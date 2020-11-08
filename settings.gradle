@@ -1,0 +1,2 @@
+rootProject.name='ToolBox2'
+include ':app', ':DataCollection'
