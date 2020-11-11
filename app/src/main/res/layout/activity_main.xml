@@ -4,12 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".view.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last connected device: "
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/deviceNameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"/>
+
+
+    </LinearLayout>
+
 
     <TextView
+
+        android:layout_centerHorizontal="true"
+        android:layout_margin="40dp"
         android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Demo"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
+        />
 
 </RelativeLayout>
