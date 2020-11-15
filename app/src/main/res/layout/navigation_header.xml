@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/back_button_foreground"
                 android:focusable="true"
-                android:onClick="myFancyMethod">
+                android:onClick="backButton">
 
             </ImageView>
             <TextView
