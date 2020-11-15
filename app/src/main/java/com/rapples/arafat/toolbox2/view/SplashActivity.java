@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.content.Context;
 
-import com.rapples.arafat.toolbox2.HomeActivity;
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivitySplashBinding;
 import java.io.File;

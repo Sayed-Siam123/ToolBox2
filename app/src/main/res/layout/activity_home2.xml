@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.drawerlayout.widget.DrawerLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/drawer_layout"
@@ -25,55 +24,16 @@
                 android:layout_width="280dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
-                android:fitsSystemWindows="true"
                 android:background="@color/black"
-                app:itemTextColor="@color/white"
-                app:itemIconTint="@color/colorPrimaryDark"
+                android:fitsSystemWindows="true"
                 app:headerLayout="@layout/navigation_header"
+                app:itemIconTint="@color/colorPrimaryDark"
+                app:itemTextColor="@color/white"
                 app:menu="@menu/menu_item" />
 
 
         </androidx.drawerlayout.widget.DrawerLayout>
-=======
-<layout>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".HomeActivity">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Button
-                android:layout_margin="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:text="RFID Reader"
-                android:textColor="#FFFFFF"
-                android:onClick="rfiReader"/>
-
-            <Button
-                android:layout_margin="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:text="Barcode scanner"
-                android:textColor="#FFFFFF"
-                android:onClick="barCode"/>
-
-
-
-
-
-
-
-        </LinearLayout>
->>>>>>> 9a8f146af3f6a44246c82f086958c1758e525a60
 
     </RelativeLayout>
 </layout>
