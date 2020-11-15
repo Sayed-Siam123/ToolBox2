@@ -1,29 +1,28 @@
 package com.rapples.arafat.toolbox2.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
-import android.widget.Toast;
+import android.content.Context;
 
 import com.rapples.arafat.toolbox2.HomeActivity;
 import com.rapples.arafat.toolbox2.R;
-
-import java.io.BufferedWriter;
+import com.rapples.arafat.toolbox2.databinding.ActivitySplashBinding;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.*;
 
 public class SplashActivity extends AppCompatActivity {
 
+    private ActivitySplashBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_splash);
         setContentView(R.layout.activity_splash);
 
         createDirectory();
@@ -33,10 +32,9 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashActivity.this, ApplicationSettingsActivity.class));
-                finish();
+                startActivity(new Intent(SplashActivity.this,HomeActivity.class));
             }
-        },2000);
+        },3000);
 
     }
 
