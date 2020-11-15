@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:background="#000000"
+    android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#000000"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:clickable="true"
+                android:id="@+id/back_to_menu_icon"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back_button_foreground"
+                android:focusable="true"
+                android:onClick="myFancyMethod">
+
+            </ImageView>
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/back"
+                android:textColor="#FFFFFF">
+            </TextView>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/white"/>
+
+    </LinearLayout>
+
+</layout>
