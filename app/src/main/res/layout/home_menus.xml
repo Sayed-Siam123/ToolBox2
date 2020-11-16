@@ -13,6 +13,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/barCodeComparisonButtonLL"
                 android:onClick="barcode_compare"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"

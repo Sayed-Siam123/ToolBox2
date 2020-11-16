@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -24,6 +26,7 @@ import android.widget.Toolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityHome2Binding;
+import com.rapples.arafat.toolbox2.util.SharedPref;
 
 import java.util.Objects;
 
@@ -34,10 +37,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private LinearLayout barcodeComparationLL;
+
 
     public boolean status = false;
     ImageView back_button,menu_button;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        checkFunction();
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("WrongConstant")
@@ -45,6 +58,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_home2);
+
+
+        init();
+
+
+        checkFunction();
+
 
         back_button = (ImageView) findViewById(R.id.back_to_menu_icon);
         TextView tvBack = (TextView) findViewById(R.id.navigationBack);
@@ -56,6 +76,23 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 //        else drawer.closeDrawer(Gravity.END);
         NavigationView navigationView = binding.navView;
         navigationView.setNavigationItemSelectedListener(this);
+
+    }
+
+    private void checkFunction() {
+        boolean comparisonFuntion = sharedPreferences.getBoolean(SharedPref.BARCODE_COMPARISON_FUNTION,false);
+        if(comparisonFuntion){
+            barcodeComparationLL.setVisibility(View.VISIBLE);
+        }else{
+            barcodeComparationLL.setVisibility(View.GONE);
+        }
+    }
+
+    private void init() {
+        sharedPreferences = getSharedPreferences(SharedPref.SETTING_PREFERENCE,MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        barcodeComparationLL = findViewById(R.id.barCodeComparisonButtonLL);
+
 
     }
 
@@ -115,12 +152,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     public void barcode_compare(View v) {
         Log.d("Barcode  Cmp", "onNavigationItemSelected: Barcode compare");
+        startActivity(new Intent(HomeActivity.this,BarcodeComparisonActivity.class));
 
     }
-
-
-
-
 
 
 
