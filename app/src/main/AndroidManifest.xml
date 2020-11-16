@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.BarcodeComparisonActivity"></activity>
+        <activity android:name=".view.BarcodeComparisonActivity"
+            android:windowSoftInputMode="stateVisible"/>
         <activity
             android:name=".view.HomeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -49,7 +50,7 @@
         <activity
             android:name=".view.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

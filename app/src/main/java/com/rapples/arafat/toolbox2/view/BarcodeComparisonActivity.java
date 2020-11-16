@@ -81,8 +81,8 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
     private void storeBarcode() {
         editor.putString(SharedPref.BARCODE, binding.barCodeET.getText().toString());
         editor.apply();
-        binding.barCodeET.setText("");
         binding.masterCodeDat.setText(binding.barCodeET.getText().toString());
+        binding.barCodeET.setText("");
         binding.firstProductLL.setVisibility(View.VISIBLE);
         flag = true;
     }
@@ -92,7 +92,7 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         binding.resultRL.setVisibility(View.VISIBLE);
         if (binding.barCodeET.getText().toString().equals(code)) {
             binding.resultRL.setBackgroundColor(getResources().getColor(R.color.green));
-            binding.statusTV.setText("PASS");
+            binding.statusTV.setText("OK");
             binding.resultRL.setVisibility(View.VISIBLE);
         } else {
             binding.resultRL.setBackgroundColor(getResources().getColor(R.color.red));

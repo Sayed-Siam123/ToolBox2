@@ -142,7 +142,7 @@
                 <RelativeLayout
                     android:layout_weight="0.6"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="30dp">
 
                     <LinearLayout
                         android:id="@+id/edittextLL"
@@ -154,7 +154,10 @@
                             android:id="@+id/barCodeET"
                             android:layout_weight="1"
                             android:layout_width="0dp"
-                            android:layout_height="40dp"/>
+                            android:layout_height="40dp"
+                            android:maxLength="5"
+                            android:background="@android:color/transparent"
+                            />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -190,7 +193,11 @@
                     </LinearLayout>
 
 
-
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/black"
+                        android:layout_alignParentBottom="true"/>
 
 
                 </RelativeLayout>
@@ -214,10 +221,11 @@
                 android:background="@drawable/circle_background"
                 android:id="@+id/statusTV"
                 android:padding="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:textSize="50sp"
                 android:textColor="@color/black"
+                android:gravity="center"
                 android:layout_centerInParent="true" />
 
 
