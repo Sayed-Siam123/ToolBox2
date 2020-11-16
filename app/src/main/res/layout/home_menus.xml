@@ -13,6 +13,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:onClick="barcode_compare"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:orientation="horizontal"
@@ -68,6 +69,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:onClick=""
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:orientation="horizontal"
@@ -124,6 +126,7 @@
 
 
             <LinearLayout
+                android:onClick=""
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:orientation="horizontal"
@@ -179,6 +182,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:onClick=""
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:orientation="horizontal"

@@ -110,6 +110,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+
+    //Home page menu item
+
+    public void barcode_compare(View v) {
+        Log.d("Barcode  Cmp", "onNavigationItemSelected: Barcode compare");
+
+    }
+
+
+
+
+
+
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = binding.drawerLayout;
