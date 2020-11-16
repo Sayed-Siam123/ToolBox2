@@ -4,11 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.rapples.arafat.toolbox2.R;
@@ -29,6 +34,8 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
 
         init();
 
+        checkSharedPref();
+
         getSharedPreferencesData();
 
         setBarcode();
@@ -38,10 +45,40 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkSharedPref();
+    }
+
+    private void checkSharedPref() {
+        boolean isActivate = sharedPreferences.getBoolean(SharedPref.BARCODE_COMPARISON_FUNTION,false);
+
+        Toast.makeText(this, ""+isActivate, Toast.LENGTH_SHORT).show();
+        if(isActivate == true){
+            binding.funtionLL.setEnabled(true);
+            focusEditText();
+
+        }else{
+            for (int i = 0; i < binding.funtionLL.getChildCount(); i++) {
+                View child = binding.funtionLL.getChildAt(i);
+                child.setEnabled(false);
+            }
+        }
+    }
+
+    private void focusEditText() {
+        binding.edittextLL.requestFocus();
+        InputMethodManager imm = (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(binding.edittextLL, InputMethodManager.SHOW_IMPLICIT);
+    }
+
     private void inputBarcode() {
         binding.barCodeET.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                binding.scanDigitCount.setText(binding.barCodeET.getText().toString().length() +" Digits");
 
                 // TODO Auto-generated method stub
                 if (s.length() == 5) {
@@ -82,6 +119,7 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         editor.putString(SharedPref.BARCODE, binding.barCodeET.getText().toString());
         editor.apply();
         binding.masterCodeDat.setText(binding.barCodeET.getText().toString());
+        binding.digitCount.setText(binding.barCodeET.getText().toString().length() +" Digits");
         binding.barCodeET.setText("");
         binding.firstProductLL.setVisibility(View.VISIBLE);
         flag = true;
@@ -99,6 +137,7 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
             binding.statusTV.setText("Fail");
             binding.resultRL.setVisibility(View.VISIBLE);
         }
+
     }
 
     private void setBarcode() {
@@ -124,6 +163,7 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
 
         binding.sannnerLL.setVisibility(View.GONE);
         binding.edittextLL.setVisibility(View.VISIBLE);
+        focusEditText();
 
     }
 
@@ -131,5 +171,15 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
 
         binding.sannnerLL.setVisibility(View.VISIBLE);
         binding.edittextLL.setVisibility(View.GONE);
+        disableFocus();
+    }
+
+    private void disableFocus() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
+    public void onSettings(View view) {
+        startActivity(new Intent(BarcodeComparisonActivity.this,ApplicationSettingsActivity.class));
     }
 }

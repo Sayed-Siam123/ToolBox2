@@ -31,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashActivity.this, CustomFunctionSettingsActivity.class));
+                startActivity(new Intent(SplashActivity.this, BarcodeComparisonActivity.class));
                 finish();
             }
         },3000);
