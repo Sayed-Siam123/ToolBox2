@@ -43,6 +43,15 @@
                 android:text="Custom Function Settings"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:onClick="saveData"
+                android:src="@drawable/ic_baseline_save_24" />
         </RelativeLayout>
 
 
@@ -116,6 +125,7 @@
                 android:layout_weight="0.6">
 
                 <EditText
+                    android:layout_marginLeft="5dp"
                     android:id="@+id/nameEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -152,6 +162,7 @@
                     android:id="@+id/descriptionEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:background="@android:color/transparent"/>
             </RelativeLayout>
 
@@ -209,6 +220,7 @@
 
                 <EditText
                     android:id="@+id/nameIdEt"
+                    android:layout_marginLeft="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"/>
@@ -242,6 +254,7 @@
 
                 <EditText
                     android:id="@+id/separatorEt"
+                    android:layout_marginLeft="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"/>
