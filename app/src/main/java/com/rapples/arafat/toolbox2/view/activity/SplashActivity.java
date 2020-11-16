@@ -31,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashActivity.this, BarcodeComparisonActivity.class));
+                startActivity(new Intent(SplashActivity.this, HomeActivity.class));
                 finish();
             }
         },3000);
@@ -39,8 +39,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void createDirectory() {
-        File mydir = this.getDir("folder", Context.MODE_PRIVATE); //Creating an internal dir;
-        File fileWithinMyDir = new File(mydir, "myfile"); //Getting a file within the dir.
+        File mydir = this.getDir("Sample Folder", Context.MODE_PRIVATE); //Creating an internal dir;
+        File fileWithinMyDir = new File(mydir, "test"); //Getting a file within the dir.
         try {
             FileOutputStream out = new FileOutputStream(fileWithinMyDir); //Use the stream as usual to write into the file.
         } catch (FileNotFoundException e) {

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -95,10 +96,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         else if (id == R.id.item_application_settings) {
             Log.d("item_application_settings", "onNavigationItemSelected: item_application_settings");
+            startActivity(new Intent(HomeActivity.this,ApplicationSettingsActivity.class));
         }
 
         else if (id == R.id.item_custom_settings) {
             Log.d("item_custom_settings", "onNavigationItemSelected: item_custom_settings");
+            startActivity(new Intent(HomeActivity.this,CustomFunctionSettingsActivity.class));
         }
 
 

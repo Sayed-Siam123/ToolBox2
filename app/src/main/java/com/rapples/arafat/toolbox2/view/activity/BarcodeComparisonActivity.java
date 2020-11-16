@@ -5,8 +5,10 @@ import androidx.databinding.DataBindingUtil;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,11 +23,32 @@ import com.rapples.arafat.toolbox2.databinding.ActivityBarcodeComparisonBinding;
 import com.rapples.arafat.toolbox2.util.SharedPref;
 
 public class BarcodeComparisonActivity extends AppCompatActivity {
+    private static final String ACTION_BARCODE_DATA = "com.honeywell.sample.action.BARCODE_DATA";
     private ActivityBarcodeComparisonBinding binding;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private String barcode;
     private boolean flag = false;
+
+
+    private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (ACTION_BARCODE_DATA.equals(intent.getAction())) {
+                int version = intent.getIntExtra("version", 0);
+                if (version >= 1) {
+                    String aimId = intent.getStringExtra("aimId");
+                    String charset = intent.getStringExtra("charset");
+                    String codeId = intent.getStringExtra("codeId");
+                    String data = intent.getStringExtra("data");
+                    byte[] dataBytes = intent.getByteArrayExtra("dataBytes");
+                    String timestamp = intent.getStringExtra("timestamp");
+
+
+                }
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +71,7 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        registerReceiver(barcodeDataReceiver, new IntentFilter(ACTION_BARCODE_DATA));
         checkSharedPref();
     }
 
