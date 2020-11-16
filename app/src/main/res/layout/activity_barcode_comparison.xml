@@ -155,7 +155,8 @@
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="40dp"
-                            android:maxLength="5"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"
                             android:background="@android:color/transparent"
                             />
 

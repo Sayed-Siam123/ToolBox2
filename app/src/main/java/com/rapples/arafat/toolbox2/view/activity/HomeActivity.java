@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -40,6 +41,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private LinearLayout barcodeComparationLL;
+    boolean doubleBackToExitPressedOnce = false;
 
 
     public boolean status = false;
@@ -160,11 +162,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = binding.drawerLayout;
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce=false;
+                }
+            }, 2000);
         }
     }
 
@@ -187,4 +202,5 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = binding.drawerLayout;
         drawer.openDrawer(Gravity.START);
     }
+
 }

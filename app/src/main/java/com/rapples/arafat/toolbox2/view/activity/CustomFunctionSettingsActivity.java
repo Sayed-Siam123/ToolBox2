@@ -67,7 +67,7 @@ public class CustomFunctionSettingsActivity extends AppCompatActivity {
     }
 
     private void setFileFormatDropDown() {
-        String[] items = new String[]{"jpg", "pdf", "csv","docx"};
+        String[] items = new String[]{"jpg", "pdf", "csv","docx","txt"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         binding.fileFormateDropdown.setAdapter(adapter);
     }
