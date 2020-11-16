@@ -4,18 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.content.Context;
 
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivitySplashBinding;
+import com.rapples.arafat.toolbox2.util.SharedPref;
+
 import java.io.File;
 import java.io.*;
 
 public class SplashActivity extends AppCompatActivity {
 
     private ActivitySplashBinding binding;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,10 @@ public class SplashActivity extends AppCompatActivity {
 
         createDirectory();
 
+        init();
+
+        setDefaultValue();
+
         Handler handler = new Handler();
 
         handler.postDelayed(new Runnable() {
@@ -35,6 +44,18 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         },3000);
+
+    }
+
+    private void setDefaultValue() {
+        editor.putBoolean(SharedPref.BARCODE_COMPARISON_FUNTION,true);
+        editor.apply();
+    }
+
+    private void init() {
+        sharedPreferences = getSharedPreferences(SharedPref.SETTING_PREFERENCE,MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
 
     }
 

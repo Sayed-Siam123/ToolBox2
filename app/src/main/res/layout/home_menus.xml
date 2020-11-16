@@ -70,7 +70,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:onClick=""
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:orientation="horizontal"
@@ -127,7 +126,6 @@
 
 
             <LinearLayout
-                android:onClick=""
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:orientation="horizontal"
@@ -182,61 +180,60 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:onClick=""
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:orientation="horizontal"
-                android:background="@drawable/card_layout">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="80dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:background="@drawable/card_layout">-->
 
-                <LinearLayout
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/image_shape">
+<!--                <LinearLayout-->
+<!--                    android:layout_marginLeft="5dp"-->
+<!--                    android:layout_width="50dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:background="@drawable/image_shape">-->
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/idea">
+<!--                    <ImageView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:src="@drawable/idea">-->
 
-                    </ImageView>
+<!--                    </ImageView>-->
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
-                <LinearLayout
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_marginLeft="5dp"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical">-->
 
-                    <TextView
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Custom Settings"
-                        android:textStyle="bold"
-                        android:textSize="17dp"
-                        android:textColor="@color/black">
-                    </TextView>
+<!--                    <TextView-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginLeft="10dp"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Custom Function"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textSize="17dp"-->
+<!--                        android:textColor="@color/black">-->
+<!--                    </TextView>-->
 
-                    <TextView
-                        android:layout_marginTop="5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Custom Settings"
-                        android:textStyle="normal"
-                        android:textSize="10dp"
-                        android:textColor="@color/black">
-                    </TextView>
+<!--                    <TextView-->
+<!--                        android:layout_marginTop="5dp"-->
+<!--                        android:layout_marginLeft="10dp"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Custom Settings"-->
+<!--                        android:textStyle="normal"-->
+<!--                        android:textSize="10dp"-->
+<!--                        android:textColor="@color/black">-->
+<!--                    </TextView>-->
 
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
         </LinearLayout>
 
