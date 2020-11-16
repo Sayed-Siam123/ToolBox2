@@ -24,6 +24,11 @@ import com.rapples.arafat.toolbox2.util.SharedPref;
 
 public class BarcodeComparisonActivity extends AppCompatActivity {
     private static final String ACTION_BARCODE_DATA = "com.honeywell.sample.action.BARCODE_DATA";
+    private static final String ACTION_CLAIM_SCANNER = "com.honeywell.aidc.action.ACTION_CLAIM_SCANNER";
+    private static final String ACTION_RELEASE_SCANNER = "com.honeywell.aidc.action.ACTION_RELEASE_SCANNER";
+    private static final String EXTRA_SCANNER = "com.honeywell.aidc.extra.EXTRA_SCANNER";
+    private static final String EXTRA_PROFILE = "com.honeywell.aidc.extra.EXTRA_PROFILE";
+    private static final String EXTRA_PROPERTIES = "com.honeywell.aidc.extra.EXTRA_PROPERTIES";
     private ActivityBarcodeComparisonBinding binding;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -44,6 +49,39 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
                     byte[] dataBytes = intent.getByteArrayExtra("dataBytes");
                     String timestamp = intent.getStringExtra("timestamp");
 
+                    if(!flag){
+                        editor.putString(SharedPref.BARCODE, data);
+                        editor.apply();
+                        binding.masterCodeDat.setText(data);
+                        binding.digitCount.setText(data.length() +" Digits");
+                        binding.barCodeFromSC.setText("");
+                        binding.firstProductLL.setVisibility(View.VISIBLE);
+                        if(codeId.equals("d")){
+                            binding.codeType.setText("EAN13");
+                        }else if(codeId.equals("s")){
+                            binding.codeType.setText("QRCODE");
+                        }else if(codeId.equals("j")){
+                            binding.codeType.setText("CODE 128");
+                        }else if(codeId.equals("s")){
+                            binding.codeType.setText("QRCODE");
+                        }else if(codeId.equals("s")){
+                            binding.codeType.setText("QRCODE");
+                        }
+                        flag = true;
+                    }else{
+                        String code = sharedPreferences.getString(SharedPref.BARCODE, "");
+                        binding.resultRL.setVisibility(View.VISIBLE);
+                        if (data.equals(code)) {
+                            binding.resultRL.setBackgroundColor(getResources().getColor(R.color.green));
+                            binding.statusTV.setText("OK");
+                            binding.resultRL.setVisibility(View.VISIBLE);
+                        } else {
+                            binding.resultRL.setBackgroundColor(getResources().getColor(R.color.red));
+                            binding.statusTV.setText("Fail");
+                            binding.resultRL.setVisibility(View.VISIBLE);
+                        }
+
+                    }
 
                 }
             }
@@ -72,13 +110,33 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         registerReceiver(barcodeDataReceiver, new IntentFilter(ACTION_BARCODE_DATA));
+        claimScanner();
         checkSharedPref();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(barcodeDataReceiver);
+
+        releaseScanner();
+    }
+
+    private void claimScanner() {
+        Bundle properties = new Bundle();
+        properties.putBoolean("DPR_DATA_INTENT", true); properties.putString("DPR_DATA_INTENT_ACTION", ACTION_BARCODE_DATA);
+        sendBroadcast(new Intent(ACTION_CLAIM_SCANNER) .setPackage("com.intermec.datacollectionservice")
+                .putExtra(EXTRA_SCANNER, "dcs.scanner.imager") .putExtra(EXTRA_PROFILE, "MyProfile1") .putExtra(EXTRA_PROPERTIES, properties)
+        );
+    }
+    private void releaseScanner() {
+        sendBroadcast(new Intent(ACTION_RELEASE_SCANNER)
+        );
     }
 
     private void checkSharedPref() {
         boolean isActivate = sharedPreferences.getBoolean(SharedPref.BARCODE_COMPARISON_FUNTION,false);
 
-        Toast.makeText(this, ""+isActivate, Toast.LENGTH_SHORT).show();
         if(isActivate == true){
             binding.funtionLL.setEnabled(true);
             focusEditText();
