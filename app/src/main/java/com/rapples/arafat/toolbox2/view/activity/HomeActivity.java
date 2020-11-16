@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -43,7 +44,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_home2);
+
         back_button = (ImageView) findViewById(R.id.back_to_menu_icon);
+        TextView tvBack = (TextView) findViewById(R.id.navigationBack);
         menu_button = (ImageView) findViewById(R.id.menu_image);
         DrawerLayout drawer = binding.drawerLayout;
 //        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -55,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    @SuppressLint("LongLogTag")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -71,6 +75,35 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setNavigationItemSelectedListener(this);
             status = true;
         }
+
+
+        else if (id == R.id.item_file_upload) {
+            Log.d("File upload", "onNavigationItemSelected: File upload");
+        }
+
+        else if (id == R.id.item_language) {
+            Log.d("item_language", "onNavigationItemSelected: Item Language");
+        }
+
+        else if (id == R.id.item_about) {
+            Log.d("item_about", "onNavigationItemSelected: Item About");
+        }
+
+        else if (id == R.id.item_barcode_settings) {
+            Log.d("item_barcode_settings", "onNavigationItemSelected: Item Barcode Settings");
+        }
+
+        else if (id == R.id.item_application_settings) {
+            Log.d("item_application_settings", "onNavigationItemSelected: item_application_settings");
+        }
+
+        else if (id == R.id.item_custom_settings) {
+            Log.d("item_custom_settings", "onNavigationItemSelected: item_custom_settings");
+        }
+
+
+
+
         return true;
     }
 
