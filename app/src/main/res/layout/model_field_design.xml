@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/fieldCountTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Field 1"
+        android:layout_margin="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="0.4"
+            android:text="Fieldtype:"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_margin="5dp"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@drawable/edit_text_background"
+            android:layout_weight="0.6">
+
+            <Spinner
+                android:id="@+id/fieldTypeDropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"/>
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="0.4"
+            android:text="Fieldname:"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_margin="5dp"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@drawable/edit_text_background"
+            android:layout_weight="0.6">
+
+            <EditText
+                android:id="@+id/fieldNameEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"/>
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
