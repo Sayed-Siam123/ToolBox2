@@ -9,7 +9,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="back">back</string>
+    <string name="back">back to main menu</string>
     <string name="connect_reader_menu_item_text">Connect Reader menu item</string>
     <string name="disconnect_reader_menu_item_text">Disconnect reader menu item</string>
     <string name="change_reader_menu_item_text">Change reader menu item text</string>
