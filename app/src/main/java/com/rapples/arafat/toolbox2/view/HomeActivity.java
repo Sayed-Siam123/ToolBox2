@@ -34,7 +34,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
 
     public boolean status = false;
-    ImageView back_button;
+    ImageView back_button,menu_button;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -44,7 +44,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_home2);
         back_button = (ImageView) findViewById(R.id.back_to_menu_icon);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        menu_button = (ImageView) findViewById(R.id.menu_image);
+        DrawerLayout drawer = binding.drawerLayout;
 //        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 //        if(!drawer.isDrawerOpen(Gravity.START))
 //            drawer.openDrawer(Gravity.START);
@@ -75,7 +76,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = binding.drawerLayout;
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -83,7 +84,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void myFancyMethod(View v) {
+    public void backButton(View v) {
         if(!status) {
             onBackPressed();
         }
@@ -95,5 +96,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setNavigationItemSelectedListener(this);
             status = false;
         }
+    }
+
+    @SuppressLint("WrongConstant")
+    public void menubutton(View v) {
+        DrawerLayout drawer = binding.drawerLayout;
+        drawer.openDrawer(Gravity.START);
     }
 }
