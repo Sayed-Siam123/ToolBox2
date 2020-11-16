@@ -17,14 +17,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.CustomFunctionSettingsActivity"></activity>
+        <activity android:name=".view.activity.CustomFunctionSettingsActivity"></activity>
         <activity
-            android:name=".view.BarcodeComparisonActivity"
+            android:name=".view.activity.BarcodeComparisonActivity"
             android:windowSoftInputMode="stateVisible" />
         <activity
-            android:name=".view.HomeActivity"
+            android:name=".view.activity.HomeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".view.ApplicationSettingsActivity" />
+        <activity android:name=".view.activity.ApplicationSettingsActivity" />
         <activity
             android:name=".ReaderManagerActivity"
             android:label="@string/app_name"
@@ -38,7 +38,7 @@
                 android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
                 android:resource="@xml/device_filter" />
         </activity>
-        <activity android:name=".view.SplashActivity">
+        <activity android:name=".view.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,7 +50,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
