@@ -54,11 +54,17 @@
             android:layout_below="@+id/toolbar"
             android:background="@color/black" />
 
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_height="wrap_content">
+
         <LinearLayout
             android:id="@+id/funtionLL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar"
+
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -83,7 +89,8 @@
                         android:id="@+id/masterEdittextLL"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <EditText
                             android:id="@+id/masterBarCodeET"
@@ -99,14 +106,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="34dp"
                             android:layout_marginRight="10dp"
-                            android:onClick="openScaaner"
+                            android:onClick="openScaanerMaster"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/ic_bar_code" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:id="@+id/masterSannnerLL"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -123,7 +130,7 @@
                             />
 
                         <ImageView
-                            android:onClick="openKeyboard"
+                            android:onClick="openKeyboardMaster"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
@@ -196,6 +203,7 @@
                     android:layout_height="30dp">
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:id="@+id/edittextLL"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -222,7 +230,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:id="@+id/sannnerLL"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -290,12 +298,13 @@
 
 
         </LinearLayout>
+        </ScrollView>
 
         <RelativeLayout
             android:visibility="gone"
             android:id="@+id/resultRL"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/funtionLL"
+            android:layout_below="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
