@@ -3,23 +3,19 @@ package com.rapples.arafat.toolbox2.view.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityBarcodeComparisonBinding;
@@ -33,8 +29,6 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
     private static final String EXTRA_PROFILE = "com.honeywell.aidc.extra.EXTRA_PROFILE";
     private static final String EXTRA_PROPERTIES = "com.honeywell.aidc.extra.EXTRA_PROPERTIES";
     private ActivityBarcodeComparisonBinding binding;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
     private String barcode;
     private boolean flag = false;
 
@@ -52,39 +46,6 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
                     byte[] dataBytes = intent.getByteArrayExtra("dataBytes");
                     String timestamp = intent.getStringExtra("timestamp");
 
-                    if (!flag) {
-                        editor.putString(SharedPref.BARCODE, data);
-                        editor.apply();
-                        binding.masterCodeDat.setText(data);
-                        binding.digitCount.setText(data.length() + " Digits");
-                        binding.barCodeFromSC.setText("");
-                        binding.firstProductLL.setVisibility(View.VISIBLE);
-                        if (codeId.equals("d")) {
-                            binding.codeType.setText("EAN13");
-                        } else if (codeId.equals("s")) {
-                            binding.codeType.setText("QRCODE");
-                        } else if (codeId.equals("j")) {
-                            binding.codeType.setText("CODE 128");
-                        } else if (codeId.equals("s")) {
-                            binding.codeType.setText("QRCODE");
-                        } else if (codeId.equals("s")) {
-                            binding.codeType.setText("QRCODE");
-                        }
-                        flag = true;
-                    } else {
-                        String code = sharedPreferences.getString(SharedPref.BARCODE, "");
-                        binding.resultRL.setVisibility(View.VISIBLE);
-                        if (data.equals(code)) {
-                            binding.resultRL.setBackgroundColor(getResources().getColor(R.color.green));
-                            binding.statusTV.setText("OK");
-                            binding.resultRL.setVisibility(View.VISIBLE);
-                        } else {
-                            binding.resultRL.setBackgroundColor(getResources().getColor(R.color.red));
-                            binding.statusTV.setText("Fail");
-                            binding.resultRL.setVisibility(View.VISIBLE);
-                        }
-
-                    }
 
                 }
             }
@@ -96,16 +57,59 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_barcode_comparison);
 
-        init();
+        inputMasterTypeBarcode();
 
-        checkSharedPref();
+        inputReferenceBarcode();
 
-        getSharedPreferencesData();
 
-        setBarcode();
+    }
 
-        inputBarcode();
+    private void inputReferenceBarcode() {
+        binding.barCodeET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    binding.masterBarCodeET.setSelectAllOnFocus(true);
+                    binding.masterBarCodeET.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(binding.edittextLL, InputMethodManager.SHOW_IMPLICIT);
 
+                    binding.masterBarCodeET.setSelectAllOnFocus(true);
+                    binding.scanDigitCount.setText(binding.barCodeET.getText().toString().length() + " Digits");
+                    compareBarcode();
+
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
+
+
+    }
+
+    private void inputMasterTypeBarcode() {
+
+        binding.masterBarCodeET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    binding.barcodeLL.setVisibility(View.VISIBLE);
+                    binding.barCodeET.setText("");
+                    binding.barCodeET.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(binding.edittextLL, InputMethodManager.SHOW_IMPLICIT);
+                    binding.resultRL.setVisibility(View.GONE);
+                    binding.masterScanDigitCount.setText(binding.masterBarCodeET.getText().toString().length() + " Digits");
+
+
+                    handled = true;
+                }
+                return handled;
+            }
+        });
 
     }
 
@@ -114,7 +118,6 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         super.onResume();
         registerReceiver(barcodeDataReceiver, new IntentFilter(ACTION_BARCODE_DATA));
         claimScanner();
-        checkSharedPref();
     }
 
     @Override
@@ -138,20 +141,6 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         );
     }
 
-    private void checkSharedPref() {
-        boolean isActivate = sharedPreferences.getBoolean(SharedPref.BARCODE_COMPARISON_FUNTION, false);
-
-        if (isActivate == true) {
-            binding.funtionLL.setEnabled(true);
-            focusEditText();
-
-        } else {
-            for (int i = 0; i < binding.funtionLL.getChildCount(); i++) {
-                View child = binding.funtionLL.getChildAt(i);
-                child.setEnabled(false);
-            }
-        }
-    }
 
     private void focusEditText() {
         binding.edittextLL.requestFocus();
@@ -159,72 +148,10 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         imm.showSoftInput(binding.edittextLL, InputMethodManager.SHOW_IMPLICIT);
     }
 
-    private void inputBarcode() {
 
-        binding.barCodeET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    if (!flag) {
-                        storeBarcode();
-                    } else {
-                        compareBarcode();
-                    }
-                    handled = true;
-                }
-                return handled;
-            }
-        });
-
-
-        binding.barCodeET.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                binding.scanDigitCount.setText(binding.barCodeET.getText().toString().length() + " Digits");
-
-                // TODO Auto-generated method stub
-                if (flag) {
-                    compareBarcode();
-                }
-
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                // TODO Auto-generated method stub
-            }
-        });
-
-    }
-
-    private void showFailMessage() {
-        binding.resultRL.setBackgroundColor(getResources().getColor(R.color.red));
-        binding.statusTV.setText("Fail");
-        binding.resultRL.setVisibility(View.VISIBLE);
-    }
-
-    private void storeBarcode() {
-        editor.putString(SharedPref.BARCODE, binding.barCodeET.getText().toString());
-        editor.apply();
-        binding.masterCodeDat.setText(binding.barCodeET.getText().toString());
-        binding.digitCount.setText(binding.barCodeET.getText().toString().length() + " Digits");
-        binding.barCodeET.setText("");
-        binding.firstProductLL.setVisibility(View.VISIBLE);
-        flag = true;
-        focusEditText();
-    }
 
     private void compareBarcode() {
-        String code = sharedPreferences.getString(SharedPref.BARCODE, "");
+        String code = binding.masterBarCodeET.getText().toString();
         binding.resultRL.setVisibility(View.VISIBLE);
         if (binding.barCodeET.getText().toString().equals(code)) {
             binding.resultRL.setBackgroundColor(getResources().getColor(R.color.green));
@@ -238,24 +165,6 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
 
     }
 
-    private void setBarcode() {
-        if (!barcode.isEmpty()) {
-            binding.firstProductLL.setVisibility(View.VISIBLE);
-            binding.masterCodeDat.setText(barcode);
-            flag = true;
-        }
-    }
-
-    private void getSharedPreferencesData() {
-        barcode = sharedPreferences.getString(SharedPref.BARCODE, "");
-
-    }
-
-    private void init() {
-        sharedPreferences = getSharedPreferences(SharedPref.COMPARE_PREFERENCE, MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-
-    }
 
     public void openKeyboard(View view) {
 
