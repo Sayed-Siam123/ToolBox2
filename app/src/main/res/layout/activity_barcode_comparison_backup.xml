@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.activity.BarcodeComparisonActivity">
+        tools:context=".backup.BarcodeComparisonBackupActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -30,8 +30,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
                     android:onClick="onSettings"
                     android:src="@drawable/ic_equalizer" />
 
@@ -60,6 +60,72 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
             android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/firstProductLL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:text="Mastercode:" />
+
+                    <TextView
+                        android:id="@+id/masterCodeDat"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.6"
+                        android:text="00000" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/codeType"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:text="Code 128" />
+
+                    <TextView
+                        android:id="@+id/digitCount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.6"
+                        android:text="6 digit" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black" />
+
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,133 +133,16 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/masterBarcodeTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
                     android:layout_marginLeft="10dp"
-                    android:text="Scan Mastercode:" />
+                    android:layout_weight="0.4"
+                    android:text="ScanBarcode:" />
 
                 <RelativeLayout
-                    android:layout_weight="0.6"
                     android:layout_width="0dp"
-                    android:layout_height="30dp">
-
-                    <LinearLayout
-                        android:id="@+id/masterEdittextLL"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/masterBarCodeET"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:imeOptions="actionDone"
-                            android:singleLine="true"
-                            android:background="@android:color/transparent"
-                            />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="34dp"
-                            android:layout_marginRight="10dp"
-                            android:onClick="openScaaner"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_bar_code" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:visibility="gone"
-                        android:id="@+id/masterSannnerLL"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/masterbarCodeFromSCET"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:imeOptions="actionDone"
-                            android:singleLine="true"
-                            android:background="@android:color/transparent"
-                            />
-
-                        <ImageView
-                            android:onClick="openKeyboard"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_tap"/>
-
-                    </LinearLayout>
-
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:background="@color/black"
-                        android:layout_alignParentBottom="true"/>
-
-
-                </RelativeLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-
-                <TextView
-                    android:id="@+id/masterScanCodeType"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
-                    android:text="" />
-
-                <TextView
-                    android:id="@+id/masterScanDigitCount"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.6"
-                    android:text="" />
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/black"/>
-
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/barcodeLL"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
-                    android:layout_marginLeft="10dp"
-                    android:text="Scan Barcode:" />
-
-                <RelativeLayout
-                    android:layout_weight="0.6"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp">
+                    android:layout_height="30dp"
+                    android:layout_weight="0.6">
 
                     <LinearLayout
                         android:id="@+id/edittextLL"
@@ -203,48 +152,43 @@
 
                         <EditText
                             android:id="@+id/barCodeET"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="40dp"
-                            android:imeOptions="actionDone"
-                            android:singleLine="true"
+                            android:layout_weight="1"
                             android:background="@android:color/transparent"
-                            />
+                            android:imeOptions="actionDone"
+                            android:singleLine="true" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="34dp"
+                            android:layout_gravity="center_vertical"
                             android:layout_marginRight="10dp"
                             android:onClick="openScaaner"
-                            android:layout_gravity="center_vertical"
                             android:src="@drawable/ic_bar_code" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
                         android:id="@+id/sannnerLL"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
-                        <EditText
-                            android:id="@+id/barCodeFromSCET"
-                            android:layout_weight="1"
+                        <TextView
+                            android:id="@+id/barCodeFromSC"
                             android:layout_width="0dp"
                             android:layout_height="40dp"
-                            android:imeOptions="actionDone"
-                            android:singleLine="true"
-                            android:background="@android:color/transparent"
-                            />
+                            android:layout_weight="1" />
 
                         <ImageView
-                            android:onClick="openKeyboard"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_tap"/>
+                            android:layout_marginRight="10dp"
+                            android:onClick="openKeyboard"
+                            android:src="@drawable/ic_tap" />
 
                     </LinearLayout>
 
@@ -252,8 +196,8 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:background="@color/black"
-                        android:layout_alignParentBottom="true"/>
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/black" />
 
 
                 </RelativeLayout>
@@ -288,28 +232,26 @@
             </LinearLayout>
 
 
-
         </LinearLayout>
 
         <RelativeLayout
-            android:visibility="gone"
             android:id="@+id/resultRL"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/funtionLL"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/funtionLL"
+            android:layout_marginTop="10dp"
+            android:visibility="gone">
 
             <TextView
-                android:background="@drawable/circle_background"
                 android:id="@+id/statusTV"
-                android:padding="15dp"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:textSize="50sp"
-                android:textColor="@color/black"
+                android:layout_centerInParent="true"
+                android:background="@drawable/circle_background"
                 android:gravity="center"
-                android:layout_centerInParent="true" />
-
+                android:padding="15dp"
+                android:textColor="@color/black"
+                android:textSize="50sp" />
 
 
         </RelativeLayout>
