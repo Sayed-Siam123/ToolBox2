@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.CustomFunctionSettingsActivity"></activity>
+        <activity android:name=".view.activity.MasterData"></activity>
+        <activity android:name=".view.activity.CustomFunctionSettingsActivity" />
         <activity
             android:name=".view.activity.BarcodeComparisonActivity"
             android:windowSoftInputMode="stateVisible" />

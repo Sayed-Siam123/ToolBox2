@@ -106,6 +106,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.item_masterdata) {
 
             Log.d("item name", "onNavigationItemSelected: masterdata");
+            startActivity(new Intent(HomeActivity.this,MasterData.class));
+
 
 
         } else if (id == R.id.item_settings) {
