@@ -32,7 +32,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:layout_centerVertical="true"
-                    android:onClick="onBack"
+                    android:onClick="onSettings"
                     android:src="@drawable/ic_equalizer" />
 
                 <TextView
@@ -155,7 +155,8 @@
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="40dp"
-                            android:maxLength="5"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"
                             android:background="@android:color/transparent"
                             />
 
@@ -202,6 +203,32 @@
 
                 </RelativeLayout>
 
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/scanCodeType"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/scanDigitCount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:text="" />
 
             </LinearLayout>
 
