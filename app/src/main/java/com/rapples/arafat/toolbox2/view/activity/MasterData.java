@@ -83,25 +83,25 @@ public class MasterData extends AppCompatActivity {
             final int position = viewHolder.getAdapterPosition();
 
             switch (direction) {
-                case ItemTouchHelper.LEFT:
+                case ItemTouchHelper.RIGHT:
 
-                    Snackbar.make(recyclerView, "RecyclerView "+position, Snackbar.LENGTH_LONG)
+                    Snackbar.make(recyclerView, "Edit "+position, Snackbar.LENGTH_LONG)
                             .setAction("Undo", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
 
-                                    Log.d("TAG", "onClick: Deleted row position "+position);
+                                    Log.d("TAG", "onClick: Edited row position "+position);
 
                                 }
                             }).show();
                     break;
 
-                    case ItemTouchHelper.RIGHT:
-                    Snackbar.make(recyclerView,  "Edit", Snackbar.LENGTH_LONG)
+                    case ItemTouchHelper.LEFT:
+                    Snackbar.make(recyclerView,  "Delete "+position, Snackbar.LENGTH_LONG)
                             .setAction("Undo", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Log.d("TAG", "onClick: Edited row position "+position);
+                                    Log.d("TAG", "onClick: Deleted row position "+position);
                                 }
                             }).show();
 
@@ -113,10 +113,10 @@ public class MasterData extends AppCompatActivity {
         @Override
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
             new RecyclerViewSwipeDecorator.Builder(MasterData.this, c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(MasterData.this, R.color.green))
-                    .addSwipeLeftActionIcon(R.drawable.ic_baseline_edit_24)
-                    .addSwipeRightBackgroundColor(ContextCompat.getColor(MasterData.this, R.color.red))
-                    .addSwipeRightActionIcon(R.drawable.ic_baseline_delete_24)
+                    .addSwipeRightBackgroundColor(ContextCompat.getColor(MasterData.this, R.color.green))
+                    .addSwipeRightActionIcon(R.drawable.ic_baseline_edit_24)
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(MasterData.this, R.color.red))
+                    .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
                     .setActionIconTint(ContextCompat.getColor(recyclerView.getContext(), android.R.color.white))
                     .create()
                     .decorate();
