@@ -30,6 +30,9 @@ public class CustomFunctionSettingsActivity extends AppCompatActivity {
     private int fieldSize = 1;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private boolean functionIsActive;
+    private String name;
+    private String description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,19 @@ public class CustomFunctionSettingsActivity extends AppCompatActivity {
         changeCustomFuntionStatus();
 
         setFileFormatDropDown();
+        
+        setSharedPreferenceData();
 
+    }
+
+    private void setSharedPreferenceData() {
+        functionIsActive = sharedPreferences.getBoolean(SharedPref.CUSTOM_FUNCTION,false);
+        name = sharedPreferences.getString(SharedPref.CUSTOM_FUNCTION_NAME,"");
+        description = sharedPreferences.getString(SharedPref.CUSTOM_FUNCTION_DESCRIPTION,"");
+        
+        binding.nameEt.setText(name);
+        binding.descriptionEt.setText(description);
+        binding.customFuntionSwitch.setChecked(functionIsActive);
     }
 
     private void configRecyclearview() {
@@ -110,5 +125,9 @@ public class CustomFunctionSettingsActivity extends AppCompatActivity {
                 editor.apply();
             }
         });
+    }
+
+    public void back(View view) {
+        onBackPressed();
     }
 }

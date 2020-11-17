@@ -40,7 +40,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private LinearLayout barcodeComparationLL;
+    private LinearLayout barcodeComparationLL,customFunctionLL;
+    private TextView customFunctionName,customFunctiondescription;
     boolean doubleBackToExitPressedOnce = false;
 
 
@@ -83,17 +84,31 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void checkFunction() {
         boolean comparisonFuntion = sharedPreferences.getBoolean(SharedPref.BARCODE_COMPARISON_FUNTION,false);
+        boolean customFuntion = sharedPreferences.getBoolean(SharedPref.CUSTOM_FUNCTION,false);
+
         if(comparisonFuntion){
             barcodeComparationLL.setVisibility(View.VISIBLE);
         }else{
             barcodeComparationLL.setVisibility(View.GONE);
         }
+
+        if(customFuntion){
+            customFunctionLL.setVisibility(View.VISIBLE);
+            customFunctionName.setText(sharedPreferences.getString(SharedPref.CUSTOM_FUNCTION_NAME,""));
+            customFunctiondescription.setText(sharedPreferences.getString(SharedPref.CUSTOM_FUNCTION_DESCRIPTION,""));
+        }else{
+            customFunctionLL.setVisibility(View.GONE);
+        }
+
     }
 
     private void init() {
         sharedPreferences = getSharedPreferences(SharedPref.SETTING_PREFERENCE,MODE_PRIVATE);
         editor = sharedPreferences.edit();
         barcodeComparationLL = findViewById(R.id.barCodeComparisonButtonLL);
+        customFunctionLL = findViewById(R.id.customFunctionLL);
+        customFunctionName = findViewById(R.id.customFunctionNameTv);
+        customFunctiondescription = findViewById(R.id.customFunctionDescriptionTv);
 
 
     }

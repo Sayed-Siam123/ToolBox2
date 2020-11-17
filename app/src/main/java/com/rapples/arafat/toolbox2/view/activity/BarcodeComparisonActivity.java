@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -46,13 +47,36 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
                     byte[] dataBytes = intent.getByteArrayExtra("dataBytes");
                     String timestamp = intent.getStringExtra("timestamp");
 
-                    if(!flag){
+                    if (!flag) {
                         binding.masterbarCodeFromSCET.setText(data);
                         binding.masterScanDigitCount.setText(data.length() + " Digits");
+                        if (codeId.equals("<")) {
+                            binding.masterScanCodeType.setText("CODE 39");
+                        } else if (codeId.equals("d")) {
+                            binding.masterScanCodeType.setText("EAN13");
+                        } else if (codeId.equals("j")) {
+                            binding.masterScanCodeType.setText("CODE 128");
+                        } else if (codeId.equals("s")) {
+                            binding.masterScanCodeType.setText("QR CODE ");
+                        } else if (codeId.equals("w")) {
+                            binding.masterScanCodeType.setText("Datatmatrix");
+                        }
+
                         flag = true;
-                    }else{
+                    } else {
                         binding.barCodeFromSCET.setText(data);
                         binding.scanDigitCount.setText(data.length() + " Digits");
+                        if (codeId.equals("<")) {
+                            binding.scanCodeType.setText("CODE 39");
+                        } else if (codeId.equals("d")) {
+                            binding.scanCodeType.setText("EAN13");
+                        } else if (codeId.equals("j")) {
+                            binding.scanCodeType.setText("CODE 128");
+                        } else if (codeId.equals("s")) {
+                            binding.scanCodeType.setText("QR CODE ");
+                        } else if (codeId.equals("w")) {
+                            binding.scanCodeType.setText("Datatmatrix");
+                        }
                         flag = false;
                     }
 
@@ -70,6 +94,8 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
 
         setDefaultFocus();
 
+        hideKey();
+
         inputMasterTypeBarcode();
 
         inputReferenceBarcode();
@@ -79,8 +105,12 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         inputReferenceBarcodeForScanner();
 
 
+    }
 
-
+    private void hideKey() {
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+        );
     }
 
     private void setDefaultFocus() {
@@ -109,7 +139,6 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
                 return handled;
             }
         });
-
 
 
     }
@@ -159,7 +188,6 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
 
             }
         });
-
 
 
     }
@@ -224,7 +252,6 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.showSoftInput(binding.edittextLL, InputMethodManager.SHOW_IMPLICIT);
     }
-
 
 
     private void compareBarcode() {
