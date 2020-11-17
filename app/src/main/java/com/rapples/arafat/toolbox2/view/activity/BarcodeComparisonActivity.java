@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -93,6 +94,8 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
 
         setDefaultFocus();
 
+        hideKey();
+
         inputMasterTypeBarcode();
 
         inputReferenceBarcode();
@@ -102,6 +105,12 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         inputReferenceBarcodeForScanner();
 
 
+    }
+
+    private void hideKey() {
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+        );
     }
 
     private void setDefaultFocus() {
