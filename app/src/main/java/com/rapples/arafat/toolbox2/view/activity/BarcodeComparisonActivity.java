@@ -338,4 +338,8 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
     }
+
+    public void backComparison(View view) {
+        onBackPressed();
+    }
 }
