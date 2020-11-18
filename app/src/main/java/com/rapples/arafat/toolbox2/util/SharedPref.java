@@ -17,6 +17,13 @@ public class SharedPref {
     public static final String SHOW_BARCODETYPE ="showBarcode";
     public static final String SHOW_NUMBER_OF_DIGITS ="showNumberOfDigits";
     public static final String MANAGE_PRICES ="managePrices";
+    public static final String CODE_TWO_BY_FIVE ="codeTwoByFive";
+    public static final String CODE_39 ="code39";
+    public static final String CODE_128 ="code128";
+    public static final String EAN_13 ="ean13";
+    public static final String DATA_MATRIX ="dataMatrix";
+    public static final String QR_CODE ="qrCode";
+
 
 
 

@@ -16,7 +16,7 @@ public class ApplicationSettingsActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    ActivityApplicationSettingsBinding binding;
+    private ActivityApplicationSettingsBinding binding;
     private boolean barcodeComparisonFuntionStatus;
     private boolean barcodeInformation;
     private boolean showDescription;
