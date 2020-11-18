@@ -134,7 +134,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.item_language) {
             Log.d("item_language", "onNavigationItemSelected: Item Language");
         } else if (id == R.id.item_about) {
-            Log.d("item_about", "onNavigationItemSelected: Item About");
+            startActivity(new Intent(HomeActivity.this, AboutActivity.class));
         } else if (id == R.id.item_barcode_settings) {
             startActivity(new Intent(HomeActivity.this, BarcodeSettingsActivity.class));
         } else if (id == R.id.item_application_settings) {

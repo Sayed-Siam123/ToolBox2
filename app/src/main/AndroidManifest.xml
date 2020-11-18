@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.BarcodeSettingsActivity"></activity>
+        <activity android:name=".view.activity.AboutActivity"></activity>
+        <activity android:name=".view.activity.BarcodeSettingsActivity" />
         <activity
             android:name=".backup.BarcodeComparisonBackupActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
