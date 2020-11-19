@@ -56,7 +56,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_home2);
+        binding = DataBindingUtil.setContentView(HomeActivity.this,R.layout.activity_home2);
+
 
 
         init();
@@ -66,9 +67,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
         back_button = (ImageView) findViewById(R.id.back_to_menu_icon);
-        TextView tvBack = (TextView) findViewById(R.id.navigationBack);
         menu_button = (ImageView) findViewById(R.id.menu_image);
-        DrawerLayout drawer = binding.drawerLayout;
+        drawer = binding.drawerLayout;
 //        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 //        if(!drawer.isDrawerOpen(Gravity.START))
 //            drawer.openDrawer(Gravity.START);
