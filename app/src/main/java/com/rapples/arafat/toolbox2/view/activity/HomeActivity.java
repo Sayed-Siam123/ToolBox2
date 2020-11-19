@@ -2,7 +2,6 @@ package com.rapples.arafat.toolbox2.view.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
@@ -21,15 +20,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.android.material.navigation.NavigationView;
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityHome2Binding;
 import com.rapples.arafat.toolbox2.util.SharedPref;
-
-import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -121,6 +117,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.item_masterdata) {
 
             Log.d("item name", "onNavigationItemSelected: masterdata");
+            startActivity(new Intent(HomeActivity.this, MasterDataActivity.class));
+
 
 
         } else if (id == R.id.item_settings) {

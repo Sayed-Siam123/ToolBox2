@@ -22,6 +22,9 @@
         <activity
             android:name=".backup.BarcodeComparisonBackupActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".view.activity.EditMasterdataActivity"></activity>
+        <activity android:name=".view.activity.AddMasterDataActivity" />
+        <activity android:name=".view.activity.MasterDataActivity" />
         <activity android:name=".view.activity.CustomFunctionSettingsActivity" />
         <activity
             android:name=".view.activity.BarcodeComparisonActivity"
