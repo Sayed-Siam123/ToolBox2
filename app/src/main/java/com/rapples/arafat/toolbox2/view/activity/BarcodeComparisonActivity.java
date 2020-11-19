@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -46,6 +47,39 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
                     byte[] dataBytes = intent.getByteArrayExtra("dataBytes");
                     String timestamp = intent.getStringExtra("timestamp");
 
+                    if (!flag) {
+                        binding.masterbarCodeFromSCET.setText(data);
+                        binding.masterScanDigitCount.setText(data.length() + " Digits");
+                        if (codeId.equals("<")) {
+                            binding.masterScanCodeType.setText("CODE 39");
+                        } else if (codeId.equals("d")) {
+                            binding.masterScanCodeType.setText("EAN13");
+                        } else if (codeId.equals("j")) {
+                            binding.masterScanCodeType.setText("CODE 128");
+                        } else if (codeId.equals("s")) {
+                            binding.masterScanCodeType.setText("QR CODE ");
+                        } else if (codeId.equals("w")) {
+                            binding.masterScanCodeType.setText("Datatmatrix");
+                        }
+
+                        flag = true;
+                    } else {
+                        binding.barCodeFromSCET.setText(data);
+                        binding.scanDigitCount.setText(data.length() + " Digits");
+                        if (codeId.equals("<")) {
+                            binding.scanCodeType.setText("CODE 39");
+                        } else if (codeId.equals("d")) {
+                            binding.scanCodeType.setText("EAN13");
+                        } else if (codeId.equals("j")) {
+                            binding.scanCodeType.setText("CODE 128");
+                        } else if (codeId.equals("s")) {
+                            binding.scanCodeType.setText("QR CODE ");
+                        } else if (codeId.equals("w")) {
+                            binding.scanCodeType.setText("Datatmatrix");
+                        }
+                        flag = false;
+                    }
+
 
                 }
             }
@@ -57,11 +91,32 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_barcode_comparison);
 
+
+        setDefaultFocus();
+
+        hideKey();
+
         inputMasterTypeBarcode();
 
         inputReferenceBarcode();
 
+        inputMasterTypeBarcodeForScanner();
 
+        inputReferenceBarcodeForScanner();
+
+
+    }
+
+    private void hideKey() {
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+        );
+    }
+
+    private void setDefaultFocus() {
+        binding.masterbarCodeFromSCET.requestFocus();
+        disableFocus();
+        hideKeyboard(this);
     }
 
     private void inputReferenceBarcode() {
@@ -86,7 +141,6 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         });
 
 
-
     }
 
     private void inputMasterTypeBarcode() {
@@ -108,6 +162,57 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
                     handled = true;
                 }
                 return handled;
+            }
+        });
+
+    }
+
+    private void inputReferenceBarcodeForScanner() {
+        binding.barCodeFromSCET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                binding.masterbarCodeFromSCET.setSelectAllOnFocus(true);
+                binding.masterbarCodeFromSCET.requestFocus();
+                binding.scanDigitCount.setText(binding.masterbarCodeFromSCET.getText().toString().length() + " Digits");
+                compareBarcodeForScanner();
+
+            }
+        });
+
+
+    }
+
+    private void inputMasterTypeBarcodeForScanner() {
+
+        binding.masterbarCodeFromSCET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                binding.barcodeLL.setVisibility(View.VISIBLE);
+                binding.barCodeFromSCET.setText("");
+                binding.barCodeFromSCET.requestFocus();
+                binding.resultRL.setVisibility(View.GONE);
+                binding.masterScanDigitCount.setText(binding.masterbarCodeFromSCET.getText().toString().length() + " Digits");
+
             }
         });
 
@@ -149,7 +254,6 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
     }
 
 
-
     private void compareBarcode() {
         String code = binding.masterBarCodeET.getText().toString();
         binding.resultRL.setVisibility(View.VISIBLE);
@@ -165,20 +269,39 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
 
     }
 
+    private void compareBarcodeForScanner() {
+        String code = binding.masterbarCodeFromSCET.getText().toString();
+        binding.resultRL.setVisibility(View.VISIBLE);
+        if (binding.barCodeFromSCET.getText().toString().equals(code)) {
+            binding.resultRL.setBackgroundColor(getResources().getColor(R.color.green));
+            binding.statusTV.setText("OK");
+            binding.resultRL.setVisibility(View.VISIBLE);
+        } else {
+            binding.resultRL.setBackgroundColor(getResources().getColor(R.color.red));
+            binding.statusTV.setText("Fail");
+            binding.resultRL.setVisibility(View.VISIBLE);
+        }
+
+    }
+
 
     public void openKeyboard(View view) {
 
-        binding.sannnerLL.setVisibility(View.GONE);
         binding.edittextLL.setVisibility(View.VISIBLE);
-        focusEditText();
+        binding.sannnerLL.setVisibility(View.GONE);
+        binding.barCodeET.requestFocus();
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
     }
 
     public void openScaaner(View view) {
 
-        binding.sannnerLL.setVisibility(View.VISIBLE);
         binding.edittextLL.setVisibility(View.GONE);
+        binding.sannnerLL.setVisibility(View.VISIBLE);
+        binding.masterbarCodeFromSCET.requestFocus();
         disableFocus();
+        hideKeyboard(this);
     }
 
     private void disableFocus() {
@@ -188,5 +311,35 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
 
     public void onSettings(View view) {
         startActivity(new Intent(BarcodeComparisonActivity.this, ApplicationSettingsActivity.class));
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public void openScaanerMaster(View view) {
+        binding.masterEdittextLL.setVisibility(View.GONE);
+        binding.masterSannnerLL.setVisibility(View.VISIBLE);
+        binding.masterbarCodeFromSCET.requestFocus();
+        disableFocus();
+        hideKeyboard(this);
+    }
+
+    public void openKeyboardMaster(View view) {
+        binding.masterEdittextLL.setVisibility(View.VISIBLE);
+        binding.masterSannnerLL.setVisibility(View.GONE);
+        binding.masterBarCodeET.requestFocus();
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+
+    }
+
+    public void backComparison(View view) {
+        onBackPressed();
     }
 }
