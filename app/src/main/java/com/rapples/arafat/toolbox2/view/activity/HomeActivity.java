@@ -56,7 +56,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_home2);
+        binding = DataBindingUtil.setContentView(HomeActivity.this,R.layout.activity_home2);
+
 
 
         init();
@@ -66,9 +67,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
         back_button = (ImageView) findViewById(R.id.back_to_menu_icon);
-        TextView tvBack = (TextView) findViewById(R.id.navigationBack);
         menu_button = (ImageView) findViewById(R.id.menu_image);
-        DrawerLayout drawer = binding.drawerLayout;
+        drawer = binding.drawerLayout;
 //        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 //        if(!drawer.isDrawerOpen(Gravity.START))
 //            drawer.openDrawer(Gravity.START);
@@ -132,7 +132,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.item_language) {
             Log.d("item_language", "onNavigationItemSelected: Item Language");
         } else if (id == R.id.item_about) {
-            Log.d("item_about", "onNavigationItemSelected: Item About");
+            startActivity(new Intent(HomeActivity.this, AboutActivity.class));
         } else if (id == R.id.item_barcode_settings) {
             startActivity(new Intent(HomeActivity.this, BarcodeSettingsActivity.class));
         } else if (id == R.id.item_application_settings) {
