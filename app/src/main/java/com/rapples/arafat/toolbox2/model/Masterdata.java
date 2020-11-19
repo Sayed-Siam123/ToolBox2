@@ -2,38 +2,74 @@ package com.rapples.arafat.toolbox2.model;
 
 import android.graphics.drawable.Icon;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+
+
+@Entity(tableName = "MASTERDATA")
 public class Masterdata {
-    private String title;
-    private String subtitle;
-    private int imgId;
+    @PrimaryKey(autoGenerate = true)
+    int ID;
+    private String BARCODE;
+    private String PROD_DESC;
+    private String PRICE;
+    private int IMAGE_LOCATION;
 
-    public Masterdata(String title, String subtitle, int imgId) {
-        this.title = title;
-        this.subtitle = subtitle;
-        this.imgId = imgId;
+    public Masterdata(int ID, String BARCODE, String PROD_DESC, String PRICE, int IMAGE_LOCATION) {
+        this.ID = ID;
+        this.BARCODE = BARCODE;
+        this.PROD_DESC = PROD_DESC;
+        this.PRICE = PRICE;
+        this.IMAGE_LOCATION = IMAGE_LOCATION;
     }
 
-    public String getTitle() {
-        return title;
+    @Ignore
+    public Masterdata(String BARCODE, String PROD_DESC, String PRICE, int IMAGE_LOCATION) {
+        this.BARCODE = BARCODE;
+        this.PROD_DESC = PROD_DESC;
+        this.PRICE = PRICE;
+        this.IMAGE_LOCATION = IMAGE_LOCATION;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public int getID() {
+        return ID;
     }
 
-    public String getSubtitle() {
-        return subtitle;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
+    public String getBARCODE() {
+        return BARCODE;
     }
 
-    public int getImage() {
-        return imgId;
+    public void setBARCODE(String BARCODE) {
+        this.BARCODE = BARCODE;
     }
 
-    public void setImage(int imgId) {
-        this.imgId = imgId;
+    public String getPROD_DESC() {
+        return PROD_DESC;
+    }
+
+    public void setPROD_DESC(String PROD_DESC) {
+        this.PROD_DESC = PROD_DESC;
+    }
+
+    public String getPRICE() {
+        return PRICE;
+    }
+
+    public void setPRICE(String PRICE) {
+        this.PRICE = PRICE;
+    }
+
+    public int getIMAGE_LOCATION() {
+        return IMAGE_LOCATION;
+    }
+
+    public void setIMAGE_LOCATION(int IMAGE_LOCATION) {
+        this.IMAGE_LOCATION = IMAGE_LOCATION;
     }
 }

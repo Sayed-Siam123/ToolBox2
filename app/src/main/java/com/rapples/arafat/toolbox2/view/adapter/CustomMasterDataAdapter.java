@@ -41,16 +41,16 @@ public class CustomMasterDataAdapter extends RecyclerView.Adapter<CustomMasterDa
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Masterdata masterData = masterDataList.get(position);
 
-        Log.d("TAG", "onBindViewHolder: "+masterData.getImage());
+        Log.d("TAG", "onBindViewHolder: "+masterData.getIMAGE_LOCATION());
 
-        holder.titleTv.setText(masterData.getTitle());
-        holder.subtitleTv.setText(masterData.getSubtitle());
-        holder.imageView.setImageResource(masterData.getImage());
+        holder.titleTv.setText(masterData.getPROD_DESC());
+        holder.subtitleTv.setText(masterData.getBARCODE());
+        holder.imageView.setImageResource(android.R.drawable.ic_dialog_email);
 
         holder.LinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Clicked "+ masterData.getTitle() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Clicked "+ masterData.getPROD_DESC() , Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -71,7 +71,7 @@ public class CustomMasterDataAdapter extends RecyclerView.Adapter<CustomMasterDa
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            titleTv = itemView.findViewById(R.id.title);
+            titleTv = itemView.findViewById(R.id.prod_desc);
             subtitleTv = itemView.findViewById(R.id.barcodeText);
             imageView = itemView.findViewById(R.id.iconImage);
             LinearLayout = itemView.findViewById(R.id.linearLayout);

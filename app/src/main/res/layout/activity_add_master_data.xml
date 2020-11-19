@@ -29,21 +29,12 @@
                         android:onClick="onBack"
                         android:src="@drawable/ic_back_ios" />
 
-                    <ImageView
-                        android:layout_width="47dp"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        android:onClick="onSettings"
-                        android:src="@drawable/search_button_foreground"/>
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:text="Masterdata"
+                        android:text="New Value"
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </RelativeLayout>
@@ -58,16 +49,18 @@
                 android:background="@color/black" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/masterDataRecyclerview"/>
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:text="OK!">
+
+           </TextView>
 
 
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/fabAdd"
             android:layout_alignBottom="@+id/layout"
             android:layout_alignEnd="@+id/layout"
             android:layout_width="wrap_content"

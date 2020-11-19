@@ -26,14 +26,14 @@
                 android:layout_gravity="center">
 
                 <TextView
-                    android:id="@+id/title"
+                    android:id="@+id/prod_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:padding="2dp"
-                    android:text="Medium Text"
+                    android:text="Product Description"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#4d4d4d"
                     android:textStyle="bold" />
@@ -80,7 +80,7 @@
 
                     <TextView
                         android:layout_marginTop="10dp"
-                        android:id="@+id/proceText"
+                        android:id="@+id/priceText"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
