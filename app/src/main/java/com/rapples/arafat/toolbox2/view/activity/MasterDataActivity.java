@@ -13,6 +13,7 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -100,16 +101,15 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
 
             switch (direction) {
                 case ItemTouchHelper.RIGHT:
+                    startActivity(new Intent(MasterDataActivity.this,EditMasterdataActivity.class)
+                            .putExtra("barcode",masterDataList.get(position).getBarcode())
+                            .putExtra("description",masterDataList.get(position).getDescription())
+                            .putExtra("price",masterDataList.get(position).getPrice())
+                            .putExtra("image",masterDataList.get(position).getImage())
+                            .putExtra("id",String.valueOf(masterDataList.get(position).getId()))
 
-                    Snackbar.make(recyclerView, "Edit "+position, Snackbar.LENGTH_LONG)
-                            .setAction("Undo", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
+                    );
 
-                                    Log.d("TAG", "onClick: Edited row position "+position);
-
-                                }
-                            }).show();
 
                     break;
 

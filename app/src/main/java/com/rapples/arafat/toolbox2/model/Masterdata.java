@@ -15,7 +15,7 @@ public class Masterdata {
     private String price;
     private String image;
 
-    @Ignore
+
     public Masterdata(int id, String barcode, String description, String price, String image) {
         this.id = id;
         this.barcode = barcode;
@@ -23,7 +23,7 @@ public class Masterdata {
         this.price = price;
         this.image = image;
     }
-
+    @Ignore
     public Masterdata(String barcode, String description, String price, String image) {
         this.barcode = barcode;
         this.description = description;
