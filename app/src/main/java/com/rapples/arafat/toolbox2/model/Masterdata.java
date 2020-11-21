@@ -1,7 +1,5 @@
 package com.rapples.arafat.toolbox2.model;
 
-import android.graphics.drawable.Icon;
-
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -11,65 +9,65 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "MASTERDATA")
 public class Masterdata {
     @PrimaryKey(autoGenerate = true)
-    int ID;
-    private String BARCODE;
-    private String PROD_DESC;
-    private String PRICE;
-    private int IMAGE_LOCATION;
-
-    public Masterdata(int ID, String BARCODE, String PROD_DESC, String PRICE, int IMAGE_LOCATION) {
-        this.ID = ID;
-        this.BARCODE = BARCODE;
-        this.PROD_DESC = PROD_DESC;
-        this.PRICE = PRICE;
-        this.IMAGE_LOCATION = IMAGE_LOCATION;
-    }
+    int id;
+    private String barcode;
+    private String description;
+    private String price;
+    private String image;
 
     @Ignore
-    public Masterdata(String BARCODE, String PROD_DESC, String PRICE, int IMAGE_LOCATION) {
-        this.BARCODE = BARCODE;
-        this.PROD_DESC = PROD_DESC;
-        this.PRICE = PRICE;
-        this.IMAGE_LOCATION = IMAGE_LOCATION;
+    public Masterdata(int id, String barcode, String description, String price, String image) {
+        this.id = id;
+        this.barcode = barcode;
+        this.description = description;
+        this.price = price;
+        this.image = image;
     }
 
-    public int getID() {
-        return ID;
+    public Masterdata(String barcode, String description, String price, String image) {
+        this.barcode = barcode;
+        this.description = description;
+        this.price = price;
+        this.image = image;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public int getId() {
+        return id;
     }
 
-    public String getBARCODE() {
-        return BARCODE;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setBARCODE(String BARCODE) {
-        this.BARCODE = BARCODE;
+    public String getBarcode() {
+        return barcode;
     }
 
-    public String getPROD_DESC() {
-        return PROD_DESC;
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
-    public void setPROD_DESC(String PROD_DESC) {
-        this.PROD_DESC = PROD_DESC;
+    public String getDescription() {
+        return description;
     }
 
-    public String getPRICE() {
-        return PRICE;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setPRICE(String PRICE) {
-        this.PRICE = PRICE;
+    public String getPrice() {
+        return price;
     }
 
-    public int getIMAGE_LOCATION() {
-        return IMAGE_LOCATION;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public void setIMAGE_LOCATION(int IMAGE_LOCATION) {
-        this.IMAGE_LOCATION = IMAGE_LOCATION;
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

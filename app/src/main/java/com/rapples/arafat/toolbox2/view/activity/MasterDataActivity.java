@@ -16,6 +16,8 @@ import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.rapples.arafat.toolbox2.Database.MasterData_DB;
+import com.rapples.arafat.toolbox2.Database.MasterExecutor;
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityMasterDataBinding;
 import com.rapples.arafat.toolbox2.model.Masterdata;
@@ -32,6 +34,7 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
     private ActivityMasterDataBinding binding;
     List<Masterdata> masterDataList;
     CustomMasterDataAdapter adapter;
+    private MasterData_DB data_db;
     RecyclerView recyclerView;
     FloatingActionButton fab;
 
@@ -51,31 +54,37 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setDataIntoMaster();
+    }
+
     private void setDataIntoMaster() {
 
-        Masterdata[] myListData = new Masterdata[] {
-                new Masterdata("Email", "141012345" ,"100",android.R.drawable.ic_dialog_email),
-                new Masterdata("Info", "141012345" ,"100",android.R.drawable.ic_dialog_info),
-                new Masterdata("Delete", "141012345" ,"100",android.R.drawable.ic_delete),
-                new Masterdata("Dialer", "141012345" ,"100",android.R.drawable.ic_dialog_dialer),
-                new Masterdata("Alert", "141012345" ,"100",android.R.drawable.ic_dialog_alert),
-                new Masterdata("Map", "141012345" ,"100",android.R.drawable.ic_dialog_map),
-                new Masterdata("Email", "141012345" ,"100",android.R.drawable.ic_dialog_email),
-                new Masterdata("Info", "141012345" ,"100",android.R.drawable.ic_dialog_info),
-                new Masterdata("Delete", "141012345" ,"100",android.R.drawable.ic_delete),
-                new Masterdata("Dialer", "141012345" ,"100",android.R.drawable.ic_dialog_dialer),
-                new Masterdata("Alert", "141012345" ,"100",android.R.drawable.ic_dialog_alert),
-                new Masterdata("Map", "141012345" ,"100",android.R.drawable.ic_dialog_map),
-        };
+        MasterExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                masterDataList  =  MasterData_DB.getInstance(getApplicationContext()).MasterdataDao().loadAllData();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView = (RecyclerView) findViewById(R.id.masterDataRecyclerview);
+                        CustomMasterDataAdapter adapter = new CustomMasterDataAdapter(masterDataList,MasterDataActivity.this);
+                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(MasterDataActivity.this));
+                        recyclerView.setAdapter(adapter);
 
-        recyclerView = (RecyclerView) findViewById(R.id.masterDataRecyclerview);
-        CustomMasterDataAdapter adapter = new CustomMasterDataAdapter(Arrays.asList(myListData),this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+                        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+                        itemTouchHelper.attachToRecyclerView(recyclerView);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+                    }
+                });
+            }
+        });
+
+
     }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
