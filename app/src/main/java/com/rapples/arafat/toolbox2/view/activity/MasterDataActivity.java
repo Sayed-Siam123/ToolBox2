@@ -110,16 +110,19 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
 
                                 }
                             }).show();
+
                     break;
 
                     case ItemTouchHelper.LEFT:
-                    Snackbar.make(recyclerView,  "Delete "+position, Snackbar.LENGTH_LONG)
+                    Snackbar.make(recyclerView,  "Delete product", Snackbar.LENGTH_LONG)
                             .setAction("Undo", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Log.d("TAG", "onClick: Deleted row position "+position);
+
                                 }
                             }).show();
+
+                    deleateElement(position);
 
                     break;
             }
@@ -139,6 +142,23 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };
+
+    private void deleateElement(final int position) {
+
+        MasterExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                MasterData_DB.getInstance(getApplicationContext()).MasterdataDao().delete(masterDataList.get(position));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                       setDataIntoMaster();
+                    }
+                });
+            }
+        });
+
+    }
 
     private void init() {
         binding.masterDataRecyclerview.setLayoutManager(new LinearLayoutManager(this));
