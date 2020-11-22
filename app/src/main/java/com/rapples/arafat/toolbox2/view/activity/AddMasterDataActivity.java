@@ -2,14 +2,18 @@ package com.rapples.arafat.toolbox2.view.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -66,7 +70,6 @@ public class AddMasterDataActivity extends AppCompatActivity {
                     binding.barCodeFromSCET.setText(data);
 
 
-
                 }
             }
         }
@@ -78,6 +81,8 @@ public class AddMasterDataActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_masterdata);
 
         init();
+
+        checkIfAlreadyhavePermission();
 
         getSharedPreferencesData();
 
@@ -337,5 +342,14 @@ public class AddMasterDataActivity extends AppCompatActivity {
         disableFocus();
         hideKeyboard(this);
 
+    }
+
+    private void checkIfAlreadyhavePermission() {
+        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+        if (result == PackageManager.PERMISSION_GRANTED) {
+
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE,}, 101);
+        }
     }
 }
