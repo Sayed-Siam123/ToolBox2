@@ -256,6 +256,9 @@ public class AddMasterDataActivity extends AppCompatActivity {
                         image = "";
                         price = "";
                         description = "";
+                        binding.clearCV.setVisibility(View.GONE);
+                        binding.imageView.setVisibility(View.GONE);
+                        binding.pictureLL.setVisibility(View.VISIBLE);
                         if (isScannerOpenTrue) {
                             binding.barCodeFromSCET.setText("");
                             binding.barCodeFromSCET.requestFocus();
