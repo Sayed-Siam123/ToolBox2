@@ -8,11 +8,14 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,11 +36,10 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 public class MasterDataActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ActivityMasterDataBinding binding;
-    List<Masterdata> masterDataList;
-    CustomMasterDataAdapter adapter;
-    private MasterData_DB data_db;
-    RecyclerView recyclerView;
-    FloatingActionButton fab;
+    private List<Masterdata> masterDataList;
+    private RecyclerView recyclerView;
+    private FloatingActionButton fab;
+    private  boolean isScannerOpenTrue = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,5 +178,42 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
 
     public void onBack(View view) {
         onBackPressed();
+    }
+
+    public void openSearchModule(View view) {
+        binding.searchToolBar.setVisibility(View.VISIBLE);
+        binding.defaultToolBar.setVisibility(View.GONE);
+    }
+
+    public void openEditScanner(View view) {
+        binding.edittextLL.setVisibility(View.GONE);
+        binding.sannnerLL.setVisibility(View.VISIBLE);
+        binding.barCodeFromSCET.requestFocus();
+        isScannerOpenTrue = true;
+        disableFocus();
+        hideKeyboard(this);
+    }
+
+    public void openEditableKeyboard(View view) {
+        binding.edittextLL.setVisibility(View.VISIBLE);
+        binding.sannnerLL.setVisibility(View.GONE);
+        binding.barCodeET.requestFocus();
+        isScannerOpenTrue = false;
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    private void disableFocus() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
