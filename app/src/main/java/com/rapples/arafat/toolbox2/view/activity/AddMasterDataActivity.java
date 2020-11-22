@@ -2,14 +2,18 @@ package com.rapples.arafat.toolbox2.view.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -18,8 +22,11 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rapples.arafat.toolbox2.Database.MasterData_DB;
@@ -49,6 +56,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
     private String price;
     private String image;
     private boolean isScannerOpenTrue = true;
+    boolean priceVisibility;
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
         @Override
@@ -66,7 +74,6 @@ public class AddMasterDataActivity extends AppCompatActivity {
                     binding.barCodeFromSCET.setText(data);
 
 
-
                 }
             }
         }
@@ -78,6 +85,8 @@ public class AddMasterDataActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_masterdata);
 
         init();
+
+        checkIfAlreadyhavePermission();
 
         getSharedPreferencesData();
 
@@ -138,7 +147,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
     }
 
     private void getSharedPreferencesData() {
-        boolean priceVisibility = sharedPreferences.getBoolean(SharedPref.MANAGE_PRICES, false);
+        priceVisibility = sharedPreferences.getBoolean(SharedPref.MANAGE_PRICES, false);
         if (priceVisibility) {
             binding.priceLL.setVisibility(View.VISIBLE);
         } else {
@@ -315,6 +324,61 @@ public class AddMasterDataActivity extends AppCompatActivity {
         binding.barCodeFromSCET.requestFocus();
         disableFocus();
         hideKeyboard(this);
+
+        binding.barCodeET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    binding.descriptionEt.requestFocus();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
+        binding.barCodeFromSCET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    binding.descriptionEt.requestFocus();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
+        binding.priceEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    disableFocus();
+                    hideKeyboard(AddMasterDataActivity.this);
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
+        binding.descriptionEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if(priceVisibility){
+                        binding.priceEt.requestFocus();
+                    }else{
+                        disableFocus();
+                        hideKeyboard(AddMasterDataActivity.this);
+                    }
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
     }
 
 
@@ -337,5 +401,14 @@ public class AddMasterDataActivity extends AppCompatActivity {
         disableFocus();
         hideKeyboard(this);
 
+    }
+
+    private void checkIfAlreadyhavePermission() {
+        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+        if (result == PackageManager.PERMISSION_GRANTED) {
+
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE,}, 101);
+        }
     }
 }
