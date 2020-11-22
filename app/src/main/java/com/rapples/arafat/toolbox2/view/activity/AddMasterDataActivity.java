@@ -256,6 +256,9 @@ public class AddMasterDataActivity extends AppCompatActivity {
                         image = "";
                         price = "";
                         description = "";
+                        binding.clearCV.setVisibility(View.GONE);
+                        binding.imageView.setVisibility(View.GONE);
+                        binding.pictureLL.setVisibility(View.VISIBLE);
                         if (isScannerOpenTrue) {
                             binding.barCodeFromSCET.setText("");
                             binding.barCodeFromSCET.requestFocus();
@@ -277,6 +280,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
+
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);

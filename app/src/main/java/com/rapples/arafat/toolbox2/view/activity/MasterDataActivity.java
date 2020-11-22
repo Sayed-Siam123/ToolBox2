@@ -13,9 +13,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,23 +40,24 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
 
     private ActivityMasterDataBinding binding;
     private List<Masterdata> masterDataList;
+    private List<Masterdata> newMasterDataList = new ArrayList<>();
     private RecyclerView recyclerView;
+    private RecyclerView newrecyclerView;
     private FloatingActionButton fab;
     private  boolean isScannerOpenTrue = true;
+    private EditText barCodeET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_master_data);
         fab = findViewById(R.id.fab);
-
+        barCodeET = binding.barCodeET;
         fab.setOnClickListener(this);
-
 
         init();
 
         setDataIntoMaster();
-
 
     }
 
@@ -81,7 +85,30 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
                         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
                         itemTouchHelper.attachToRecyclerView(recyclerView);
 
+                    }
+                });
+            }
+        });
 
+
+    }
+
+    private void setNewDataIntoMaster() {
+
+        MasterExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView = (RecyclerView) findViewById(R.id.masterDataRecyclerview);
+                        CustomMasterDataAdapter adapter = new CustomMasterDataAdapter(newMasterDataList,MasterDataActivity.this);
+                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(MasterDataActivity.this));
+                        recyclerView.setAdapter(adapter);
+
+                        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+                        itemTouchHelper.attachToRecyclerView(recyclerView);
                     }
                 });
             }
@@ -183,6 +210,7 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
     public void openSearchModule(View view) {
         binding.searchToolBar.setVisibility(View.VISIBLE);
         binding.defaultToolBar.setVisibility(View.GONE);
+        search();
     }
 
     public void openEditScanner(View view) {
@@ -216,4 +244,49 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
+    public void search(){
+        barCodeET.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.d("Changed text", "afterTextChanged: "+s.toString()+" count: "+count);
+                newMasterDataList.clear();
+
+                for(Masterdata productListData : masterDataList){
+
+                    if(productListData.getBarcode().toLowerCase().contains(s) || productListData.getDescription().toLowerCase().contains(s)){
+                        newMasterDataList.add(productListData);
+                    }
+
+
+                    if(newMasterDataList.size()==0){
+                        Log.d("status", "onTextChanged: no data found");
+                        setDataIntoMaster();
+                    }else {
+
+                        Log.d("status", "onTextChanged: data found");
+                        for(int i = 0; i<newMasterDataList.size();i++){
+                            Log.d("TAG", "onTextChanged: "+newMasterDataList.get(i).getBarcode());
+                            setNewDataIntoMaster();                        }
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+
 }
