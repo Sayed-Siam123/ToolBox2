@@ -22,8 +22,11 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rapples.arafat.toolbox2.Database.MasterData_DB;
@@ -53,6 +56,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
     private String price;
     private String image;
     private boolean isScannerOpenTrue = true;
+    boolean priceVisibility;
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
         @Override
@@ -143,7 +147,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
     }
 
     private void getSharedPreferencesData() {
-        boolean priceVisibility = sharedPreferences.getBoolean(SharedPref.MANAGE_PRICES, false);
+        priceVisibility = sharedPreferences.getBoolean(SharedPref.MANAGE_PRICES, false);
         if (priceVisibility) {
             binding.priceLL.setVisibility(View.VISIBLE);
         } else {
@@ -320,6 +324,61 @@ public class AddMasterDataActivity extends AppCompatActivity {
         binding.barCodeFromSCET.requestFocus();
         disableFocus();
         hideKeyboard(this);
+
+        binding.barCodeET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    binding.descriptionEt.requestFocus();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
+        binding.barCodeFromSCET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    binding.descriptionEt.requestFocus();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
+        binding.priceEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    disableFocus();
+                    hideKeyboard(AddMasterDataActivity.this);
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
+        binding.descriptionEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if(priceVisibility){
+                        binding.priceEt.requestFocus();
+                    }else{
+                        disableFocus();
+                        hideKeyboard(AddMasterDataActivity.this);
+                    }
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
     }
 
 
