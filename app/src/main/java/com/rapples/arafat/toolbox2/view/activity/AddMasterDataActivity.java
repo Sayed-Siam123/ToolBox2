@@ -61,8 +61,7 @@ public class AddMasterDataActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    protected void onActivityResult(int requestcode, int resultcode,
-                                    Intent imagereturnintent) {
+    protected void onActivityResult(int requestcode, int resultcode, Intent imagereturnintent) {
         super.onActivityResult(requestcode, resultcode, imagereturnintent);
         if(requestcode == Activity.RESULT_OK){
             Log.d("TAG", "onActivityResult: gotit");
