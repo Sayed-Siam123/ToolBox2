@@ -13,19 +13,19 @@ import java.util.List;
 @Dao
 public interface MasterdataDao {
 
-    @Query("SELECT * FROM MASTERDATA ORDER BY ID")
-    List<Masterdata> loadAllPersons();
+    @Query("SELECT * FROM MASTERDATA ORDER BY id")
+    List<Masterdata> loadAllData();
 
     @Insert
-    void insertPerson(Masterdata person);
+    void insertPerson(Masterdata masterdata);
 
     @Update
-    void updatePerson(Masterdata person);
+    void updatePerson(Masterdata masterdata);
 
     @Delete
-    void delete(Masterdata person);
+    void delete(Masterdata masterdata);
 
-    @Query("SELECT * FROM MASTERDATA WHERE ID = :id")
+    @Query("SELECT * FROM MASTERDATA WHERE id = :id")
     Masterdata loadPersonById(int id);
 
 }

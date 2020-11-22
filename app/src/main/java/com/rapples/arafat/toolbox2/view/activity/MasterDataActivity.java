@@ -8,14 +8,20 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.rapples.arafat.toolbox2.Database.MasterData_DB;
+import com.rapples.arafat.toolbox2.Database.MasterExecutor;
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityMasterDataBinding;
 import com.rapples.arafat.toolbox2.model.Masterdata;
@@ -30,10 +36,10 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 public class MasterDataActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ActivityMasterDataBinding binding;
-    List<Masterdata> masterDataList;
-    CustomMasterDataAdapter adapter;
-    RecyclerView recyclerView;
-    FloatingActionButton fab;
+    private List<Masterdata> masterDataList;
+    private RecyclerView recyclerView;
+    private FloatingActionButton fab;
+    private  boolean isScannerOpenTrue = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,31 +57,37 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setDataIntoMaster();
+    }
+
     private void setDataIntoMaster() {
 
-        Masterdata[] myListData = new Masterdata[] {
-                new Masterdata("Email", "141012345" ,"100",android.R.drawable.ic_dialog_email),
-                new Masterdata("Info", "141012345" ,"100",android.R.drawable.ic_dialog_info),
-                new Masterdata("Delete", "141012345" ,"100",android.R.drawable.ic_delete),
-                new Masterdata("Dialer", "141012345" ,"100",android.R.drawable.ic_dialog_dialer),
-                new Masterdata("Alert", "141012345" ,"100",android.R.drawable.ic_dialog_alert),
-                new Masterdata("Map", "141012345" ,"100",android.R.drawable.ic_dialog_map),
-                new Masterdata("Email", "141012345" ,"100",android.R.drawable.ic_dialog_email),
-                new Masterdata("Info", "141012345" ,"100",android.R.drawable.ic_dialog_info),
-                new Masterdata("Delete", "141012345" ,"100",android.R.drawable.ic_delete),
-                new Masterdata("Dialer", "141012345" ,"100",android.R.drawable.ic_dialog_dialer),
-                new Masterdata("Alert", "141012345" ,"100",android.R.drawable.ic_dialog_alert),
-                new Masterdata("Map", "141012345" ,"100",android.R.drawable.ic_dialog_map),
-        };
+        MasterExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                masterDataList  =  MasterData_DB.getInstance(getApplicationContext()).MasterdataDao().loadAllData();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView = (RecyclerView) findViewById(R.id.masterDataRecyclerview);
+                        CustomMasterDataAdapter adapter = new CustomMasterDataAdapter(masterDataList,MasterDataActivity.this);
+                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(MasterDataActivity.this));
+                        recyclerView.setAdapter(adapter);
 
-        recyclerView = (RecyclerView) findViewById(R.id.masterDataRecyclerview);
-        CustomMasterDataAdapter adapter = new CustomMasterDataAdapter(Arrays.asList(myListData),this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+                        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+                        itemTouchHelper.attachToRecyclerView(recyclerView);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+                    }
+                });
+            }
+        });
+
+
     }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -91,26 +103,28 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
 
             switch (direction) {
                 case ItemTouchHelper.RIGHT:
+                    startActivity(new Intent(MasterDataActivity.this,EditMasterdataActivity.class)
+                            .putExtra("barcode",masterDataList.get(position).getBarcode())
+                            .putExtra("description",masterDataList.get(position).getDescription())
+                            .putExtra("price",masterDataList.get(position).getPrice())
+                            .putExtra("image",masterDataList.get(position).getImage())
+                            .putExtra("id",String.valueOf(masterDataList.get(position).getId()))
 
-                    Snackbar.make(recyclerView, "Edit "+position, Snackbar.LENGTH_LONG)
-                            .setAction("Undo", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
+                    );
 
-                                    Log.d("TAG", "onClick: Edited row position "+position);
 
-                                }
-                            }).show();
                     break;
 
                     case ItemTouchHelper.LEFT:
-                    Snackbar.make(recyclerView,  "Delete "+position, Snackbar.LENGTH_LONG)
+                    Snackbar.make(recyclerView,  "Delete product", Snackbar.LENGTH_LONG)
                             .setAction("Undo", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Log.d("TAG", "onClick: Deleted row position "+position);
+
                                 }
                             }).show();
+
+                    deleateElement(position);
 
                     break;
             }
@@ -131,6 +145,23 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
         }
     };
 
+    private void deleateElement(final int position) {
+
+        MasterExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                MasterData_DB.getInstance(getApplicationContext()).MasterdataDao().delete(masterDataList.get(position));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                       setDataIntoMaster();
+                    }
+                });
+            }
+        });
+
+    }
+
     private void init() {
         binding.masterDataRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         masterDataList = new ArrayList<>();
@@ -147,5 +178,42 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
 
     public void onBack(View view) {
         onBackPressed();
+    }
+
+    public void openSearchModule(View view) {
+        binding.searchToolBar.setVisibility(View.VISIBLE);
+        binding.defaultToolBar.setVisibility(View.GONE);
+    }
+
+    public void openEditScanner(View view) {
+        binding.edittextLL.setVisibility(View.GONE);
+        binding.sannnerLL.setVisibility(View.VISIBLE);
+        binding.barCodeFromSCET.requestFocus();
+        isScannerOpenTrue = true;
+        disableFocus();
+        hideKeyboard(this);
+    }
+
+    public void openEditableKeyboard(View view) {
+        binding.edittextLL.setVisibility(View.VISIBLE);
+        binding.sannnerLL.setVisibility(View.GONE);
+        binding.barCodeET.requestFocus();
+        isScannerOpenTrue = false;
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    private void disableFocus() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
