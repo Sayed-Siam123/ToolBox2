@@ -20,32 +20,119 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:onClick="onBack"
-                        android:src="@drawable/ic_back_ios" />
+                    <RelativeLayout
+                        android:id="@+id/defaultToolBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <ImageView
-                        android:layout_width="47dp"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        android:onClick="onSettings"
-                        android:src="@drawable/search_button_foreground"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:onClick="onBack"
+                            android:src="@drawable/ic_back_ios" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:text="Masterdata"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        <ImageView
+                            android:layout_width="47dp"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:onClick="openSearchModule"
+                            android:src="@drawable/search_button_foreground" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:text="Masterdata"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:visibility="gone"
+                        android:id="@+id/searchToolBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:onClick="onBack"
+                            android:src="@drawable/ic_back_ios" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="20dp">
+
+                            <LinearLayout
+                                android:id="@+id/edittextLL"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <EditText
+                                    android:id="@+id/barCodeET"
+                                    android:layout_weight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="25dp"
+                                    android:imeOptions="actionDone"
+                                    android:singleLine="true"
+                                    android:background="@drawable/edit_text_background"
+                                    />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="34dp"
+                                    android:layout_marginRight="10dp"
+                                    android:onClick="openEditScanner"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/ic_bar_code" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:visibility="visible"
+                                android:id="@+id/sannnerLL"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <EditText
+                                    android:id="@+id/barCodeFromSCET"
+                                    android:layout_weight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="25dp"
+                                    android:imeOptions="actionDone"
+                                    android:singleLine="true"
+                                    android:background="@drawable/edit_text_background"
+
+                                    />
+
+                                <ImageView
+                                    android:onClick="openEditableKeyboard"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/ic_tap"/>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+
+                    </RelativeLayout>
                 </RelativeLayout>
 
 
@@ -59,23 +146,23 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/masterDataRecyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/masterDataRecyclerview"/>
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
-            android:layout_alignBottom="@+id/layout"
-            android:layout_alignEnd="@+id/layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/layout"
+            android:layout_alignBottom="@+id/layout"
             android:layout_gravity="end|bottom"
-            android:src="@drawable/ic_baseline_add_24"
+            android:layout_margin="16dp"
             android:contentDescription="submit"
-            android:layout_margin="16dp"/>
+            android:src="@drawable/ic_baseline_add_24" />
 
     </RelativeLayout>
 
