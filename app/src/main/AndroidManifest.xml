@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
 
         android:allowBackup="true"
@@ -20,26 +21,44 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.AboutActivity"></activity>
-        <activity android:name=".view.activity.BarcodeSettingsActivity" />
+        <activity
+            android:name=".view.activity.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.BarcodeSettingsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".backup.BarcodeComparisonBackupActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".view.activity.EditMasterdataActivity"></activity>
-        <activity android:name=".view.activity.AddMasterDataActivity" />
-        <activity android:name=".view.activity.MasterDataActivity" />
-        <activity android:name=".view.activity.CustomFunctionSettingsActivity" />
+        <activity
+            android:name=".view.activity.EditMasterdataActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.AddMasterDataActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.MasterDataActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.CustomFunctionSettingsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.BarcodeComparisonActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".view.activity.HomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".view.activity.ApplicationSettingsActivity" />
+        <activity
+            android:name=".view.activity.ApplicationSettingsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ReaderManagerActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
@@ -49,7 +68,9 @@
                 android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
                 android:resource="@xml/device_filter" />
         </activity>
-        <activity android:name=".view.activity.SplashActivity">
+        <activity
+            android:name=".view.activity.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,6 +84,7 @@
         <activity
             android:name=".view.activity.MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

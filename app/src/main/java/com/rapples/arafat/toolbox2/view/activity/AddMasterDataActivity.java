@@ -38,7 +38,13 @@ import com.rapples.arafat.toolbox2.util.SharedPref;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
+import java.util.StringTokenizer;
+
+import static android.telephony.PhoneNumberUtils.formatNumber;
 
 public class AddMasterDataActivity extends AppCompatActivity {
     private static final String ACTION_BARCODE_DATA = "com.honeywell.sample.action.BARCODE_DATA";
@@ -57,6 +63,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
     private String image;
     private boolean isScannerOpenTrue = true;
     boolean priceVisibility;
+    private String current = "";
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
         @Override
@@ -90,12 +97,63 @@ public class AddMasterDataActivity extends AppCompatActivity {
 
         getSharedPreferencesData();
 
+        addThousandSeparator();
 
         setAutoFocusforbarCodeFormScanner();
 
         setDefaultFocus();
 
 
+    }
+
+    private void addThousandSeparator() {
+        binding.priceEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try
+                {
+                    binding.priceEt.removeTextChangedListener(this);
+                    String value = binding.priceEt.getText().toString();
+
+
+                    if (value != null && !value.equals(""))
+                    {
+
+                        if(value.startsWith(".")){
+                            binding.priceEt.setText("0.");
+                        }
+                        if(value.startsWith("0") && !value.startsWith("0.")){
+                            binding.priceEt.setText("");
+
+                        }
+
+
+                        String str = binding.priceEt.getText().toString().replaceAll(",", "");
+                        if (!value.equals(""))
+                            binding.priceEt.setText(getDecimalFormattedString(str));
+                        binding.priceEt.setSelection(binding.priceEt.getText().toString().length());
+                    }
+                    binding.priceEt.addTextChangedListener(this);
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                    binding.priceEt.addTextChangedListener(this);
+                }
+
+            }
+        });
     }
 
     private void setAutoFocusforbarCodeFormScanner() {
@@ -128,8 +186,10 @@ public class AddMasterDataActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(barcodeDataReceiver);
-        releaseScanner();
+        if(isScannerOpenTrue){
+            unregisterReceiver(barcodeDataReceiver);
+            releaseScanner();
+        }
     }
 
     private void claimScanner() {
@@ -142,8 +202,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
     }
 
     private void releaseScanner() {
-        sendBroadcast(new Intent(ACTION_RELEASE_SCANNER)
-        );
+        sendBroadcast(new Intent(ACTION_RELEASE_SCANNER));
     }
 
     private void getSharedPreferencesData() {
@@ -306,6 +365,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
         binding.sannnerLL.setVisibility(View.GONE);
         binding.barCodeET.requestFocus();
         isScannerOpenTrue = false;
+        unRegisteredScanner();
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
@@ -316,6 +376,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
         binding.sannnerLL.setVisibility(View.VISIBLE);
         binding.barCodeFromSCET.requestFocus();
         isScannerOpenTrue = true;
+        registeredScanner();
         disableFocus();
         hideKeyboard(this);
     }
@@ -411,4 +472,65 @@ public class AddMasterDataActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE,}, 101);
         }
     }
+
+    public static String getDecimalFormattedString(String value)
+    {
+        StringTokenizer lst = new StringTokenizer(value, ".");
+        String str1 = value;
+        String str2 = "";
+        if (lst.countTokens() > 1)
+        {
+            str1 = lst.nextToken();
+            str2 = lst.nextToken();
+        }
+        String str3 = "";
+        int i = 0;
+        int j = -1 + str1.length();
+        if (str1.charAt( -1 + str1.length()) == '.')
+        {
+            j--;
+            str3 = ".";
+        }
+        for (int k = j;; k--)
+        {
+            if (k < 0)
+            {
+                if (str2.length() > 0)
+                    str3 = str3 + "." + str2;
+                return str3;
+            }
+            if (i == 3)
+            {
+                str3 = "," + str3;
+                i = 0;
+            }
+            str3 = str1.charAt(k) + str3;
+            i++;
+        }
+
+    }
+
+    public static String trimCommaOfString(String string) {
+//        String returnString;
+        if(string.contains(",")){
+            return string.replace(",","");}
+        else {
+            return string;
+        }
+
+    }
+
+    public void registeredScanner(){
+        registerReceiver(barcodeDataReceiver, new IntentFilter(ACTION_BARCODE_DATA));
+        claimScanner();
+    }
+
+    public void unRegisteredScanner(){
+        unregisterReceiver(barcodeDataReceiver);
+        releaseScanner();
+
+    }
+
+
+
 }
