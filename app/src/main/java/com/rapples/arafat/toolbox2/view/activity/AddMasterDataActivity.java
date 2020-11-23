@@ -38,7 +38,13 @@ import com.rapples.arafat.toolbox2.util.SharedPref;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
+import java.util.StringTokenizer;
+
+import static android.telephony.PhoneNumberUtils.formatNumber;
 
 public class AddMasterDataActivity extends AppCompatActivity {
     private static final String ACTION_BARCODE_DATA = "com.honeywell.sample.action.BARCODE_DATA";
@@ -57,6 +63,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
     private String image;
     private boolean isScannerOpenTrue = true;
     boolean priceVisibility;
+    private String current = "";
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
         @Override
@@ -90,13 +97,14 @@ public class AddMasterDataActivity extends AppCompatActivity {
 
         getSharedPreferencesData();
 
-
         setAutoFocusforbarCodeFormScanner();
 
         setDefaultFocus();
 
 
     }
+
+
 
     private void setAutoFocusforbarCodeFormScanner() {
 
@@ -128,8 +136,10 @@ public class AddMasterDataActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(barcodeDataReceiver);
-        releaseScanner();
+        if(isScannerOpenTrue){
+            unregisterReceiver(barcodeDataReceiver);
+            releaseScanner();
+        }
     }
 
     private void claimScanner() {
@@ -142,8 +152,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
     }
 
     private void releaseScanner() {
-        sendBroadcast(new Intent(ACTION_RELEASE_SCANNER)
-        );
+        sendBroadcast(new Intent(ACTION_RELEASE_SCANNER));
     }
 
     private void getSharedPreferencesData() {
@@ -306,6 +315,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
         binding.sannnerLL.setVisibility(View.GONE);
         binding.barCodeET.requestFocus();
         isScannerOpenTrue = false;
+        unRegisteredScanner();
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
@@ -316,6 +326,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
         binding.sannnerLL.setVisibility(View.VISIBLE);
         binding.barCodeFromSCET.requestFocus();
         isScannerOpenTrue = true;
+        registeredScanner();
         disableFocus();
         hideKeyboard(this);
     }
@@ -357,6 +368,9 @@ public class AddMasterDataActivity extends AppCompatActivity {
                     disableFocus();
                     hideKeyboard(AddMasterDataActivity.this);
                     handled = true;
+
+                    binding.priceEt.setText(NumberFormat.getNumberInstance(Locale.GERMANY).format(Double.parseDouble(binding.priceEt.getText().toString())));
+
                 }
                 return handled;
             }
@@ -411,4 +425,18 @@ public class AddMasterDataActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE,}, 101);
         }
     }
+
+    public void registeredScanner(){
+        registerReceiver(barcodeDataReceiver, new IntentFilter(ACTION_BARCODE_DATA));
+        claimScanner();
+    }
+
+    public void unRegisteredScanner(){
+        unregisterReceiver(barcodeDataReceiver);
+        releaseScanner();
+
+    }
+
+
+
 }

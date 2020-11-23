@@ -32,6 +32,8 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
     private ActivityBarcodeComparisonBinding binding;
     private String barcode;
     private boolean flag = false;
+    private boolean masterScannerOpen = true;
+    private boolean referScannerOpen = true;
 
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
@@ -228,8 +230,11 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(barcodeDataReceiver);
-        releaseScanner();
+
+        if(masterScannerOpen || referScannerOpen){
+            unregisterReceiver(barcodeDataReceiver);
+            releaseScanner();
+        }
     }
 
     private void claimScanner() {
@@ -272,7 +277,7 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
     private void compareBarcodeForScanner() {
         String code = binding.masterbarCodeFromSCET.getText().toString();
         binding.resultRL.setVisibility(View.VISIBLE);
-        if (binding.barCodeFromSCET.getText().toString().equals(code)) {
+        if(binding.barCodeFromSCET.getText().toString().equals(code)) {
             binding.resultRL.setBackgroundColor(getResources().getColor(R.color.green));
             binding.statusTV.setText("OK");
             binding.resultRL.setVisibility(View.VISIBLE);
@@ -290,9 +295,10 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         binding.edittextLL.setVisibility(View.VISIBLE);
         binding.sannnerLL.setVisibility(View.GONE);
         binding.barCodeET.requestFocus();
+        referScannerOpen = false;
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-
+        checkBrodcastReceiver();
     }
 
     public void openScaaner(View view) {
@@ -300,8 +306,10 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         binding.edittextLL.setVisibility(View.GONE);
         binding.sannnerLL.setVisibility(View.VISIBLE);
         binding.masterbarCodeFromSCET.requestFocus();
+        referScannerOpen = true;
         disableFocus();
         hideKeyboard(this);
+        checkBrodcastReceiver();
     }
 
     private void disableFocus() {
@@ -327,19 +335,42 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         binding.masterSannnerLL.setVisibility(View.VISIBLE);
         binding.masterbarCodeFromSCET.requestFocus();
         disableFocus();
+        masterScannerOpen = true;
         hideKeyboard(this);
+        checkBrodcastReceiver();
     }
 
     public void openKeyboardMaster(View view) {
         binding.masterEdittextLL.setVisibility(View.VISIBLE);
         binding.masterSannnerLL.setVisibility(View.GONE);
         binding.masterBarCodeET.requestFocus();
+        masterScannerOpen = false;
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        checkBrodcastReceiver();
 
     }
 
     public void backComparison(View view) {
         onBackPressed();
+    }
+
+    public void registeredScanner(){
+        registerReceiver(barcodeDataReceiver, new IntentFilter(ACTION_BARCODE_DATA));
+        claimScanner();
+    }
+
+    public void unRegisteredScanner(){
+        unregisterReceiver(barcodeDataReceiver);
+        releaseScanner();
+
+    }
+
+    public void checkBrodcastReceiver(){
+        if(masterScannerOpen || referScannerOpen){
+            registeredScanner();
+        }else{
+            unRegisteredScanner();
+        }
     }
 }
