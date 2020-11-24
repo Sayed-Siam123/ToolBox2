@@ -69,6 +69,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
     boolean priceVisibility;
     private String current = "";
     private List<Masterdata> masterDataList;
+    boolean isFound = false;
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
         @Override
@@ -251,14 +252,22 @@ public class AddMasterDataActivity extends AppCompatActivity {
             Toast.makeText(this, "Enter barcode", Toast.LENGTH_SHORT).show();
         } else if (description.isEmpty()) {
             Toast.makeText(this, "Enter description", Toast.LENGTH_SHORT).show();
-        } else {
-            checkValidity();
+        } else if(isFound){
+            Toast.makeText(this, "Barcode already exists", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            saveDataIntoroom();
         }
 
 
     }
 
     private void checkValidity() {
+        if(isScannerOpenTrue){
+            barcode = binding.barCodeFromSCET.getText().toString();
+        }else{
+            barcode = binding.barCodeET.getText().toString();
+        }
 
 
         MasterExecutor.getInstance().diskIO().execute(new Runnable() {
@@ -268,18 +277,22 @@ public class AddMasterDataActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        boolean isFound = false;
+                        isFound = false;
                         for (Masterdata data : masterDataList) {
                             if (data.getBarcode().equals(barcode)) {
                                 Toast.makeText(AddMasterDataActivity.this, "Barcode already exists", Toast.LENGTH_SHORT).show();
                                 isFound = true;
 
                                 if (isScannerOpenTrue) {
+                                    binding.descriptionEt.requestFocus();
                                     binding.barCodeFromSCET.setSelectAllOnFocus(true);
                                     binding.barCodeFromSCET.requestFocus();
+                                    binding.barCodeFromSCET.setSelectAllOnFocus(true);
                                 } else {
+                                    binding.descriptionEt.requestFocus();
                                     binding.barCodeET.setSelectAllOnFocus(true);
                                     binding.barCodeET.requestFocus();
+                                    binding.barCodeET.setSelectAllOnFocus(true);
                                     InputMethodManager imm = (InputMethodManager) getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
                                     imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
                                 }
@@ -287,7 +300,8 @@ public class AddMasterDataActivity extends AppCompatActivity {
                             }
                         }
                         if (!isFound) {
-                            saveDataIntoroom();
+                            binding.descriptionEt.requestFocus();
+
                         }
 
 
@@ -384,7 +398,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    binding.descriptionEt.requestFocus();
+                    checkValidity();
                     handled = true;
                 }
                 return handled;
@@ -396,7 +410,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    binding.descriptionEt.requestFocus();
+                    checkValidity();
                     handled = true;
                 }
                 return handled;
@@ -439,27 +453,6 @@ public class AddMasterDataActivity extends AppCompatActivity {
 
     }
 
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        if (isScannerOpenTrue) {
-            barcode = binding.barCodeFromSCET.getText().toString();
-        } else {
-            barcode = binding.barCodeET.getText().toString();
-        }
-        description = binding.descriptionEt.getText().toString();
-        price = binding.priceEt.getText().toString();
-
-
-        if (!barcode.isEmpty() && !description.isEmpty()) {
-            checkValidity();
-        }
-        disableFocus();
-        hideKeyboard(this);
-
-    }
 
     private void checkIfAlreadyhavePermission() {
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
