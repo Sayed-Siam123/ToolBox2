@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.Activity;
@@ -35,6 +38,7 @@ import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityAddMasterdataBinding;
 import com.rapples.arafat.toolbox2.model.Masterdata;
 import com.rapples.arafat.toolbox2.util.SharedPref;
+import com.rapples.arafat.toolbox2.view.adapter.CustomMasterDataAdapter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -64,6 +68,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
     private boolean isScannerOpenTrue = true;
     boolean priceVisibility;
     private String current = "";
+    private List<Masterdata> masterDataList;
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
         @Override
@@ -105,7 +110,6 @@ public class AddMasterDataActivity extends AppCompatActivity {
     }
 
 
-
     private void setAutoFocusforbarCodeFormScanner() {
 
         binding.barCodeFromSCET.addTextChangedListener(new TextWatcher() {
@@ -136,7 +140,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if(isScannerOpenTrue){
+        if (isScannerOpenTrue) {
             unregisterReceiver(barcodeDataReceiver);
             releaseScanner();
         }
@@ -248,10 +252,49 @@ public class AddMasterDataActivity extends AppCompatActivity {
         } else if (description.isEmpty()) {
             Toast.makeText(this, "Enter description", Toast.LENGTH_SHORT).show();
         } else {
-            saveDataIntoroom();
+            checkValidity();
         }
 
 
+    }
+
+    private void checkValidity() {
+
+
+        MasterExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                masterDataList = MasterData_DB.getInstance(getApplicationContext()).MasterdataDao().loadAllData();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        boolean isFound = false;
+                        for (Masterdata data : masterDataList) {
+                            if (data.getBarcode().equals(barcode)) {
+                                Toast.makeText(AddMasterDataActivity.this, "Barcode already exists", Toast.LENGTH_SHORT).show();
+                                isFound = true;
+
+                                if (isScannerOpenTrue) {
+                                    binding.barCodeFromSCET.setSelectAllOnFocus(true);
+                                    binding.barCodeFromSCET.requestFocus();
+                                } else {
+                                    binding.barCodeET.setSelectAllOnFocus(true);
+                                    binding.barCodeET.requestFocus();
+                                    InputMethodManager imm = (InputMethodManager) getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                                }
+
+                            }
+                        }
+                        if (!isFound) {
+                            saveDataIntoroom();
+                        }
+
+
+                    }
+                });
+            }
+        });
     }
 
     private void saveDataIntoroom() {
@@ -369,8 +412,9 @@ public class AddMasterDataActivity extends AppCompatActivity {
                     hideKeyboard(AddMasterDataActivity.this);
                     handled = true;
 
-                    binding.priceEt.setText(NumberFormat.getNumberInstance(Locale.GERMANY).format(Double.parseDouble(binding.priceEt.getText().toString())));
-
+                    if (binding.priceEt.getText().toString() != null && !binding.priceEt.getText().toString().equals("")) {
+                        binding.priceEt.setText(NumberFormat.getNumberInstance(Locale.GERMANY).format(Double.parseDouble(binding.priceEt.getText().toString())));
+                    }
                 }
                 return handled;
             }
@@ -381,9 +425,9 @@ public class AddMasterDataActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    if(priceVisibility){
+                    if (priceVisibility) {
                         binding.priceEt.requestFocus();
-                    }else{
+                    } else {
                         disableFocus();
                         hideKeyboard(AddMasterDataActivity.this);
                     }
@@ -410,7 +454,7 @@ public class AddMasterDataActivity extends AppCompatActivity {
 
 
         if (!barcode.isEmpty() && !description.isEmpty()) {
-            saveDataIntoroom();
+            checkValidity();
         }
         disableFocus();
         hideKeyboard(this);
@@ -426,17 +470,16 @@ public class AddMasterDataActivity extends AppCompatActivity {
         }
     }
 
-    public void registeredScanner(){
+    public void registeredScanner() {
         registerReceiver(barcodeDataReceiver, new IntentFilter(ACTION_BARCODE_DATA));
         claimScanner();
     }
 
-    public void unRegisteredScanner(){
+    public void unRegisteredScanner() {
         unregisterReceiver(barcodeDataReceiver);
         releaseScanner();
 
     }
-
 
 
 }
