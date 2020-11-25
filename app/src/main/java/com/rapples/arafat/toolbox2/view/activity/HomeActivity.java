@@ -64,15 +64,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(HomeActivity.this,R.layout.activity_home2);
-
-
-
         init();
-
-
         checkFunction();
-
-
         back_button = (ImageView) findViewById(R.id.back_to_menu_icon);
         menu_button = (ImageView) findViewById(R.id.menu_image);
         drawer = binding.drawerLayout;

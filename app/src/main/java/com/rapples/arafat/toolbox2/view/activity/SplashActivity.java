@@ -6,8 +6,10 @@ import androidx.databinding.DataBindingUtil;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.content.Context;
+import android.util.Log;
 
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivitySplashBinding;
@@ -60,12 +62,25 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void createDirectory() {
-        File mydir = this.getDir("Sample Folder", Context.MODE_PRIVATE); //Creating an internal dir;
+        File mydir = this.getDir("toolbox_directory", Context.MODE_PRIVATE); //Creating an internal dir;
+
+        //creating folder in external storage
+        File f = new File(Environment.getExternalStorageDirectory(), "ToolBox");
+        Log.e("External Dir", f.toString());
+        if (!f.exists()) {
+            Log.e("External Created", f.toString());
+            f.mkdirs();
+
+        }
+
+        Log.e("File dir", mydir.toString());
         File fileWithinMyDir = new File(mydir, "test"); //Getting a file within the dir.
         try {
             FileOutputStream out = new FileOutputStream(fileWithinMyDir); //Use the stream as usual to write into the file.
+            Log.e("Dir create", out.toString());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            Log.e("Dir faild", e.toString());
         }
 
     }
