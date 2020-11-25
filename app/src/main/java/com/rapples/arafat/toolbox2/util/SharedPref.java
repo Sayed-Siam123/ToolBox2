@@ -23,6 +23,11 @@ public class SharedPref {
     public static final String EAN_13 ="ean13";
     public static final String DATA_MATRIX ="dataMatrix";
     public static final String QR_CODE ="qrCode";
+    public static final String DATA_ACQUISITION_FUNCTION ="dataAcquisitionFunction";
+    public static final String QUANTITY_FIELD ="quantityField";
+    public static final String ALLOW_DUPLICATE_CODES ="allowDuplicateCodes";
+
+
 
 
 
