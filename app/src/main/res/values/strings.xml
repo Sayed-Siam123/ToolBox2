@@ -52,5 +52,9 @@
     <string name="field_1">Field 1</string>
     <string name="fieldtype">Fieldtype:</string>
     <string name="fieldname">Fieldname:</string>
+    <string name="quantity_field">Quantity field</string>
+    <string name="allow_duplicate_codes">Allow duplicate codes</string>
+    <string name="separator">Separator:</string>
+    <string name="file_format">File format:</string>
 
 </resources>
