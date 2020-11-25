@@ -47,7 +47,7 @@
                                         android:layout_marginLeft="10dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Barcode Comparison"
+                                        android:text="@string/barcode_comparison"
                                         android:textStyle="bold"
                                         android:textSize="17dp"
                                         android:textColor="@color/black">
@@ -58,7 +58,7 @@
                                         android:layout_marginLeft="10dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Comparison of barcode contents"
+                                        android:text="@string/comparison_of_barcode_contents"
                                         android:textStyle="normal"
                                         android:textSize="10dp"
                                         android:textColor="@color/black">
@@ -102,7 +102,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Data Acquisition"
+                        android:text="@string/data_acquisition"
                         android:textStyle="bold"
                         android:textSize="17dp"
                         android:textColor="@color/black">
@@ -113,7 +113,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Save barcode data in CSV"
+                        android:text="@string/save_barcode_data_in_csv"
                         android:textStyle="normal"
                         android:textSize="10dp"
                         android:textColor="@color/black">
@@ -158,7 +158,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Label Printing"
+                        android:text="@string/label_printing"
                         android:textStyle="bold"
                         android:textSize="17dp"
                         android:textColor="@color/black">
@@ -169,7 +169,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Print barcodelabel"
+                        android:text="@string/print_barcodelabel"
                         android:textStyle="normal"
                         android:textSize="10dp"
                         android:textColor="@color/black">
@@ -215,7 +215,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Custom Function"
+                        android:text="@string/custom_function"
                         android:textStyle="bold"
                         android:textSize="17dp"
                         android:textColor="@color/black">
@@ -227,7 +227,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Custom Settings"
+                        android:text="@string/custom_settings"
                         android:textStyle="normal"
                         android:textSize="10dp"
                         android:textColor="@color/black">

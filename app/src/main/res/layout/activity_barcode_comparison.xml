@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:text="Barcode comparison"
+                    android:text="@string/barcode_comparison"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
                     android:layout_marginLeft="10dp"
-                    android:text="Scan Mastercode:" />
+                    android:text="@string/scan_mastercode" />
 
                 <RelativeLayout
                     android:layout_weight="0.6"
@@ -196,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
                     android:layout_marginLeft="10dp"
-                    android:text="Scan Barcode:" />
+                    android:text="@string/scan_barcode" />
 
                 <RelativeLayout
                     android:layout_weight="0.6"

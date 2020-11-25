@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Company information"
+            android:text="@string/company_information"
             android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="0.4"
-                android:text="NAME"
+                android:text="@string/name"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="0.4"
-                android:text="STREET"
+                android:text="@string/street"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="0.4"
-                android:text="ZIP CITY"
+                android:text="@string/zip_city"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -150,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="0.4"
-                android:text="COUNTRY"
+                android:text="@string/country"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -176,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="0.4"
-                android:text="PHONE"
+                android:text="@string/phone"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -202,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="0.4"
-                android:text="MAIL"
+                android:text="@string/mail"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -228,7 +228,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="App Information"
+            android:text="@string/app_information"
             android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -245,7 +245,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="0.4"
-                android:text="Version:"
+                android:text="@string/version"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -254,7 +254,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="0.4"
-                android:text="V1.002"
+                android:text="V1.003"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -271,7 +271,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="0.4"
-                android:text="Date:"
+                android:text="@string/date"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 

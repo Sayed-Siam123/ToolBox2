@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:text="Application settings"
+                    android:text="@string/application_settings"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Barcode Information"
+                android:text="@string/barcode_information"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:text="Funtion is active"
+                    android:text="@string/function_is_active"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:text="Show Description"
+                    android:text="@string/show_description"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -117,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:text="Show Prices"
+                    android:text="@string/show_prices"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -140,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:text="Show Pictures"
+                    android:text="@string/show_pictures"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -163,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:text="Show barcode type"
+                    android:text="@string/show_barcode_type"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -186,7 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:text="Show number of digits"
+                    android:text="@string/show_number_of_digits"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -210,7 +210,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Barcode comparison"
+                android:text="@string/barcode_comparison"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -227,7 +227,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:text="Funtion is active"
+                    android:text="@string/function_is_active"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -249,7 +249,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Master Data"
+                android:text="@string/master_data"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -266,7 +266,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:text="Manage Prices"
+                    android:text="@string/manage_prices"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
