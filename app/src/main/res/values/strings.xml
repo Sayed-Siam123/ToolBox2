@@ -56,5 +56,10 @@
     <string name="allow_duplicate_codes">Allow duplicate codes</string>
     <string name="separator">Separator:</string>
     <string name="file_format">File format:</string>
+    <string name="enter_filename">Enter filename:</string>
+    <string name="filename">Filename:</string>
+    <string name="counter">Counter</string>
+    <string name="last_barcode">Last Barcode:</string>
+    <string name="list">List:</string>
 
 </resources>

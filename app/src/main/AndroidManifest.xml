@@ -20,7 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.DataAcquisitionActivity"></activity>
+        <activity android:name=".view.activity.AddDataAcquisitionActivity"></activity>
+        <activity android:name=".view.activity.DataAcqusitionFileNameActivity" />
+        <activity android:name=".view.activity.DataAcquisitionActivity" />
         <activity
             android:name=".view.activity.AboutActivity"
             android:screenOrientation="portrait" />

@@ -70,6 +70,8 @@
             </LinearLayout>
 
             <LinearLayout
+                android:onClick="openDataAcquisition"
+                android:id="@+id/dataAcquisitionLL"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:orientation="horizontal"

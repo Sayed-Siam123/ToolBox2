@@ -26,6 +26,8 @@ public class SharedPref {
     public static final String DATA_ACQUISITION_FUNCTION ="dataAcquisitionFunction";
     public static final String QUANTITY_FIELD ="quantityField";
     public static final String ALLOW_DUPLICATE_CODES ="allowDuplicateCodes";
+    public static final String FILE_NAME ="fileName";
+
 
 
 
