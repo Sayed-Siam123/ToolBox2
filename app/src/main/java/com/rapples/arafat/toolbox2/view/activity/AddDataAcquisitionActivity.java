@@ -4,17 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rapples.arafat.toolbox2.Database.Acquisition_DB;
 import com.rapples.arafat.toolbox2.Database.MasterExecutor;
@@ -42,6 +47,7 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
     private CustomDataAcquisitionAdapter adapter;
     private List<Product> productList;
     private String fileName;
+
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
         @Override
@@ -82,6 +88,7 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
 
     }
 
+
     private void init() {
         productList = new ArrayList<>();
     }
@@ -118,6 +125,23 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
                     handled = true;
                 }
                 return handled;
+            }
+        });
+
+        binding.barCodeFromSCET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                productList.add(new Product(fileName,binding.barCodeFromSCET.getText().toString(), ""));
+                binding.lastBarLL.setVisibility(View.VISIBLE);
+                configproductList();
+                saveIntoDb(fileName,binding.barCodeFromSCET.getText().toString());
+                binding.barCodeFromSCET.setText("");
+
             }
         });
     }
