@@ -13,8 +13,13 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import com.rapples.arafat.toolbox2.Database.Acquisition_DB;
+import com.rapples.arafat.toolbox2.Database.MasterData_DB;
+import com.rapples.arafat.toolbox2.Database.MasterExecutor;
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityDataAcqusitionFileNameBinding;
+import com.rapples.arafat.toolbox2.model.DataAcquisition;
+import com.rapples.arafat.toolbox2.model.Masterdata;
 import com.rapples.arafat.toolbox2.util.SharedPref;
 
 public class DataAcqusitionFileNameActivity extends AppCompatActivity {
@@ -24,7 +29,7 @@ public class DataAcqusitionFileNameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_data_acqusition_file_name);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_data_acqusition_file_name);
 
         focusFileName();
 
@@ -38,16 +43,36 @@ public class DataAcqusitionFileNameActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if (!binding.fileNameEt.getText().toString().isEmpty()) {
 
-                    if(!binding.fileNameEt.getText().toString().isEmpty()){
-                        startActivity(new Intent(DataAcqusitionFileNameActivity.this,AddDataAcquisitionActivity.class)
-                                .putExtra(SharedPref.FILE_NAME,binding.fileNameEt.getText().toString()));
+                        saveFileNameRoomDb(binding.fileNameEt.getText().toString());
+
                     }
                     handled = true;
                 }
                 return handled;
             }
         });
+    }
+
+    private void saveFileNameRoomDb(final String filename) {
+        final DataAcquisition dataAcquisition = new DataAcquisition(filename, "26.11.2020");
+
+        MasterExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                Acquisition_DB.getInstance(getApplicationContext()).AcquisitionDao().insertAcquisitionData(dataAcquisition);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(DataAcqusitionFileNameActivity.this, AddDataAcquisitionActivity.class)
+                                .putExtra(SharedPref.FILE_NAME, filename));
+                    }
+                });
+            }
+        });
+
+
     }
 
     private void focusFileName() {
@@ -57,7 +82,7 @@ public class DataAcqusitionFileNameActivity extends AppCompatActivity {
     }
 
     public void onSettingsFromDataAcquisition(View view) {
-        startActivity(new Intent(DataAcqusitionFileNameActivity.this,ApplicationSettingsActivity.class));
+        startActivity(new Intent(DataAcqusitionFileNameActivity.this, ApplicationSettingsActivity.class));
     }
 
     public void onBackDataAcquisitionFileName(View view) {

@@ -7,10 +7,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.rapples.arafat.toolbox2.Database.Acquisition_DB;
+import com.rapples.arafat.toolbox2.Database.MasterExecutor;
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.model.Product;
+import com.rapples.arafat.toolbox2.view.activity.DataAcquisitionActivity;
 
 import java.util.List;
 
@@ -27,7 +31,7 @@ public class CustomDataAcquisitionAdapter extends RecyclerView.Adapter<CustomDat
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.model_data_acquisition_design,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.model_data_acquisition_product_design,parent,false);
         return new ViewHolder(view);
     }
 
@@ -37,6 +41,8 @@ public class CustomDataAcquisitionAdapter extends RecyclerView.Adapter<CustomDat
         Product product = productList.get(position);
         holder.barcode.setText(product.getBarcode());
         holder.description.setText(product.getDescription());
+
+
 
     }
 

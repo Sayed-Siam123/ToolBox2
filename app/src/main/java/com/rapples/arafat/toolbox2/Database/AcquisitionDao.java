@@ -11,20 +11,20 @@ import java.util.List;
 
 @Dao
 public interface AcquisitionDao {
-//
-//    @Query("SELECT * FROM DataAcquisition ORDER BY id")
-//    List<DataAcquisition> loadAllData();
-//
-//    @Insert
-//    void insertPerson(DataAcquisition dataAcquisition);
-//
-//    @Update
-//    void updatePerson(DataAcquisition dataAcquisition);
-//
-//    @Delete
-//    void delete(DataAcquisition dataAcquisition);
-//
-//    @Query("SELECT * FROM DataAcquisition WHERE id = :id")
-//    DataAcquisition loadPersonById(int id);
+
+    @Query("SELECT * FROM DATAACQUISITION ORDER BY id")
+    List<DataAcquisition> loadAllData();
+
+    @Insert
+    void insertAcquisitionData(DataAcquisition dataAcquisition);
+
+    @Update
+    void updateAcquisitionData(DataAcquisition dataAcquisition);
+
+    @Delete
+    void deleteAcquisitionData(DataAcquisition dataAcquisition);
+
+    @Query("SELECT * FROM DATAACQUISITION WHERE id = :id")
+    DataAcquisition loadAcquisitionDataById(int id);
 
 }

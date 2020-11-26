@@ -3,9 +3,6 @@ package com.rapples.arafat.toolbox2.model;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
-
-
 @Entity(tableName = "MASTERDATA")
 public class Masterdata {
     @PrimaryKey(autoGenerate = true)

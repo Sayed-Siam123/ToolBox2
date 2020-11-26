@@ -5,27 +5,23 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.List;
-//@Entity(tableName = "DataAcquisition")
+@Entity(tableName = "DATAACQUISITION")
 public class DataAcquisition {
     @PrimaryKey(autoGenerate = true)
-    int id;
-    String fileName;
-    String date;
-    List<Product> productList;
+    public int id;
+    private String fileName;
+    private String date;
 
 
-    public DataAcquisition(String fileName, String date, List<Product> productList) {
+    public DataAcquisition(String fileName, String date) {
         this.fileName = fileName;
         this.date = date;
-        this.productList = productList;
     }
-
-//    @Ignore
-    public DataAcquisition(int id, String fileName, String date, List<Product> productList) {
+    @Ignore
+    public DataAcquisition(int id, String fileName, String date) {
         this.id = id;
         this.fileName = fileName;
         this.date = date;
-        this.productList = productList;
     }
 
     public String getFileName() {
@@ -44,11 +40,4 @@ public class DataAcquisition {
         this.date = date;
     }
 
-    public List<Product> getProductList() {
-        return productList;
-    }
-
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
 }

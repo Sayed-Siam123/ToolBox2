@@ -8,9 +8,11 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.rapples.arafat.toolbox2.model.DataAcquisition;
 import com.rapples.arafat.toolbox2.model.Masterdata;
+import com.rapples.arafat.toolbox2.model.Product;
 
-@Database(entities = {Masterdata.class}, version = 1, exportSchema = false)
+@Database(entities = {DataAcquisition.class, Product.class}, version = 1, exportSchema = false)
 public abstract class Acquisition_DB extends RoomDatabase {
 
     private static final String LOG_TAG = Acquisition_DB.class.getSimpleName();
@@ -31,4 +33,6 @@ public abstract class Acquisition_DB extends RoomDatabase {
     }
 
     public abstract AcquisitionDao AcquisitionDao();
+
+    public abstract ProductDao ProductDao();
 }

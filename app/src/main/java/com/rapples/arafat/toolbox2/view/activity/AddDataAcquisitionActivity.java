@@ -16,8 +16,11 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import com.rapples.arafat.toolbox2.Database.Acquisition_DB;
+import com.rapples.arafat.toolbox2.Database.MasterExecutor;
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityAddDataAcquisitionBinding;
+import com.rapples.arafat.toolbox2.model.DataAcquisition;
 import com.rapples.arafat.toolbox2.model.Product;
 import com.rapples.arafat.toolbox2.util.SharedPref;
 import com.rapples.arafat.toolbox2.view.adapter.CustomDataAcquisitionAdapter;
@@ -38,6 +41,7 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
     private boolean isScannerOpen = true;
     private CustomDataAcquisitionAdapter adapter;
     private List<Product> productList;
+    private String fileName;
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
         @Override
@@ -103,16 +107,33 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     if (!binding.barCodeET.getText().toString().isEmpty()) {
-                        productList.add(new Product(binding.barCodeET.getText().toString(), ""));
+                        productList.add(new Product(fileName,binding.barCodeET.getText().toString(), ""));
                         binding.lastBarLL.setVisibility(View.VISIBLE);
                         configproductList();
                         binding.barCodeET.setText("");
-
+                        saveIntoDb(fileName,binding.barCodeET.getText().toString());
                     }
 
                     handled = true;
                 }
                 return handled;
+            }
+        });
+    }
+
+    private void saveIntoDb(String fileName, String barcode) {
+        final Product product = new Product(fileName,barcode, "");
+
+        MasterExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                Acquisition_DB.getInstance(getApplicationContext()).ProductDao().insertProduct(product);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
             }
         });
     }
@@ -155,7 +176,9 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
     }
 
     private void getFileName() {
-        binding.fileNameTv.setText(getIntent().getStringExtra(SharedPref.FILE_NAME));
+
+        fileName = getIntent().getStringExtra(SharedPref.FILE_NAME);
+        binding.fileNameTv.setText(fileName);
     }
 
     public void onBackDataAcquisitionAdd(View view) {
