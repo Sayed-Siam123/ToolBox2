@@ -22,6 +22,9 @@ import com.rapples.arafat.toolbox2.model.DataAcquisition;
 import com.rapples.arafat.toolbox2.model.Masterdata;
 import com.rapples.arafat.toolbox2.util.SharedPref;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class DataAcqusitionFileNameActivity extends AppCompatActivity {
 
     private ActivityDataAcqusitionFileNameBinding binding;
@@ -56,7 +59,9 @@ public class DataAcqusitionFileNameActivity extends AppCompatActivity {
     }
 
     private void saveFileNameRoomDb(final String filename) {
-        final DataAcquisition dataAcquisition = new DataAcquisition(filename, "26.11.2020");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        String currentDateandTime = sdf.format(new Date());
+        final DataAcquisition dataAcquisition = new DataAcquisition(filename, currentDateandTime);
 
         MasterExecutor.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -67,6 +72,7 @@ public class DataAcqusitionFileNameActivity extends AppCompatActivity {
                     public void run() {
                         startActivity(new Intent(DataAcqusitionFileNameActivity.this, AddDataAcquisitionActivity.class)
                                 .putExtra(SharedPref.FILE_NAME, filename));
+                        finish();
                     }
                 });
             }

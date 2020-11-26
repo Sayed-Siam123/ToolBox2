@@ -1,15 +1,20 @@
 package com.rapples.arafat.toolbox2.view.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.rapples.arafat.toolbox2.Database.Acquisition_DB;
 import com.rapples.arafat.toolbox2.Database.MasterData_DB;
 import com.rapples.arafat.toolbox2.Database.MasterExecutor;
@@ -20,6 +25,8 @@ import com.rapples.arafat.toolbox2.view.adapter.CustomFileAdapter;
 import com.rapples.arafat.toolbox2.view.adapter.CustomMasterDataAdapter;
 
 import java.util.List;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class DataAcquisitionActivity extends AppCompatActivity {
 
@@ -53,6 +60,8 @@ public class DataAcquisitionActivity extends AppCompatActivity {
                         adapter = new CustomFileAdapter(dataAcquisitionList,DataAcquisitionActivity.this);
                         binding.dataAcusitionRecyclearView.setAdapter(adapter);
 
+                        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+                        itemTouchHelper.attachToRecyclerView(binding.dataAcusitionRecyclearView);
 
                     }
                 });
@@ -72,4 +81,71 @@ public class DataAcquisitionActivity extends AppCompatActivity {
     public void addDList(View view) {
         startActivity(new Intent(DataAcquisitionActivity.this,DataAcqusitionFileNameActivity.class));
     }
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return true;
+        }
+
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            final int position = viewHolder.getAdapterPosition();
+
+            switch (direction) {
+                case ItemTouchHelper.RIGHT:
+
+
+
+                    break;
+
+                case ItemTouchHelper.LEFT:
+                    getFileFromRoom();
+                    Snackbar.make(binding.dataAcusitionRecyclearView, "Do you want to delete this product?", Snackbar.LENGTH_LONG)
+                            .setAction("Yes", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    deleteItem(position);
+                                }
+                            }).setActionTextColor(getResources().getColor(R.color.white)).show();
+
+
+                    break;
+            }
+
+        }
+
+        @Override
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            new RecyclerViewSwipeDecorator.Builder(DataAcquisitionActivity.this, c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addSwipeRightBackgroundColor(ContextCompat.getColor(DataAcquisitionActivity.this, R.color.green))
+                    .addSwipeRightActionIcon(R.drawable.ic_baseline_edit_24)
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(DataAcquisitionActivity.this, R.color.red))
+                    .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
+                    .setActionIconTint(ContextCompat.getColor(recyclerView.getContext(), android.R.color.white))
+                    .create()
+                    .decorate();
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        }
+    };
+
+    private void deleteItem(final int position) {
+        MasterExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                Acquisition_DB.getInstance(getApplicationContext()).AcquisitionDao().deleteAcquisitionData(dataAcquisitionList.get(position));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getFileFromRoom();
+
+
+                    }
+                });
+            }
+        });
+    }
+
 }
