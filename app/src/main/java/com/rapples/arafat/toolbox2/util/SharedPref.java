@@ -28,6 +28,8 @@ public class SharedPref {
     public static final String ALLOW_DUPLICATE_CODES ="allowDuplicateCodes";
     public static final String FILE_NAME ="fileName";
     public static final String DATE ="date";
+    public static final String ID ="id";
+
 
 
 

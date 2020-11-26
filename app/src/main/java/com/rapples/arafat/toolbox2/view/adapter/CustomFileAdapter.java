@@ -63,7 +63,8 @@ public class CustomFileAdapter extends RecyclerView.Adapter<CustomFileAdapter.Vi
             public void onClick(View v) {
                 context.startActivity(new Intent(context, DataAcquisitionDetailsActivity.class)
                         .putExtra(SharedPref.FILE_NAME, dataAcquisition.getFileName())
-                        .putExtra(SharedPref.DATE, dataAcquisition.getDate()));
+                        .putExtra(SharedPref.DATE, dataAcquisition.getDate())
+                        .putExtra(SharedPref.ID,String.valueOf(dataAcquisition.id))   );
 
             }
         });
