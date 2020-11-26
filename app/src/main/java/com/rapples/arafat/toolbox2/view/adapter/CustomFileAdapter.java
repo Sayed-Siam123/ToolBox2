@@ -3,6 +3,7 @@ package com.rapples.arafat.toolbox2.view.adapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
@@ -21,6 +22,8 @@ import com.rapples.arafat.toolbox2.Database.MasterExecutor;
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.model.DataAcquisition;
 import com.rapples.arafat.toolbox2.model.Product;
+import com.rapples.arafat.toolbox2.util.SharedPref;
+import com.rapples.arafat.toolbox2.view.activity.DataAcquisitionDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,9 +55,18 @@ public class CustomFileAdapter extends RecyclerView.Adapter<CustomFileAdapter.Vi
 
         holder.fileNameTv.setText(dataAcquisition.getFileName());
         holder.dateTv.setText(dataAcquisition.getDate());
-        holder.iconTv.setText("" + dataAcquisition.getFileName().charAt(0)+"F");
+        holder.iconTv.setText("" + dataAcquisition.getFileName().charAt(0) + "F");
         setValueCount(holder, dataAcquisition.getFileName());
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, DataAcquisitionDetailsActivity.class)
+                        .putExtra(SharedPref.FILE_NAME, dataAcquisition.getFileName())
+                        .putExtra(SharedPref.DATE, dataAcquisition.getDate()));
+
+            }
+        });
     }
 
     private void setValueCount(final ViewHolder holder, final String fileName) {

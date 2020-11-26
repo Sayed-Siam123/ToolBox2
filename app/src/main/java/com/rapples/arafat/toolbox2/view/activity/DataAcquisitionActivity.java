@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -21,9 +22,12 @@ import com.rapples.arafat.toolbox2.Database.MasterExecutor;
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityDataAcquisitionBinding;
 import com.rapples.arafat.toolbox2.model.DataAcquisition;
+import com.rapples.arafat.toolbox2.model.Product;
 import com.rapples.arafat.toolbox2.view.adapter.CustomFileAdapter;
 import com.rapples.arafat.toolbox2.view.adapter.CustomMasterDataAdapter;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
@@ -33,13 +37,19 @@ public class DataAcquisitionActivity extends AppCompatActivity {
     private List<DataAcquisition> dataAcquisitionList;
     private ActivityDataAcquisitionBinding binding;
     private CustomFileAdapter adapter;
+    List<Product> productList;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_data_acquisition);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_data_acquisition);
 
+        init();
+    }
+
+    private void init() {
+        productList = new ArrayList<>();
     }
 
     @Override
@@ -56,8 +66,13 @@ public class DataAcquisitionActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
+                        if (dataAcquisitionList != null) {
+                            Collections.reverse(dataAcquisitionList);
+                        }
+
                         binding.dataAcusitionRecyclearView.setLayoutManager(new LinearLayoutManager(DataAcquisitionActivity.this));
-                        adapter = new CustomFileAdapter(dataAcquisitionList,DataAcquisitionActivity.this);
+                        adapter = new CustomFileAdapter(dataAcquisitionList, DataAcquisitionActivity.this);
                         binding.dataAcusitionRecyclearView.setAdapter(adapter);
 
                         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
@@ -75,11 +90,11 @@ public class DataAcquisitionActivity extends AppCompatActivity {
     }
 
     public void onSettingsFromBarcodeAcquisition(View view) {
-        startActivity(new Intent(DataAcquisitionActivity.this,ApplicationSettingsActivity.class));
+        startActivity(new Intent(DataAcquisitionActivity.this, ApplicationSettingsActivity.class));
     }
 
     public void addDList(View view) {
-        startActivity(new Intent(DataAcquisitionActivity.this,DataAcqusitionFileNameActivity.class));
+        startActivity(new Intent(DataAcquisitionActivity.this, DataAcqusitionFileNameActivity.class));
     }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -96,7 +111,6 @@ public class DataAcquisitionActivity extends AppCompatActivity {
 
             switch (direction) {
                 case ItemTouchHelper.RIGHT:
-
 
 
                     break;
@@ -132,6 +146,8 @@ public class DataAcquisitionActivity extends AppCompatActivity {
     };
 
     private void deleteItem(final int position) {
+
+        deleteProduct(dataAcquisitionList.get(position).getFileName());
         MasterExecutor.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -140,6 +156,35 @@ public class DataAcquisitionActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         getFileFromRoom();
+                    }
+                });
+            }
+        });
+    }
+
+    private void deleteProduct(final String fileName) {
+
+        MasterExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                productList = Acquisition_DB.getInstance(DataAcquisitionActivity.this).ProductDao().loadAllproduct(fileName);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MasterExecutor.getInstance().diskIO().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (int i = 0; i < productList.size(); i++) {
+                                    Acquisition_DB.getInstance(DataAcquisitionActivity.this).ProductDao().deleteProduct(productList.get(i));
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                        }
+                                    });
+                                }
+                            }
+                        });
 
 
                     }

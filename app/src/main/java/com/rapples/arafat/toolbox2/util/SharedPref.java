@@ -27,6 +27,8 @@ public class SharedPref {
     public static final String QUANTITY_FIELD ="quantityField";
     public static final String ALLOW_DUPLICATE_CODES ="allowDuplicateCodes";
     public static final String FILE_NAME ="fileName";
+    public static final String DATE ="date";
+
 
 
 

@@ -110,8 +110,9 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
                         productList.add(new Product(fileName,binding.barCodeET.getText().toString(), ""));
                         binding.lastBarLL.setVisibility(View.VISIBLE);
                         configproductList();
-                        binding.barCodeET.setText("");
                         saveIntoDb(fileName,binding.barCodeET.getText().toString());
+                        binding.barCodeET.setText("");
+
                     }
 
                     handled = true;
