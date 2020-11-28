@@ -29,6 +29,7 @@ public class SharedPref {
     public static final String FILE_NAME ="fileName";
     public static final String DATE ="date";
     public static final String ID ="id";
+    public static final String EDITABLE = "editable";
 
 
 

@@ -24,6 +24,7 @@ import com.rapples.arafat.toolbox2.model.DataAcquisition;
 import com.rapples.arafat.toolbox2.model.Product;
 import com.rapples.arafat.toolbox2.util.SharedPref;
 import com.rapples.arafat.toolbox2.view.adapter.CustomDataAcquisitionAdapter;
+import com.rapples.arafat.toolbox2.view.adapter.CustomDataAcquisitionEditAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,8 +38,10 @@ public class DataAcquisitionDetailsActivity extends AppCompatActivity {
     private String fileName;
     private String date;
     private int id;
+    private String editable;
     private List<Product> productList;
     private CustomDataAcquisitionAdapter adapter;
+    private CustomDataAcquisitionEditAdapter editAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +77,16 @@ public class DataAcquisitionDetailsActivity extends AppCompatActivity {
                             Collections.reverse(productList);
                         }
                         binding.dataAcquisitionDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(DataAcquisitionDetailsActivity.this));
-                        adapter = new CustomDataAcquisitionAdapter(productList, DataAcquisitionDetailsActivity.this);
-                        binding.dataAcquisitionDetailsRecyclerView.setAdapter(adapter);
+                        if (editable.equals("true")) {
+                            editAdapter = new CustomDataAcquisitionEditAdapter(productList, DataAcquisitionDetailsActivity.this);
+                            binding.dataAcquisitionDetailsRecyclerView.setAdapter(editAdapter);
+
+                        } else {
+                            adapter = new CustomDataAcquisitionAdapter(productList, DataAcquisitionDetailsActivity.this);
+                            binding.dataAcquisitionDetailsRecyclerView.setAdapter(adapter);
+
+                        }
+
 
                         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
                         itemTouchHelper.attachToRecyclerView(binding.dataAcquisitionDetailsRecyclerView);
@@ -92,6 +103,7 @@ public class DataAcquisitionDetailsActivity extends AppCompatActivity {
         fileName = getIntent().getStringExtra(SharedPref.FILE_NAME);
         date = getIntent().getStringExtra(SharedPref.DATE);
         id = Integer.parseInt(getIntent().getStringExtra(SharedPref.ID));
+        editable = getIntent().getStringExtra(SharedPref.EDITABLE);
 
 
         binding.fileNameTv.setText(fileName);
@@ -163,7 +175,7 @@ public class DataAcquisitionDetailsActivity extends AppCompatActivity {
     }
 
 
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return true;

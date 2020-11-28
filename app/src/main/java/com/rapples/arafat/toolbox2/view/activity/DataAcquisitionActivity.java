@@ -23,6 +23,7 @@ import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityDataAcquisitionBinding;
 import com.rapples.arafat.toolbox2.model.DataAcquisition;
 import com.rapples.arafat.toolbox2.model.Product;
+import com.rapples.arafat.toolbox2.util.SharedPref;
 import com.rapples.arafat.toolbox2.view.adapter.CustomFileAdapter;
 import com.rapples.arafat.toolbox2.view.adapter.CustomMasterDataAdapter;
 
@@ -111,6 +112,11 @@ public class DataAcquisitionActivity extends AppCompatActivity {
 
             switch (direction) {
                 case ItemTouchHelper.RIGHT:
+                    startActivity(new Intent(DataAcquisitionActivity.this, DataAcquisitionDetailsActivity.class)
+                            .putExtra(SharedPref.FILE_NAME, dataAcquisitionList.get(position).getFileName())
+                            .putExtra(SharedPref.DATE, dataAcquisitionList.get(position).getDate())
+                            .putExtra(SharedPref.ID,String.valueOf(dataAcquisitionList.get(position).id))
+                            .putExtra(SharedPref.EDITABLE,"true"));
 
 
                     break;
