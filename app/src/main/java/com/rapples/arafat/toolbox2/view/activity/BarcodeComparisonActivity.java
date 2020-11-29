@@ -536,7 +536,6 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
         checkBrodcastReceiver();
-
     }
 
     public void backComparison(View view) {
