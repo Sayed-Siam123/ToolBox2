@@ -188,14 +188,14 @@ public class ApplicationSettingsActivity extends AppCompatActivity {
     }
 
     private void setSeparatorDropDown() {
-        String[] items = new String[]{";",".",":"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(ApplicationSettingsActivity.this, android.R.layout.simple_spinner_dropdown_item, items);
-        binding.separatorDropdown.setAdapter(adapter);
+        String[] separatoritems = new String[]{";",".",":"};
+        ArrayAdapter<String> sep_adapter = new ArrayAdapter<>(ApplicationSettingsActivity.this, android.R.layout.simple_spinner_dropdown_item, separatoritems);
+        binding.separatorDropdown.setAdapter(sep_adapter);
     }
 
     private void setFileFormatDropDown() {
-        String[] items = new String[]{"txt","Excel"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(ApplicationSettingsActivity.this, android.R.layout.simple_spinner_dropdown_item, items);
-        binding.fileFormateDropdown.setAdapter(adapter);
+        String[] fileformatitems = new String[]{"Text","Excel","CSV"};
+        ArrayAdapter<String> file_adapter = new ArrayAdapter<>(ApplicationSettingsActivity.this, android.R.layout.simple_spinner_dropdown_item, fileformatitems);
+        binding.fileFormateDropdown.setAdapter(file_adapter);
     }
 }

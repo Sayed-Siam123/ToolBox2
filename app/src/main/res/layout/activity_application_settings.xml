@@ -382,17 +382,13 @@
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
-                <RelativeLayout
-                    android:layout_margin="5dp"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/edit_text_background"
-                    android:layout_weight="0.6">
+
 
                     <RelativeLayout
                         android:layout_margin="5dp"
                         android:layout_width="0dp"
-                        android:layout_height="30dp"
+                        android:padding="3dp"
+                        android:layout_height="35dp"
                         android:background="@drawable/edit_text_background"
                         android:layout_weight="0.6">
 
@@ -402,7 +398,7 @@
                             android:layout_height="wrap_content"
                             android:spinnerMode="dropdown"/>
                     </RelativeLayout>
-                </RelativeLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -421,26 +417,22 @@
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
-                <RelativeLayout
-                    android:layout_margin="5dp"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/edit_text_background"
-                    android:layout_weight="0.6">
 
                     <RelativeLayout
                         android:layout_margin="5dp"
                         android:layout_width="0dp"
-                        android:layout_height="30dp"
+                        android:padding="3dp"
+                        android:layout_height="35dp"
                         android:background="@drawable/edit_text_background"
                         android:layout_weight="0.6">
 
                         <Spinner
                             android:id="@+id/fileFormateDropdown"
                             android:layout_width="match_parent"
+                            android:background="@android:color/white"
                             android:layout_height="wrap_content"
                             android:spinnerMode="dropdown"/>
-                    </RelativeLayout>
+
                 </RelativeLayout>
             </LinearLayout>
 
