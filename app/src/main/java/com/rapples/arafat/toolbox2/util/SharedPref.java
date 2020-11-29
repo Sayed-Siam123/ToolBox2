@@ -30,6 +30,8 @@ public class SharedPref {
     public static final String DATE ="date";
     public static final String ID ="id";
     public static final String EDITABLE = "editable";
+    public static final String IS_ADDED = "isAdded";
+
 
 
 

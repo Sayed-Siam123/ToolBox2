@@ -71,7 +71,8 @@ public class DataAcqusitionFileNameActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         startActivity(new Intent(DataAcqusitionFileNameActivity.this, AddDataAcquisitionActivity.class)
-                                .putExtra(SharedPref.FILE_NAME, filename));
+                                .putExtra(SharedPref.FILE_NAME, filename)
+                        .putExtra(SharedPref.IS_ADDED,false));
                         finish();
                     }
                 });

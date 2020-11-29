@@ -167,6 +167,7 @@
         android:layout_alignParentRight="true"
         android:layout_height="60dp"
         android:layout_margin="15dp"
+        android:onClick="addElement"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="100dp">
 

@@ -1,8 +1,12 @@
 package com.rapples.arafat.toolbox2.view.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,6 +14,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,11 +34,15 @@ import com.rapples.arafat.toolbox2.model.DataAcquisition;
 import com.rapples.arafat.toolbox2.model.Product;
 import com.rapples.arafat.toolbox2.util.SharedPref;
 import com.rapples.arafat.toolbox2.view.adapter.CustomDataAcquisitionAdapter;
+import com.rapples.arafat.toolbox2.view.adapter.CustomDataAcquisitionEditAdapter;
+import com.rapples.arafat.toolbox2.view.adapter.LastDataAcquisitionAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class AddDataAcquisitionActivity extends AppCompatActivity {
     private static final String ACTION_BARCODE_DATA = "com.honeywell.sample.action.BARCODE_DATA";
@@ -45,11 +54,11 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
     private ActivityAddDataAcquisitionBinding binding;
     private boolean isScannerOpen = true;
     private CustomDataAcquisitionAdapter adapter;
+    private LastDataAcquisitionAdapter lastDataAcquisitionAdapter;
     private List<Product> productList;
+    private List<Product> showList;
+    private String isAdded = "false";
     private String fileName;
-    private boolean isShowList = false;
-    private boolean isFirst = true;
-
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
         @Override
@@ -78,6 +87,7 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_data_acquisition);
 
+
         init();
 
         getFileName();
@@ -91,21 +101,36 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
     }
 
 
+
     private void init() {
         productList = new ArrayList<>();
+        showList = new ArrayList<>();
     }
 
     private void configproductList() {
 
-
         if (productList.size() >0) {
-            Collections.reverse(productList);
-            binding.lastbarcodeTv.setText(productList.get(0).getBarcode());
-            binding.counterTv.setText(String.valueOf(productList.size()));
+            showList.clear();
+            showList.addAll(productList);
+            Collections.reverse(showList);
+            showLastBarcode(showList);
+            binding.counterTv.setText(String.valueOf(showList.size()));
             binding.dataAcquisitionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            adapter = new CustomDataAcquisitionAdapter(productList, this);
+            adapter = new CustomDataAcquisitionAdapter(showList, this);
             binding.dataAcquisitionRecyclerView.setAdapter(adapter);
+
+
         }
+
+    }
+
+    private void showLastBarcode(List<Product> showLists) {
+        binding.dataAcquisitionLastDataRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        lastDataAcquisitionAdapter = new LastDataAcquisitionAdapter(showLists,this);
+        binding.dataAcquisitionLastDataRecyclerView.setAdapter(lastDataAcquisitionAdapter);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(binding.dataAcquisitionLastDataRecyclerView);
 
     }
 
@@ -166,6 +191,7 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
     }
 
     private void defaultFocus() {
+        binding.barCodeFromSCET.requestFocus();
         disableFocus();
         hideKeyboard(this);
     }
@@ -205,7 +231,28 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
     private void getFileName() {
 
         fileName = getIntent().getStringExtra(SharedPref.FILE_NAME);
+        isAdded = getIntent().getStringExtra(SharedPref.IS_ADDED);
         binding.fileNameTv.setText(fileName);
+        if(isAdded != null) {
+            if (isAdded.equals("true")) {
+                MasterExecutor.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        productList = Acquisition_DB.getInstance(AddDataAcquisitionActivity.this).ProductDao().loadAllproduct(fileName);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                configproductList();
+                                binding.listCardView.setVisibility(View.GONE);
+                                binding.dataAcquisitionRecyclerView.setVisibility(View.VISIBLE);
+                                binding.lastBarLL.setVisibility(View.VISIBLE);
+                                binding.showListItemLL.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    }
+                });
+            }
+        }
     }
 
     public void onBackDataAcquisitionAdd(View view) {
@@ -270,5 +317,60 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
         binding.listCardView.setVisibility(View.GONE);
         binding.showListItemLL.setVisibility(View.VISIBLE);
 
+    }
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return true;
+        }
+
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            final int position = viewHolder.getAdapterPosition();
+
+            switch (direction) {
+                case ItemTouchHelper.RIGHT:
+
+
+                    break;
+
+                case ItemTouchHelper.LEFT:
+                    deleteProduct(showList.get(position));
+
+                    break;
+            }
+
+        }
+
+        @Override
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            new RecyclerViewSwipeDecorator.Builder(AddDataAcquisitionActivity.this, c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(AddDataAcquisitionActivity.this, R.color.red))
+                    .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
+                    .setActionIconTint(ContextCompat.getColor(recyclerView.getContext(), android.R.color.white))
+                    .create()
+                    .decorate();
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        }
+    };
+
+    private void deleteProduct(final Product product) {
+
+        MasterExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                Acquisition_DB.getInstance(AddDataAcquisitionActivity.this).ProductDao().deleteProduct(product);
+                productList.remove(product);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        configproductList();
+                    }
+                });
+            }
+        });
     }
 }

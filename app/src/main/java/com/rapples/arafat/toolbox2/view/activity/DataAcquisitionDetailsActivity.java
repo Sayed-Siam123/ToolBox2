@@ -8,15 +8,12 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.rapples.arafat.toolbox2.Database.Acquisition_DB;
 import com.rapples.arafat.toolbox2.Database.MasterExecutor;
 import com.rapples.arafat.toolbox2.R;
@@ -54,8 +51,12 @@ public class DataAcquisitionDetailsActivity extends AppCompatActivity {
         getFileName();
 
         getProductList();
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getProductList();
     }
 
     private void init() {
@@ -220,5 +221,11 @@ public class DataAcquisitionDetailsActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    public void addElement(View view) {
+        startActivity(new Intent(DataAcquisitionDetailsActivity.this,AddDataAcquisitionActivity.class)
+        .putExtra(SharedPref.FILE_NAME,fileName)
+        .putExtra(SharedPref.IS_ADDED,"true"));
     }
 }
