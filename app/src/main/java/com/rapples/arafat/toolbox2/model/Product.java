@@ -3,29 +3,26 @@ package com.rapples.arafat.toolbox2.model;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-@Entity(tableName = "MASTERDATA")
-public class Masterdata {
+@Entity(tableName = "PRODUCT")
+public class Product {
     @PrimaryKey(autoGenerate = true)
     int id;
+    private String fileId;
     private String barcode;
     private String description;
-    private String price;
-    private String image;
 
-
-    public Masterdata(int id, String barcode, String description, String price, String image) {
-        this.id = id;
-        this.barcode = barcode;
-        this.description = description;
-        this.price = price;
-        this.image = image;
-    }
     @Ignore
-    public Masterdata(String barcode, String description, String price, String image) {
+    public Product(int id, String fileId, String barcode, String description) {
+        this.id = id;
+        this.fileId = fileId;
         this.barcode = barcode;
         this.description = description;
-        this.price = price;
-        this.image = image;
+    }
+
+    public Product(String fileId, String barcode, String description) {
+        this.fileId = fileId;
+        this.barcode = barcode;
+        this.description = description;
     }
 
     public int getId() {
@@ -34,6 +31,14 @@ public class Masterdata {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(String fileId) {
+        this.fileId = fileId;
     }
 
     public String getBarcode() {
@@ -50,21 +55,5 @@ public class Masterdata {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 }

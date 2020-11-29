@@ -42,7 +42,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private LinearLayout barcodeComparationLL, customFunctionLL;
+    private LinearLayout barcodeComparationLL, customFunctionLL, dataAquistionLL;
     private TextView customFunctionName, customFunctiondescription;
     boolean doubleBackToExitPressedOnce = false;
 
@@ -53,9 +53,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        checkFunction();
         claimScanner();
         releaseScanner();
-        checkFunction();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -81,6 +81,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void checkFunction() {
         boolean comparisonFuntion = sharedPreferences.getBoolean(SharedPref.BARCODE_COMPARISON_FUNTION, false);
         boolean customFuntion = sharedPreferences.getBoolean(SharedPref.CUSTOM_FUNCTION, false);
+        boolean dataAcquisitionFunction = sharedPreferences.getBoolean(SharedPref.DATA_ACQUISITION_FUNCTION,false);
 
         if (comparisonFuntion) {
             barcodeComparationLL.setVisibility(View.VISIBLE);
@@ -96,6 +97,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             customFunctionLL.setVisibility(View.GONE);
         }
 
+//        if(dataAcquisitionFunction){
+//            dataAquistionLL.setEnabled(true);
+//        }else{
+//            dataAquistionLL.setEnabled(false);
+//        }
+
     }
 
     private void init() {
@@ -105,6 +112,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         customFunctionLL = findViewById(R.id.customFunctionLL);
         customFunctionName = findViewById(R.id.customFunctionNameTv);
         customFunctiondescription = findViewById(R.id.customFunctionDescriptionTv);
+        dataAquistionLL = findViewById(R.id.dataAcquisitionLL);
 
 
     }
@@ -153,6 +161,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         startActivity(new Intent(HomeActivity.this, BarcodeComparisonActivity.class));
 
     }
+    public void openDataAcquisition(View v) {
+        Log.d("Barcode  Cmp", "onNavigationItemSelected: Barcode compare");
+        startActivity(new Intent(HomeActivity.this, DataAcquisitionActivity.class));
+
+    }
+
+
+
 
     public void label_printing(View v) {
         Log.d("Label print", "onNavigationItemSelected: Label print");
