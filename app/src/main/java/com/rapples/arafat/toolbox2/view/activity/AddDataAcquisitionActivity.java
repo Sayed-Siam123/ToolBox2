@@ -47,6 +47,8 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
     private CustomDataAcquisitionAdapter adapter;
     private List<Product> productList;
     private String fileName;
+    private boolean isShowList = false;
+    private boolean isFirst = true;
 
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
@@ -263,4 +265,10 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
     }
 
 
+    public void showList(View view) {
+        binding.dataAcquisitionRecyclerView.setVisibility(View.VISIBLE);
+        binding.listCardView.setVisibility(View.GONE);
+        binding.showListItemLL.setVisibility(View.VISIBLE);
+
+    }
 }

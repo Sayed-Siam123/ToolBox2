@@ -14,6 +14,7 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.rapples.arafat.toolbox2.Database.Acquisition_DB;
@@ -120,27 +121,21 @@ public class DataAcquisitionDetailsActivity extends AppCompatActivity {
     }
 
     public void DeleteFile(View view) {
-        Snackbar.make(binding.dataAcquisitionDetailsRecyclerView, "Do you want to delete this product?", Snackbar.LENGTH_LONG)
-                .setAction("Yes", new View.OnClickListener() {
+        final DataAcquisition dataAcquisition = new DataAcquisition(id, fileName, date);
+        MasterExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                Acquisition_DB.getInstance(getApplicationContext()).AcquisitionDao().deleteAcquisitionData(dataAcquisition);
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void onClick(View view) {
+                    public void run() {
                         deleteProduct(fileName);
-                        final DataAcquisition dataAcquisition = new DataAcquisition(id, fileName, date);
-                        MasterExecutor.getInstance().diskIO().execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                Acquisition_DB.getInstance(getApplicationContext()).AcquisitionDao().deleteAcquisitionData(dataAcquisition);
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        onBackPressed();
-                                    }
-                                });
-                            }
-                        });
+                        onBackPressed();
                     }
-                }).setActionTextColor(getResources().getColor(R.color.white)).show();
-
+                });
+            }
+        });
+        Toast.makeText(this, "File deleted", Toast.LENGTH_SHORT).show();
     }
 
     private void deleteProduct(final String fileName) {

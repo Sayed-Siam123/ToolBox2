@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.rapples.arafat.toolbox2.Database.Acquisition_DB;
@@ -122,16 +123,8 @@ public class DataAcquisitionActivity extends AppCompatActivity {
                     break;
 
                 case ItemTouchHelper.LEFT:
-                    getFileFromRoom();
-                    Snackbar.make(binding.dataAcusitionRecyclearView, "Do you want to delete this product?", Snackbar.LENGTH_LONG)
-                            .setAction("Yes", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    deleteItem(position);
-                                }
-                            }).setActionTextColor(getResources().getColor(R.color.white)).show();
-
-
+                    deleteItem(position);
+                    Toast.makeText(DataAcquisitionActivity.this, "File deleted", Toast.LENGTH_SHORT).show();
                     break;
             }
 
