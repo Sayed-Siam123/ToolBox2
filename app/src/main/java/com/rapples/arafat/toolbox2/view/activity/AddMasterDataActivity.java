@@ -1,4 +1,4 @@
-package com.rapples.arafat.toolbox2.view.activity;
+ package com.rapples.arafat.toolbox2.view.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
