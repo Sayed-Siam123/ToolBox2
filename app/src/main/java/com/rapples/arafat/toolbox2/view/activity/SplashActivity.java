@@ -16,6 +16,7 @@ import android.content.Context;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
+import android.util.Log;
 
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivitySplashBinding;
@@ -67,19 +68,26 @@ public class SplashActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     private void createDir() {
-        Log.d("TAG", "createDir: OK!");
-        File folder = new File(Environment.getRootDirectory().getParent() +
-                File.separator + "TollCulator");
-        boolean success = true;
-        if (!folder.exists()) {
-            success = folder.mkdirs();
+
+        File mydir = this.getDir("toolbox_directory", Context.MODE_PRIVATE); //Creating an internal dir;
+
+        //creating folder in external storage
+        File f = new File(Environment.getExternalStorageDirectory(), "ToolBox");
+        Log.e("External Dir", f.toString());
+        if (!f.exists()) {
+            Log.e("External Created", f.toString());
+            f.mkdirs();
+
         }
-        if (success) {
-            // Do something on success
-            Log.d("TAG", "createDir: ok, created");
-        } else {
-            // Do something else on failure
-            Log.d("TAG", "createDir: not ok, not created");
+
+        Log.e("File dir", mydir.toString());
+        File fileWithinMyDir = new File(mydir, "test"); //Getting a file within the dir.
+        try {
+            FileOutputStream out = new FileOutputStream(fileWithinMyDir); //Use the stream as usual to write into the file.
+            Log.e("Dir create", out.toString());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.e("Dir faild", e.toString());
         }
 
 

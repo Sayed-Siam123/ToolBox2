@@ -1,0 +1,81 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.uk.tsl.rfid.samples.inventory"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="15"
+8-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml
+9        android:targetSdkVersion="28" />
+9-->[:Rfid.AsciiProtocol-Library] /Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Rfid.AsciiProtocol-Library/build/.transforms/86ea648349f36359f09ad64f3efc297a/Rfid.AsciiProtocol-2.3.1-release/AndroidManifest.xml:9:9-38
+10
+11    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+11-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:7:5-73
+11-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:7:22-71
+12    <uses-permission android:name="android.permission.BLUETOOTH" />
+12-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:8:5-67
+12-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:8:22-65
+13    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+13-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:9:5-81
+13-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:9:22-78
+14
+15    <application
+15-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:11:5-31:23
+16        android:allowBackup="true"
+16-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:12:9-35
+17        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
+17-->[com.android.support:support-compat:28.0.0] /Users/ptvl/.gradle/caches/transforms-2/files-2.1/b73d0db3c489aeab8b531c92b0313ef9/support-compat-28.0.0/AndroidManifest.xml:22:18-91
+18        android:debuggable="true"
+19        android:icon="@mipmap/ic_launcher"
+19-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:13:9-43
+20        android:label="@string/app_name"
+20-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:14:9-41
+21        android:theme="@style/Theme.AppCompat.Light" >
+21-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:15:9-53
+22        <activity
+22-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:17:9-30:20
+23            android:name="com.uk.tsl.rfid.samples.inventory.InventoryActivity"
+23-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:18:13-79
+24            android:label="@string/app_name"
+24-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:20:13-45
+25            android:launchMode="singleTask" >
+25-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:19:13-44
+26            <intent-filter>
+26-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:21:13-25:29
+27                <action android:name="android.intent.action.MAIN" />
+27-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:22:17-69
+27-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:22:25-66
+28
+29                <category android:name="android.intent.category.LAUNCHER" />
+29-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:24:17-77
+29-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:24:27-74
+30            </intent-filter>
+31            <intent-filter>
+31-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:26:13-28:29
+32                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+32-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:27:17-90
+32-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:27:25-87
+33            </intent-filter>
+34
+35            <meta-data
+35-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:29:13-127
+36                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+36-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:29:24-86
+37                android:resource="@xml/device_filter" />
+37-->/Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/Sample Code/Inventory/AndroidManifest.xml:29:87-124
+38        </activity>
+39        <activity
+39-->[:DeviceList] /Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/DeviceList/build/intermediates/library_manifest/debug/AndroidManifest.xml:10:9-15:20
+40            android:name="com.uk.tsl.rfid.DeviceListActivity"
+40-->[:DeviceList] /Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/DeviceList/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-62
+41            android:configChanges="keyboardHidden|orientation"
+41-->[:DeviceList] /Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/DeviceList/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:13-63
+42            android:label="@string/select_reader"
+42-->[:DeviceList] /Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/DeviceList/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-50
+43            android:theme="@android:style/Theme.DeviceDefault.Light" >
+43-->[:DeviceList] /Users/ptvl/Downloads/Android ASCII 2.5 SDK v2.2.1-GM/DeviceList/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:13-69
+44        </activity>
+45    </application>
+46
+47</manifest>

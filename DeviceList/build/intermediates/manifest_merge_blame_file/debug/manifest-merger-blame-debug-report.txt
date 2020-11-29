@@ -4,23 +4,23 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="15"
-6-->/Users/sayed/WorkOnline/toolbox-native/DeviceList/src/main/AndroidManifest.xml
+6-->F:\Outsourcing\proj-Toolbox\toolbox-native\DeviceList\src\main\AndroidManifest.xml
 7        android:targetSdkVersion="28" />
-7-->/Users/sayed/WorkOnline/toolbox-native/DeviceList/src/main/AndroidManifest.xml
+7-->F:\Outsourcing\proj-Toolbox\toolbox-native\DeviceList\src\main\AndroidManifest.xml
 8
 9    <application android:allowBackup="true" >
-9-->/Users/sayed/WorkOnline/toolbox-native/DeviceList/src/main/AndroidManifest.xml:5:5-13:19
-9-->/Users/sayed/WorkOnline/toolbox-native/DeviceList/src/main/AndroidManifest.xml:6:9-35
+9-->F:\Outsourcing\proj-Toolbox\toolbox-native\DeviceList\src\main\AndroidManifest.xml:5:5-13:19
+9-->F:\Outsourcing\proj-Toolbox\toolbox-native\DeviceList\src\main\AndroidManifest.xml:6:9-35
 10        <activity
-10-->/Users/sayed/WorkOnline/toolbox-native/DeviceList/src/main/AndroidManifest.xml:8:9-12:20
+10-->F:\Outsourcing\proj-Toolbox\toolbox-native\DeviceList\src\main\AndroidManifest.xml:8:9-12:20
 11            android:name="com.uk.tsl.rfid.DeviceListActivity"
-11-->/Users/sayed/WorkOnline/toolbox-native/DeviceList/src/main/AndroidManifest.xml:8:19-68
+11-->F:\Outsourcing\proj-Toolbox\toolbox-native\DeviceList\src\main\AndroidManifest.xml:8:19-68
 12            android:configChanges="keyboardHidden|orientation"
-12-->/Users/sayed/WorkOnline/toolbox-native/DeviceList/src/main/AndroidManifest.xml:10:14-64
+12-->F:\Outsourcing\proj-Toolbox\toolbox-native\DeviceList\src\main\AndroidManifest.xml:10:14-64
 13            android:label="@string/select_reader"
-13-->/Users/sayed/WorkOnline/toolbox-native/DeviceList/src/main/AndroidManifest.xml:11:14-51
+13-->F:\Outsourcing\proj-Toolbox\toolbox-native\DeviceList\src\main\AndroidManifest.xml:11:14-51
 14            android:theme="@android:style/Theme.DeviceDefault.Light" >
-14-->/Users/sayed/WorkOnline/toolbox-native/DeviceList/src/main/AndroidManifest.xml:9:14-70
+14-->F:\Outsourcing\proj-Toolbox\toolbox-native\DeviceList\src\main\AndroidManifest.xml:9:14-70
 15        </activity>
 16    </application>
 17

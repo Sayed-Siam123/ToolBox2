@@ -30,6 +30,12 @@ import com.rapples.arafat.toolbox2.util.SharedPref;
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityHome2Binding binding;
+    private static final String ACTION_BARCODE_DATA = "com.honeywell.sample.action.BARCODE_DATA";
+    private static final String ACTION_CLAIM_SCANNER = "com.honeywell.aidc.action.ACTION_CLAIM_SCANNER";
+    private static final String ACTION_RELEASE_SCANNER = "com.honeywell.aidc.action.ACTION_RELEASE_SCANNER";
+    private static final String EXTRA_SCANNER = "com.honeywell.aidc.extra.EXTRA_SCANNER";
+    private static final String EXTRA_PROFILE = "com.honeywell.aidc.extra.EXTRA_PROFILE";
+    private static final String EXTRA_PROPERTIES = "com.honeywell.aidc.extra.EXTRA_PROPERTIES";
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -47,7 +53,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-
+        claimScanner();
+        releaseScanner();
         checkFunction();
     }
 
@@ -57,15 +64,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(HomeActivity.this,R.layout.activity_home2);
-
-
-
         init();
-
-
         checkFunction();
-
-
         back_button = (ImageView) findViewById(R.id.back_to_menu_icon);
         menu_button = (ImageView) findViewById(R.id.menu_image);
         drawer = binding.drawerLayout;
@@ -194,6 +194,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void menubutton(View v) {
         DrawerLayout drawer = binding.drawerLayout;
         drawer.openDrawer(Gravity.START);
+    }
+
+    private void releaseScanner() {
+        sendBroadcast(new Intent(ACTION_RELEASE_SCANNER));
+    }
+    private void claimScanner() {
+        Bundle properties = new Bundle();
+        properties.putBoolean("DPR_DATA_INTENT", false);
+        properties.putString("DPR_DATA_INTENT_ACTION", ACTION_BARCODE_DATA);
+        sendBroadcast(new Intent(ACTION_CLAIM_SCANNER).setPackage("com.intermec.datacollectionservice")
+                .putExtra(EXTRA_SCANNER, "dcs.scanner.imager").putExtra(EXTRA_PROFILE, "MyProfile1").putExtra(EXTRA_PROPERTIES, properties)
+        );
     }
 
 }

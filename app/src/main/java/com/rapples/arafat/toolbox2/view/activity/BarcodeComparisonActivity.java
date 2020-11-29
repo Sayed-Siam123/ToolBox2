@@ -32,6 +32,8 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
     private ActivityBarcodeComparisonBinding binding;
     private String barcode;
     private boolean flag = false;
+    private boolean masterScannerOpen = true;
+    private boolean referScannerOpen = true;
 
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
@@ -50,33 +52,14 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
                     if (!flag) {
                         binding.masterbarCodeFromSCET.setText(data);
                         binding.masterScanDigitCount.setText(data.length() + " Digits");
-                        if (codeId.equals("<")) {
-                            binding.masterScanCodeType.setText("CODE 39");
-                        } else if (codeId.equals("d")) {
-                            binding.masterScanCodeType.setText("EAN13");
-                        } else if (codeId.equals("j")) {
-                            binding.masterScanCodeType.setText("CODE 128");
-                        } else if (codeId.equals("s")) {
-                            binding.masterScanCodeType.setText("QR CODE ");
-                        } else if (codeId.equals("w")) {
-                            binding.masterScanCodeType.setText("Datatmatrix");
-                        }
+                        binding.masterScanCodeType.setText(defineCodeName(codeId));
+
 
                         flag = true;
                     } else {
                         binding.barCodeFromSCET.setText(data);
                         binding.scanDigitCount.setText(data.length() + " Digits");
-                        if (codeId.equals("<")) {
-                            binding.scanCodeType.setText("CODE 39");
-                        } else if (codeId.equals("d")) {
-                            binding.scanCodeType.setText("EAN13");
-                        } else if (codeId.equals("j")) {
-                            binding.scanCodeType.setText("CODE 128");
-                        } else if (codeId.equals("s")) {
-                            binding.scanCodeType.setText("QR CODE ");
-                        } else if (codeId.equals("w")) {
-                            binding.scanCodeType.setText("Datatmatrix");
-                        }
+                        binding.scanCodeType.setText(defineCodeName(codeId));
                         flag = false;
                     }
 
@@ -85,6 +68,213 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
             }
         }
     };
+
+    private String defineCodeName(String codeId) {
+        String codeName;
+        switch(codeId) {
+            case ".":
+                codeName = "DOTCODE";
+                break;
+            case "1":
+                codeName = "CODE1";
+                break;
+            case ";":
+                codeName = "MERGED_COUPON";
+                break;
+            case "<":
+                codeName = "CODE32";
+                break;
+            case ">":
+                codeName = "LABELCODE_IV";
+                break;
+            case "=":
+                codeName = "TRIOPTIC";
+                break;
+            case "'?'":
+                codeName = "KOREA_POST";
+                break;
+            case ",":
+                codeName = "INFOMAIL";
+                break;
+            case "[":
+                codeName = "SWEEDISH_POST";
+                break;
+            case "|":
+                codeName = "RM_MAILMARK";
+                break;
+            case "'":
+                codeName = "EAN13_ISBN";
+                break;
+            case "]":
+                codeName = "BRAZIL_POS";
+                break;
+            case "A":
+                codeName = "AUS_POST";
+                break;
+            case "B":
+                codeName = "BRITISH_POST";
+                break;
+            case "C":
+                codeName = "CANADIAN_POST";
+                break;
+            case "D":
+                codeName = "EAN8";
+                break;
+            case "E":
+                codeName = "UPCE";
+                break;
+            case "G'":
+                codeName = "BC412";
+                break;
+            case "H":
+                codeName = "HAN_XIN_CODE";
+                break;
+            case "I":
+                codeName = "GS1_128";
+                break;
+            case "J":
+                codeName = "JAPAN_POST";
+                break;
+            case "K":
+                codeName = "KIX_CODE";
+                break;
+            case "L":
+                codeName = "PLANET_CODE";
+                break;
+            case "M":
+                codeName = "INTELLIGENT_MAIL";
+                break;
+            case "N":
+                codeName = "ID_TAGS";
+                break;
+            case "O":
+                codeName = "OCR";
+                break;
+            case "P":
+                codeName = "POSTNET";
+                break;
+            case "Q":
+                codeName = "HK25";
+                break;
+            case "R":
+                codeName = "MICROPDF";
+                break;
+            case "S":
+                codeName = "SECURE_CODE";
+                break;
+            case "T":
+                codeName = "TLC39";
+                break;
+            case "U":
+                codeName = "ULTRACODE";
+                break;
+            case "V":
+                codeName = "CODABLOCK_A";
+                break;
+            case "W":
+                codeName = "POSICODE";
+                break;
+            case "X":
+                codeName = "GRID_MATRIX";
+                break;
+            case "Y":
+                codeName = "NEC25";
+                break;
+            case "Z":
+                codeName = "MESA";
+                break;
+            case "a":
+                codeName = "CODABAR";
+                break;
+            case "b":
+                codeName = "CODE39";
+                break;
+            case "c":
+                codeName = "UPCA";
+                break;
+            case "d":
+                codeName = "EAN13";
+                break;
+            case "e":
+                codeName = "I25";
+                break;
+            case "f":
+                codeName = "S25 (2BAR and 3BAR)";
+                break;
+            case "g":
+                codeName = "MSI";
+                break;
+            case "h":
+                codeName = "CODE11";
+                break;
+            case "i":
+                codeName = "CODE93";
+                break;
+            case "j":
+                codeName = "CODE128";
+                break;
+            case "k":
+                codeName = "UNUSED";
+                break;
+            case "l":
+                codeName = "CODE49";
+                break;
+            case "m":
+                codeName = "M25";
+                break;
+            case "n":
+                codeName = "PLESSEY";
+                break;
+            case "o":
+                codeName = "CODE16K";
+                break;
+            case "p":
+                codeName = "CHANNELCODE";
+                break;
+            case "q":
+                codeName = "CODABLOCK_F";
+                break;
+            case "r":
+                codeName = "PDF417";
+                break;
+            case "s":
+                codeName = "QRCODE";
+                break;
+            case "-":
+                codeName = "MICROQR_ALT";
+                break;
+            case "t":
+                codeName = "TELEPEN";
+                break;
+            case "u":
+                codeName = "CODEZ";
+                break;
+            case "v":
+                codeName = "VERICODE";
+                break;
+            case "w":
+                codeName = "DATAMATRIX";
+                break;
+            case "x":
+                codeName = "MAXICODE";
+                break;
+            case "y":
+                codeName = "RSS";
+                break;
+            case "{":
+                codeName = "GS1_DATABAR";
+                break;
+            case "}":
+                codeName = "GS1_DATABAR_EXP";
+                break;
+            case "z":
+                codeName = "AZTEC_CODE";
+                break;
+            default:
+                codeName ="";
+        }
+        return  codeName;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,8 +418,11 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(barcodeDataReceiver);
-        releaseScanner();
+
+        if(masterScannerOpen || referScannerOpen){
+            unregisterReceiver(barcodeDataReceiver);
+            releaseScanner();
+        }
     }
 
     private void claimScanner() {
@@ -272,7 +465,7 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
     private void compareBarcodeForScanner() {
         String code = binding.masterbarCodeFromSCET.getText().toString();
         binding.resultRL.setVisibility(View.VISIBLE);
-        if (binding.barCodeFromSCET.getText().toString().equals(code)) {
+        if(binding.barCodeFromSCET.getText().toString().equals(code)) {
             binding.resultRL.setBackgroundColor(getResources().getColor(R.color.green));
             binding.statusTV.setText("OK");
             binding.resultRL.setVisibility(View.VISIBLE);
@@ -290,9 +483,10 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         binding.edittextLL.setVisibility(View.VISIBLE);
         binding.sannnerLL.setVisibility(View.GONE);
         binding.barCodeET.requestFocus();
+        referScannerOpen = false;
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-
+        checkBrodcastReceiver();
     }
 
     public void openScaaner(View view) {
@@ -300,8 +494,10 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         binding.edittextLL.setVisibility(View.GONE);
         binding.sannnerLL.setVisibility(View.VISIBLE);
         binding.masterbarCodeFromSCET.requestFocus();
+        referScannerOpen = true;
         disableFocus();
         hideKeyboard(this);
+        checkBrodcastReceiver();
     }
 
     private void disableFocus() {
@@ -327,19 +523,42 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         binding.masterSannnerLL.setVisibility(View.VISIBLE);
         binding.masterbarCodeFromSCET.requestFocus();
         disableFocus();
+        masterScannerOpen = true;
         hideKeyboard(this);
+        checkBrodcastReceiver();
     }
 
     public void openKeyboardMaster(View view) {
         binding.masterEdittextLL.setVisibility(View.VISIBLE);
         binding.masterSannnerLL.setVisibility(View.GONE);
         binding.masterBarCodeET.requestFocus();
+        masterScannerOpen = false;
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        checkBrodcastReceiver();
 
     }
 
     public void backComparison(View view) {
         onBackPressed();
+    }
+
+    public void registeredScanner(){
+        registerReceiver(barcodeDataReceiver, new IntentFilter(ACTION_BARCODE_DATA));
+        claimScanner();
+    }
+
+    public void unRegisteredScanner(){
+        unregisterReceiver(barcodeDataReceiver);
+        releaseScanner();
+
+    }
+
+    public void checkBrodcastReceiver(){
+        if(masterScannerOpen || referScannerOpen){
+            registeredScanner();
+        }else{
+            unRegisteredScanner();
+        }
     }
 }

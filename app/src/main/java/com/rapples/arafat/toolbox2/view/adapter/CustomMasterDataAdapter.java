@@ -47,7 +47,7 @@ public class CustomMasterDataAdapter extends RecyclerView.Adapter<CustomMasterDa
         holder.productDescriptionTv.setText(masterData.getDescription());
         holder.barCodeTv.setText(masterData.getBarcode());
         if(masterData.getPrice() != null){
-            holder.priceTv.setText(masterData.getPrice());
+            holder.priceTv.setText(masterData.getPrice() +" EUR");
         }
 
         if (masterData.getImage() != null) {

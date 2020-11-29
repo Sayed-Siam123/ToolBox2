@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:text="Application settings"
+                    android:text="@string/application_settings"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -38,10 +38,14 @@
 
         </androidx.appcompat.widget.Toolbar>
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar"
             android:orientation="vertical">
 
             <View
@@ -54,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Barcode Information"
+                android:text="@string/barcode_information"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -71,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:text="Funtion is active"
+                    android:text="@string/function_is_active"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -94,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:text="Show Description"
+                    android:text="@string/show_description"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -117,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:text="Show Prices"
+                    android:text="@string/show_prices"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -140,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:text="Show Pictures"
+                    android:text="@string/show_pictures"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -163,7 +167,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:text="Show barcode type"
+                    android:text="@string/show_barcode_type"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -186,7 +190,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:text="Show number of digits"
+                    android:text="@string/show_number_of_digits"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -210,7 +214,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Barcode comparison"
+                android:text="@string/barcode_comparison"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -227,7 +231,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:text="Funtion is active"
+                    android:text="@string/function_is_active"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -249,7 +253,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Master Data"
+                android:text="@string/master_data"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -266,7 +270,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:text="Manage Prices"
+                    android:text="@string/manage_prices"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -284,7 +288,164 @@
                 android:background="@color/black" />
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/data_acquisition"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/function_is_active"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <Switch
+                    android:id="@+id/dataAcquisitionSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/quantity_field"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <Switch
+                    android:id="@+id/quantityFieldSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/allow_duplicate_codes"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <Switch
+                    android:id="@+id/allowDuplicateCodesSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="0.4"
+                    android:text="@string/separator"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+
+
+                    <RelativeLayout
+                        android:layout_margin="5dp"
+                        android:layout_width="0dp"
+                        android:padding="3dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/edit_text_background"
+                        android:layout_weight="0.6">
+
+                        <Spinner
+                            android:id="@+id/separatorDropdown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:spinnerMode="dropdown"/>
+                    </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="0.4"
+                    android:text="@string/file_format"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+
+                    <RelativeLayout
+                        android:layout_margin="5dp"
+                        android:layout_width="0dp"
+                        android:padding="3dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/edit_text_background"
+                        android:layout_weight="0.6">
+
+                        <Spinner
+                            android:id="@+id/fileFormateDropdown"
+                            android:layout_width="match_parent"
+                            android:background="@android:color/white"
+                            android:layout_height="wrap_content"
+                            android:spinnerMode="dropdown"/>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black" />
         </LinearLayout>
+        </ScrollView>
 
 
     </RelativeLayout>

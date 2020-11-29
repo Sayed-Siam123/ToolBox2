@@ -35,7 +35,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:text="New Value"
+                        android:text="@string/new_value"
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </RelativeLayout>
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="0.4"
-                    android:text="Barcode:" />
+                    android:text="@string/barcode" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -145,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="0.4"
-                    android:text="Description:" />
+                    android:text="@string/description" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -194,7 +194,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="0.4"
-                    android:text="Price:" />
+                    android:text="@string/price" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -212,9 +212,8 @@
                             android:layout_width="0dp"
                             android:layout_height="40dp"
                             android:layout_weight="1"
-                            android:background="@android:color/transparent"
                             android:imeOptions="actionDone"
-                            android:inputType="number"
+                            android:inputType="numberDecimal"
                             android:singleLine="true" />
 
                     </LinearLayout>
@@ -244,7 +243,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="0.4"
-                    android:text="Picture:" />
+                    android:text="@string/picture" />
 
                 <RelativeLayout
                     android:layout_width="0dp"

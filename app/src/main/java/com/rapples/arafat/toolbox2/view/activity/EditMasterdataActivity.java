@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -30,6 +32,13 @@ import java.io.IOException;
 
 public class EditMasterdataActivity extends AppCompatActivity {
 
+    private static final String ACTION_BARCODE_DATA = "com.honeywell.sample.action.BARCODE_DATA";
+    private static final String ACTION_CLAIM_SCANNER = "com.honeywell.aidc.action.ACTION_CLAIM_SCANNER";
+    private static final String ACTION_RELEASE_SCANNER = "com.honeywell.aidc.action.ACTION_RELEASE_SCANNER";
+    private static final String EXTRA_SCANNER = "com.honeywell.aidc.extra.EXTRA_SCANNER";
+    private static final String EXTRA_PROFILE = "com.honeywell.aidc.extra.EXTRA_PROFILE";
+    private static final String EXTRA_PROPERTIES = "com.honeywell.aidc.extra.EXTRA_PROPERTIES";
+
     private String barcode;
     private String description;
     private String price;
@@ -38,6 +47,26 @@ public class EditMasterdataActivity extends AppCompatActivity {
     private ActivityEditMasterdataBinding binding;
     private SharedPreferences sharedPreferences;
     private boolean isScannerOpenTrue;
+
+    private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (ACTION_BARCODE_DATA.equals(intent.getAction())) {
+                int version = intent.getIntExtra("version", 0);
+                if (version >= 1) {
+                    String aimId = intent.getStringExtra("aimId");
+                    String charset = intent.getStringExtra("charset");
+                    String codeId = intent.getStringExtra("codeId");
+                    String data = intent.getStringExtra("data");
+                    byte[] dataBytes = intent.getByteArrayExtra("dataBytes");
+                    String timestamp = intent.getStringExtra("timestamp");
+
+                    binding.barCodeFromSCET.setText(data);
+
+                }
+            }
+        }
+    };
 
 
 
@@ -57,6 +86,36 @@ public class EditMasterdataActivity extends AppCompatActivity {
         setDefaultFocus();
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(barcodeDataReceiver, new IntentFilter(ACTION_BARCODE_DATA));
+        claimScanner();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(isScannerOpenTrue){
+            unregisterReceiver(barcodeDataReceiver);
+            releaseScanner();
+        }
+    }
+
+    private void claimScanner() {
+        Bundle properties = new Bundle();
+        properties.putBoolean("DPR_DATA_INTENT", true);
+        properties.putString("DPR_DATA_INTENT_ACTION", ACTION_BARCODE_DATA);
+        sendBroadcast(new Intent(ACTION_CLAIM_SCANNER).setPackage("com.intermec.datacollectionservice")
+                .putExtra(EXTRA_SCANNER, "dcs.scanner.imager").putExtra(EXTRA_PROFILE, "MyProfile1").putExtra(EXTRA_PROPERTIES, properties)
+        );
+    }
+
+    private void releaseScanner() {
+        sendBroadcast(new Intent(ACTION_RELEASE_SCANNER));
+    }
+
 
     private void updateProduct() {
         if (isScannerOpenTrue) {
@@ -204,6 +263,7 @@ public class EditMasterdataActivity extends AppCompatActivity {
         binding.sannnerLL.setVisibility(View.GONE);
         binding.barCodeET.requestFocus();
         isScannerOpenTrue = false;
+        unRegisteredScanner();
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
@@ -214,6 +274,7 @@ public class EditMasterdataActivity extends AppCompatActivity {
         binding.edittextLL.setVisibility(View.GONE);
         binding.sannnerLL.setVisibility(View.VISIBLE);
         binding.barCodeFromSCET.requestFocus();
+        registeredScanner();
         isScannerOpenTrue = true;
         disableFocus();
         hideKeyboard(this);
@@ -241,5 +302,16 @@ public class EditMasterdataActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         startActivityForResult(intent, 1);
+    }
+
+    public void registeredScanner(){
+        registerReceiver(barcodeDataReceiver, new IntentFilter(ACTION_BARCODE_DATA));
+        claimScanner();
+    }
+
+    public void unRegisteredScanner(){
+        unregisterReceiver(barcodeDataReceiver);
+        releaseScanner();
+
     }
 }
