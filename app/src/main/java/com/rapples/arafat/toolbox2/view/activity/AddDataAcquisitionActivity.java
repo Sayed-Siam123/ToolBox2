@@ -58,6 +58,7 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
     private String isAdded = "false";
     private String fileName;
     private boolean allowDuplicate;
+    private boolean quantityStatus;
     private boolean isFound;
 
 
@@ -97,7 +98,7 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
 
         defaultFocus();
 
-        checkDuplicateCode();
+        editTextTeco();
 
         configproductList();
 
@@ -106,6 +107,13 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
 
     private void checkSetting() {
         allowDuplicate = sharedPreferences.getBoolean(SharedPref.ALLOW_DUPLICATE_CODES, false);
+        quantityStatus = sharedPreferences.getBoolean(SharedPref.QUANTITY_FIELD, false);
+
+        if (quantityStatus) {
+            binding.quantityLL.setVisibility(View.VISIBLE);
+        } else {
+            binding.quantityLL.setVisibility(View.GONE);
+        }
 
     }
 
@@ -144,7 +152,7 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
 
     }
 
-    private void checkDuplicateCode() {
+    private void editTextTeco() {
 
         binding.barCodeET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -153,33 +161,36 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
                 isFound = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     if (!binding.barCodeET.getText().toString().isEmpty()) {
-
-                        if (productList.size() > 0) {
-                            if (allowDuplicate) {
-                                saveData();
-                            } else {
-                                for (int i = 0; i < productList.size(); i++) {
-                                    if (productList.get(i).getBarcode().equals(binding.barCodeET.getText().toString().trim())) {
-                                        Toast.makeText(AddDataAcquisitionActivity.this, "Duplicate barcode", Toast.LENGTH_SHORT).show();
-                                        isFound = true;
-                                        if(isScannerOpen){
-                                            binding.barCodeFromSCET.requestFocus();
-                                            binding.barCodeFromSCET.setSelectAllOnFocus(true);
-                                        }else{
-                                            binding.barCodeFromSCET.requestFocus();
-                                            binding.barCodeET.setSelectAllOnFocus(true);
-                                            binding.barCodeET.requestFocus();
-                                            binding.barCodeET.setSelectAllOnFocus(true);
-                                        }
-                                    }
-                                }
-                                if (!isFound) {
-                                    saveData();
-                                }
-
-                            }
+                        if (quantityStatus) {
+                            binding.quantityEt.requestFocus();
+                            InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
                         } else {
-                            saveData();
+                            checkduplicateText();
+                        }
+                    }
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
+        binding.quantityEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if (!binding.quantityEt.getText().toString().isEmpty()) {
+                        if (isScannerOpen) {
+                            productList.add(new Product(fileName, binding.barCodeFromSCET.getText().toString(), "", binding.quantityEt.getText().toString()));
+                            binding.lastBarLL.setVisibility(View.VISIBLE);
+                            configproductList();
+                            saveIntoDb(fileName, binding.barCodeFromSCET.getText().toString());
+                            binding.barCodeFromSCET.setText("");
+                            binding.barCodeFromSCET.requestFocus();
+                        } else {
+                            checkduplicateText();
+                            binding.barCodeET.requestFocus();
                         }
                     }
 
@@ -200,26 +211,72 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                productList.add(new Product(fileName, binding.barCodeFromSCET.getText().toString(), "","1"));
-                binding.lastBarLL.setVisibility(View.VISIBLE);
-                configproductList();
-                saveIntoDb(fileName, binding.barCodeFromSCET.getText().toString());
-                binding.barCodeFromSCET.setText("");
+
+                if (quantityStatus) {
+                    binding.quantityEt.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                } else {
+                    productList.add(new Product(fileName, binding.barCodeFromSCET.getText().toString(), "", ""));
+                    binding.lastBarLL.setVisibility(View.VISIBLE);
+                    configproductList();
+                    saveIntoDb(fileName, binding.barCodeFromSCET.getText().toString());
+                    binding.barCodeFromSCET.setText("");
+                }
+
 
             }
         });
     }
 
+    private void checkduplicateText() {
+        if (productList.size() > 0) {
+            if (allowDuplicate) {
+                saveData();
+            } else {
+                for (int i = 0; i < productList.size(); i++) {
+                    if (productList.get(i).getBarcode().equals(binding.barCodeET.getText().toString().trim())) {
+                        Toast.makeText(AddDataAcquisitionActivity.this, "Duplicate barcode", Toast.LENGTH_SHORT).show();
+                        isFound = true;
+                        if (isScannerOpen) {
+                            binding.barCodeFromSCET.requestFocus();
+                            binding.barCodeFromSCET.setSelectAllOnFocus(true);
+                        } else {
+                            binding.barCodeFromSCET.requestFocus();
+                            binding.barCodeET.setSelectAllOnFocus(true);
+                            binding.barCodeET.requestFocus();
+                            binding.barCodeET.setSelectAllOnFocus(true);
+                        }
+                    }
+                }
+                if (!isFound) {
+                    saveData();
+                }
+
+            }
+        } else {
+            saveData();
+        }
+
+    }
+
     private void saveData() {
-        productList.add(new Product(fileName, binding.barCodeET.getText().toString(), "","1"));
+        if (quantityStatus) {
+            productList.add(new Product(fileName, binding.barCodeET.getText().toString(), "", binding.quantityEt.getText().toString()));
+        } else {
+            productList.add(new Product(fileName, binding.barCodeET.getText().toString(), "", ""));
+        }
         binding.lastBarLL.setVisibility(View.VISIBLE);
         configproductList();
         saveIntoDb(fileName, binding.barCodeET.getText().toString());
         binding.barCodeET.setText("");
+        binding.quantityEt.setText("");
+
+
     }
 
     private void saveIntoDb(String fileName, String barcode) {
-        final Product product = new Product(fileName, barcode, "","1");
+        final Product product = new Product(fileName, barcode, "", "1");
 
         MasterExecutor.getInstance().diskIO().execute(new Runnable() {
             @Override

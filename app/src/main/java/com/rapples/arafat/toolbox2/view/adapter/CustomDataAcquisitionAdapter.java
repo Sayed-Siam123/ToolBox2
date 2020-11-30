@@ -1,9 +1,11 @@
 package com.rapples.arafat.toolbox2.view.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,7 @@ import com.rapples.arafat.toolbox2.Database.Acquisition_DB;
 import com.rapples.arafat.toolbox2.Database.MasterExecutor;
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.model.Product;
+import com.rapples.arafat.toolbox2.util.SharedPref;
 import com.rapples.arafat.toolbox2.view.activity.DataAcquisitionActivity;
 
 import java.util.List;
@@ -22,10 +25,13 @@ public class CustomDataAcquisitionAdapter extends RecyclerView.Adapter<CustomDat
 
     List<Product> productList;
     Context context;
+    SharedPreferences sharedPreferences;
+    boolean quantityStatus;
 
     public CustomDataAcquisitionAdapter(List<Product> productList, Context context) {
         this.productList = productList;
         this.context = context;
+        sharedPreferences = context.getSharedPreferences(SharedPref.SETTING_PREFERENCE,Context.MODE_PRIVATE);
     }
 
     @NonNull
@@ -37,11 +43,18 @@ public class CustomDataAcquisitionAdapter extends RecyclerView.Adapter<CustomDat
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        quantityStatus = sharedPreferences.getBoolean(SharedPref.QUANTITY_FIELD,false);
 
         Product product = productList.get(position);
         holder.barcode.setText(product.getBarcode());
         holder.description.setText(product.getDescription());
 
+        if(quantityStatus){
+            holder.quantityTv.setText(product.getQuantity());
+            holder.quantityLL.setVisibility(View.VISIBLE);
+        }else{
+            holder.quantityLL.setVisibility(View.GONE);
+        }
 
 
     }
@@ -52,12 +65,15 @@ public class CustomDataAcquisitionAdapter extends RecyclerView.Adapter<CustomDat
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView barcode,description;
+        private TextView barcode,description, quantityTv;
+        private LinearLayout quantityLL;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             barcode = itemView.findViewById(R.id.barcodeTv);
             description = itemView.findViewById(R.id.descriptionTv);
+            quantityTv = itemView.findViewById(R.id.quantityTv);
+            quantityLL = itemView.findViewById(R.id.quantityLiL);
         }
     }
 }
