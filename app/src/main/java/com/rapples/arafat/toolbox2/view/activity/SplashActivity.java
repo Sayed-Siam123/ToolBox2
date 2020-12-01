@@ -1,14 +1,21 @@
 package com.rapples.arafat.toolbox2.view.activity;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.content.Context;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.widget.Toast;
 import android.util.Log;
 
 import com.rapples.arafat.toolbox2.R;
@@ -24,6 +31,7 @@ public class SplashActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +39,9 @@ public class SplashActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_splash);
         setContentView(R.layout.activity_splash);
 
-        createDirectory();
-
         init();
+
+        createDir();
 
         setDefaultValue();
 
@@ -46,7 +54,6 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         },3000);
-
     }
 
     private void setDefaultValue() {
@@ -57,11 +64,11 @@ public class SplashActivity extends AppCompatActivity {
     private void init() {
         sharedPreferences = getSharedPreferences(SharedPref.SETTING_PREFERENCE,MODE_PRIVATE);
         editor = sharedPreferences.edit();
-
-
     }
 
-    private void createDirectory() {
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    private void createDir() {
+
         File mydir = this.getDir("toolbox_directory", Context.MODE_PRIVATE); //Creating an internal dir;
 
         //creating folder in external storage
@@ -82,6 +89,7 @@ public class SplashActivity extends AppCompatActivity {
             e.printStackTrace();
             Log.e("Dir faild", e.toString());
         }
+
 
     }
 
