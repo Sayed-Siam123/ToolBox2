@@ -6,23 +6,26 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "PRODUCT")
 public class Product {
     @PrimaryKey(autoGenerate = true)
-    int id;
+    public int id;
     private String fileId;
     private String barcode;
     private String description;
+    private String quantity;
 
     @Ignore
-    public Product(int id, String fileId, String barcode, String description) {
+    public Product(int id, String fileId, String barcode, String description,String quantity) {
         this.id = id;
         this.fileId = fileId;
         this.barcode = barcode;
         this.description = description;
+        this.quantity = quantity;
     }
 
-    public Product(String fileId, String barcode, String description) {
+    public Product(String fileId, String barcode, String description,String quantity) {
         this.fileId = fileId;
         this.barcode = barcode;
         this.description = description;
+        this.quantity = quantity;
     }
 
     public int getId() {
@@ -55,5 +58,13 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 }

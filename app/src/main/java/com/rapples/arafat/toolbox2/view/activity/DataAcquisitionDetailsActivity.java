@@ -80,7 +80,7 @@ public class DataAcquisitionDetailsActivity extends AppCompatActivity {
                         }
                         binding.dataAcquisitionDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(DataAcquisitionDetailsActivity.this));
                         if (editable.equals("true")) {
-                            editAdapter = new CustomDataAcquisitionEditAdapter(productList, DataAcquisitionDetailsActivity.this);
+                            editAdapter = new CustomDataAcquisitionEditAdapter(productList, DataAcquisitionDetailsActivity.this,fileName);
                             binding.dataAcquisitionDetailsRecyclerView.setAdapter(editAdapter);
 
                         } else {

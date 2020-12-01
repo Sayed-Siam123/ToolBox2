@@ -8,18 +8,17 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -30,16 +29,13 @@ import com.rapples.arafat.toolbox2.Database.Acquisition_DB;
 import com.rapples.arafat.toolbox2.Database.MasterExecutor;
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityAddDataAcquisitionBinding;
-import com.rapples.arafat.toolbox2.model.DataAcquisition;
 import com.rapples.arafat.toolbox2.model.Product;
 import com.rapples.arafat.toolbox2.util.SharedPref;
 import com.rapples.arafat.toolbox2.view.adapter.CustomDataAcquisitionAdapter;
-import com.rapples.arafat.toolbox2.view.adapter.CustomDataAcquisitionEditAdapter;
 import com.rapples.arafat.toolbox2.view.adapter.LastDataAcquisitionAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
@@ -52,6 +48,8 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
     private static final String EXTRA_PROFILE = "com.honeywell.aidc.extra.EXTRA_PROFILE";
     private static final String EXTRA_PROPERTIES = "com.honeywell.aidc.extra.EXTRA_PROPERTIES";
     private ActivityAddDataAcquisitionBinding binding;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private boolean isScannerOpen = true;
     private CustomDataAcquisitionAdapter adapter;
     private LastDataAcquisitionAdapter lastDataAcquisitionAdapter;
@@ -59,6 +57,9 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
     private List<Product> showList;
     private String isAdded = "false";
     private String fileName;
+    private boolean allowDuplicate;
+    private boolean isFound;
+
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
         @Override
@@ -90,26 +91,35 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
 
         init();
 
+        checkSetting();
+
         getFileName();
 
         defaultFocus();
 
-        submitCode();
+        checkDuplicateCode();
 
         configproductList();
 
     }
 
 
+    private void checkSetting() {
+        allowDuplicate = sharedPreferences.getBoolean(SharedPref.ALLOW_DUPLICATE_CODES, false);
+
+    }
+
 
     private void init() {
+        sharedPreferences = getSharedPreferences(SharedPref.SETTING_PREFERENCE, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         productList = new ArrayList<>();
         showList = new ArrayList<>();
     }
 
     private void configproductList() {
 
-        if (productList.size() >0) {
+        if (productList.size() > 0) {
             showList.clear();
             showList.addAll(productList);
             Collections.reverse(showList);
@@ -126,7 +136,7 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
 
     private void showLastBarcode(List<Product> showLists) {
         binding.dataAcquisitionLastDataRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        lastDataAcquisitionAdapter = new LastDataAcquisitionAdapter(showLists,this);
+        lastDataAcquisitionAdapter = new LastDataAcquisitionAdapter(showLists, this);
         binding.dataAcquisitionLastDataRecyclerView.setAdapter(lastDataAcquisitionAdapter);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
@@ -134,19 +144,43 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
 
     }
 
-    private void submitCode() {
+    private void checkDuplicateCode() {
+
         binding.barCodeET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
+                isFound = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     if (!binding.barCodeET.getText().toString().isEmpty()) {
-                        productList.add(new Product(fileName,binding.barCodeET.getText().toString(), ""));
-                        binding.lastBarLL.setVisibility(View.VISIBLE);
-                        configproductList();
-                        saveIntoDb(fileName,binding.barCodeET.getText().toString());
-                        binding.barCodeET.setText("");
 
+                        if (productList.size() > 0) {
+                            if (allowDuplicate) {
+                                saveData();
+                            } else {
+                                for (int i = 0; i < productList.size(); i++) {
+                                    if (productList.get(i).getBarcode().equals(binding.barCodeET.getText().toString().trim())) {
+                                        Toast.makeText(AddDataAcquisitionActivity.this, "Duplicate barcode", Toast.LENGTH_SHORT).show();
+                                        isFound = true;
+                                        if(isScannerOpen){
+                                            binding.barCodeFromSCET.requestFocus();
+                                            binding.barCodeFromSCET.setSelectAllOnFocus(true);
+                                        }else{
+                                            binding.barCodeFromSCET.requestFocus();
+                                            binding.barCodeET.setSelectAllOnFocus(true);
+                                            binding.barCodeET.requestFocus();
+                                            binding.barCodeET.setSelectAllOnFocus(true);
+                                        }
+                                    }
+                                }
+                                if (!isFound) {
+                                    saveData();
+                                }
+
+                            }
+                        } else {
+                            saveData();
+                        }
                     }
 
                     handled = true;
@@ -157,24 +191,35 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
 
         binding.barCodeFromSCET.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
-                productList.add(new Product(fileName,binding.barCodeFromSCET.getText().toString(), ""));
+                productList.add(new Product(fileName, binding.barCodeFromSCET.getText().toString(), "","1"));
                 binding.lastBarLL.setVisibility(View.VISIBLE);
                 configproductList();
-                saveIntoDb(fileName,binding.barCodeFromSCET.getText().toString());
+                saveIntoDb(fileName, binding.barCodeFromSCET.getText().toString());
                 binding.barCodeFromSCET.setText("");
 
             }
         });
     }
 
+    private void saveData() {
+        productList.add(new Product(fileName, binding.barCodeET.getText().toString(), "","1"));
+        binding.lastBarLL.setVisibility(View.VISIBLE);
+        configproductList();
+        saveIntoDb(fileName, binding.barCodeET.getText().toString());
+        binding.barCodeET.setText("");
+    }
+
     private void saveIntoDb(String fileName, String barcode) {
-        final Product product = new Product(fileName,barcode, "");
+        final Product product = new Product(fileName, barcode, "","1");
 
         MasterExecutor.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -199,6 +244,7 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        checkSetting();
         registerReceiver(barcodeDataReceiver, new IntentFilter(ACTION_BARCODE_DATA));
         claimScanner();
     }
@@ -233,7 +279,7 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
         fileName = getIntent().getStringExtra(SharedPref.FILE_NAME);
         isAdded = getIntent().getStringExtra(SharedPref.IS_ADDED);
         binding.fileNameTv.setText(fileName);
-        if(isAdded != null) {
+        if (isAdded != null) {
             if (isAdded.equals("true")) {
                 MasterExecutor.getInstance().diskIO().execute(new Runnable() {
                     @Override
