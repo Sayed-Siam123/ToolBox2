@@ -6,6 +6,23 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabButton1"
+                android:layout_width="wrap_content"
+                android:elevation="5dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="submit"
+                android:onClick="fabButtonClicktoPrint"
+                android:src="@drawable/ic_baseline_local_printshop_24"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/firstLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -18,19 +35,20 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="598dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    android:gravity="right"
                     android:orientation="horizontal">
 
                     <View
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:layout_marginLeft="230dp"
+
                         android:layout_marginTop="3dp"
                         android:background="@drawable/circular_shape"></View>
 
@@ -140,7 +158,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -169,13 +187,13 @@
                                 android:visibility="visible">
 
                                 <EditText
-                                    android:windowSoftInputMode="stateVisible"
                                     android:id="@+id/barcodeET1"
                                     android:layout_width="0dp"
                                     android:layout_height="40dp"
                                     android:layout_weight="1"
                                     android:background="@android:color/transparent"
-                                    android:singleLine="true"/>
+                                    android:singleLine="true"
+                                    android:windowSoftInputMode="stateVisible" />
 
                             </LinearLayout>
 
@@ -289,11 +307,11 @@
 
                 <LinearLayout
                     android:id="@+id/quantityPrint"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:orientation="horizontal"
-                    android:layout_margin="10dp">
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -303,14 +321,14 @@
 
 
                     <Button
-                        android:layout_marginTop="10dp"
                         android:layout_width="22dp"
                         android:layout_height="20dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/decrement_button_shape"
+                        android:onClick="decrementQuantity"
                         android:text="-"
                         android:textColor="@color/white"
-                        android:textSize="15dp"
-                        android:onClick="decrementQuantity"
-                        android:background="@drawable/decrement_button_shape" />
+                        android:textSize="15dp" />
 
 
                     <TextView
@@ -321,47 +339,45 @@
                         android:text="1" />
 
                     <Button
-                        android:layout_marginTop="10dp"
                         android:layout_width="22dp"
                         android:layout_height="20dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/increment_button_shape"
+                        android:onClick="incrementQuantity"
                         android:text="+"
                         android:textColor="@color/white"
-                        android:textSize="15dp"
-                        android:onClick="incrementQuantity"
-                        android:background="@drawable/increment_button_shape" />
-
+                        android:textSize="15dp" />
 
 
                 </LinearLayout>
 
 
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/imageViewbarcode"
+                    android:layout_width="300dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_equalizer"
+                    android:visibility="visible">
+
+                </ImageView>
+
+                <include
+                    android:id="@+id/labelQnty"
+                    android:visibility="visible"
+                    layout="@layout/label_with_qnty"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="270dp"
-                    android:gravity="right">
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fabButton1"
-                        android:visibility="gone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|bottom"
-                        android:layout_margin="16dp"
-                        android:onClick="fabButtonClicktoPrint"
-                        android:contentDescription="submit"
-                        android:src="@drawable/ic_baseline_local_printshop_24" />
-
-                </LinearLayout>
+                    android:layout_height="match_parent" />
 
 
             </LinearLayout>
+
 
         </LinearLayout>
 
 
 
 
-    </RelativeLayout>
 
+    </RelativeLayout>
 </layout>
