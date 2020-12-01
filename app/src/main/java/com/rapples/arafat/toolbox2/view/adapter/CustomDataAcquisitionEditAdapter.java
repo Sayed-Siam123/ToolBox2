@@ -3,6 +3,7 @@ package com.rapples.arafat.toolbox2.view.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,8 @@ public class CustomDataAcquisitionEditAdapter extends RecyclerView.Adapter<Custo
             holder.quantityLayout.setVisibility(View.GONE);
         }
         holder.quantity.setText(product.getQuantity());
+
+        Log.d("sajib", "onBindViewHolder: "+product.getQuantity());
 
 
         holder.increaseBtn.setOnClickListener(new View.OnClickListener() {

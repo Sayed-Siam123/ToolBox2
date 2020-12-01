@@ -45,6 +45,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private LinearLayout barcodeComparationLL, customFunctionLL, dataAquistionLL;
     private TextView customFunctionName, customFunctiondescription;
     boolean doubleBackToExitPressedOnce = false;
+    boolean dataAcquisitionFunction;
 
 
     public boolean status = false;
@@ -81,7 +82,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void checkFunction() {
         boolean comparisonFuntion = sharedPreferences.getBoolean(SharedPref.BARCODE_COMPARISON_FUNTION, false);
         boolean customFuntion = sharedPreferences.getBoolean(SharedPref.CUSTOM_FUNCTION, false);
-        boolean dataAcquisitionFunction = sharedPreferences.getBoolean(SharedPref.DATA_ACQUISITION_FUNCTION,false);
+        dataAcquisitionFunction = sharedPreferences.getBoolean(SharedPref.DATA_ACQUISITION_FUNCTION,false);
 
         if (comparisonFuntion) {
             barcodeComparationLL.setVisibility(View.VISIBLE);
@@ -163,7 +164,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
     public void openDataAcquisition(View v) {
         Log.d("Barcode  Cmp", "onNavigationItemSelected: Barcode compare");
-        startActivity(new Intent(HomeActivity.this, DataAcquisitionActivity.class));
+
+        if(dataAcquisitionFunction){
+            startActivity(new Intent(HomeActivity.this, DataAcquisitionActivity.class));
+        }
+
+
 
     }
 
