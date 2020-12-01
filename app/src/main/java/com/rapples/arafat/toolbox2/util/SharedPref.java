@@ -31,6 +31,7 @@ public class SharedPref {
     public static final String ID ="id";
     public static final String EDITABLE = "editable";
     public static final String IS_ADDED = "isAdded";
+    public static final String CUSTOM_FIELD_LIST = "customFieldList";
 
 
 

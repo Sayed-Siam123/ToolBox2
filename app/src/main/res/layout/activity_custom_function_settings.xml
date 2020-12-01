@@ -57,256 +57,261 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
-        android:id="@+id/bodyLL"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:orientation="vertical">
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/black" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Custom Function"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
+        android:layout_below="@+id/toolbar">
         <LinearLayout
+            android:id="@+id/bodyLL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black" />
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:text="Funtion is active"
+                android:text="Custom Function"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-            <Switch
-                android:id="@+id/customFuntionSwitch"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp" />
-        </LinearLayout>
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="0.4"
-                android:text="Name:"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <RelativeLayout
-                android:layout_margin="5dp"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:background="@drawable/edit_text_background"
-                android:layout_weight="0.6">
-
-                <EditText
-                    android:layout_marginLeft="5dp"
-                    android:id="@+id/nameEt"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"/>
-            </RelativeLayout>
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="Funtion is active"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="0.4"
-                android:text="Description:"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <RelativeLayout
-                android:layout_margin="5dp"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:background="@drawable/edit_text_background"
-                android:layout_weight="0.6">
-
-                <EditText
-                    android:id="@+id/descriptionEt"
-                    android:layout_width="match_parent"
+                <Switch
+                    android:id="@+id/customFuntionSwitch"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:background="@android:color/transparent"/>
-            </RelativeLayout>
+                    android:layout_marginRight="10dp" />
+            </LinearLayout>
 
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/black" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:text="Timestamp"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <Switch
-                android:id="@+id/timeStampSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="0.4"
-                android:text="Name/id:"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <RelativeLayout
-                android:layout_margin="5dp"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:background="@drawable/edit_text_background"
-                android:layout_weight="0.6">
-
-                <EditText
-                    android:id="@+id/nameIdEt"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"/>
-            </RelativeLayout>
+                    android:layout_margin="10dp"
+                    android:layout_weight="0.4"
+                    android:text="Name:"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:layout_margin="5dp"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/edit_text_background"
+                    android:layout_weight="0.6">
+
+                    <EditText
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/nameEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"/>
+                </RelativeLayout>
 
 
-        </LinearLayout>
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="0.4"
-                android:text="Separator:"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
 
-            <RelativeLayout
-                android:layout_margin="5dp"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:background="@drawable/edit_text_background"
-                android:layout_weight="0.6">
-
-                <EditText
-                    android:id="@+id/separatorEt"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"/>
-            </RelativeLayout>
+                    android:layout_margin="10dp"
+                    android:layout_weight="0.4"
+                    android:text="Description:"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:layout_margin="5dp"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/edit_text_background"
+                    android:layout_weight="0.6">
+
+                    <EditText
+                        android:id="@+id/descriptionEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@android:color/transparent"/>
+                </RelativeLayout>
 
 
-        </LinearLayout>
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black" />
 
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="0.4"
-                android:text="Fileformat:"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <RelativeLayout
-                android:layout_margin="5dp"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:background="@drawable/edit_text_background"
-                android:layout_weight="0.6">
-
-                <Spinner
-                    android:id="@+id/fileFormateDropdown"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown"/>
-            </RelativeLayout>
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="Timestamp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
+                <Switch
+                    android:id="@+id/timeStampSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="0.4"
+                    android:text="Name/id:"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:layout_margin="5dp"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/edit_text_background"
+                    android:layout_weight="0.6">
+
+                    <EditText
+                        android:id="@+id/nameIdEt"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"/>
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="0.4"
+                    android:text="Separator:"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:layout_margin="5dp"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/edit_text_background"
+                    android:layout_weight="0.6">
+
+                    <EditText
+                        android:id="@+id/separatorEt"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"/>
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="0.4"
+                    android:text="Fileformat:"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:layout_margin="5dp"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/edit_text_background"
+                    android:layout_weight="0.6">
+
+                    <Spinner
+                        android:id="@+id/fileFormateDropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dropdown"/>
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fieldRecyclearview"
+                android:layout_width="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/black" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fieldRecyclearview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
+    </ScrollView>
 
 
 

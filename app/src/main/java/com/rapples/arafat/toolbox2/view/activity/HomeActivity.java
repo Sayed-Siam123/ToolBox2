@@ -98,6 +98,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             customFunctionLL.setVisibility(View.GONE);
         }
 
+        customFunctionLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this,AddCustomFunctionDataAcquisition.class));
+            }
+        });
+
 //        if(dataAcquisitionFunction){
 //            dataAquistionLL.setEnabled(true);
 //        }else{
