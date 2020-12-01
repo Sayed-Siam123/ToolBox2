@@ -53,9 +53,14 @@ public class CustomFileAdapter extends RecyclerView.Adapter<CustomFileAdapter.Vi
 
         final DataAcquisition dataAcquisition = dataAcquisitionList.get(position);
 
+        String title ="";
         holder.fileNameTv.setText(dataAcquisition.getFileName());
         holder.dateTv.setText(dataAcquisition.getDate());
-        holder.iconTv.setText("" + dataAcquisition.getFileName().charAt(0) + "F");
+        String[] words = dataAcquisition.getFileName().split("\\W+");
+        for(int i=0;i<words.length;i++){
+            title += words[i].toUpperCase().charAt(0);
+        }
+        holder.iconTv.setText(title);
         setValueCount(holder, dataAcquisition.getFileName());
 
         int[] colorList = new int[]{R.color.blue, R.color.purple, R.color.green,R.color.orange,R.color.red,R.color.darkblue,

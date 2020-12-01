@@ -2,6 +2,7 @@ package com.rapples.arafat.toolbox2.view.adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,11 +47,12 @@ public class CustomDataAcquisitionAdapter extends RecyclerView.Adapter<CustomDat
         quantityStatus = sharedPreferences.getBoolean(SharedPref.QUANTITY_FIELD,false);
 
         Product product = productList.get(position);
+        Log.d("sajib", "onBindViewHolder: "+product.getQuantity()+" sd"+product.getBarcode());
         holder.barcode.setText(product.getBarcode());
         holder.description.setText(product.getDescription());
-
+        holder.quantityTv.setText(product.getQuantity());
         if(quantityStatus){
-            holder.quantityTv.setText(product.getQuantity());
+
             holder.quantityLL.setVisibility(View.VISIBLE);
         }else{
             holder.quantityLL.setVisibility(View.GONE);

@@ -185,7 +185,7 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
                             productList.add(new Product(fileName, binding.barCodeFromSCET.getText().toString(), "", binding.quantityEt.getText().toString()));
                             binding.lastBarLL.setVisibility(View.VISIBLE);
                             configproductList();
-                            saveIntoDb(fileName, binding.barCodeFromSCET.getText().toString());
+                            saveIntoDb(fileName, binding.barCodeFromSCET.getText().toString(),binding.quantityEt.getText().toString());
                             binding.barCodeFromSCET.setText("");
                             binding.barCodeFromSCET.requestFocus();
                         } else {
@@ -220,7 +220,7 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
                     productList.add(new Product(fileName, binding.barCodeFromSCET.getText().toString(), "", ""));
                     binding.lastBarLL.setVisibility(View.VISIBLE);
                     configproductList();
-                    saveIntoDb(fileName, binding.barCodeFromSCET.getText().toString());
+                    saveIntoDb(fileName, binding.barCodeFromSCET.getText().toString(),binding.quantityEt.getText().toString());
                     binding.barCodeFromSCET.setText("");
                 }
 
@@ -268,15 +268,15 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
         }
         binding.lastBarLL.setVisibility(View.VISIBLE);
         configproductList();
-        saveIntoDb(fileName, binding.barCodeET.getText().toString());
+        saveIntoDb(fileName, binding.barCodeET.getText().toString(),binding.quantityEt.getText().toString());
         binding.barCodeET.setText("");
         binding.quantityEt.setText("");
 
 
     }
 
-    private void saveIntoDb(String fileName, String barcode) {
-        final Product product = new Product(fileName, barcode, "", "1");
+    private void saveIntoDb(String fileName, String barcode,String quantity) {
+        final Product product = new Product(fileName, barcode, "", quantity);
 
         MasterExecutor.getInstance().diskIO().execute(new Runnable() {
             @Override
