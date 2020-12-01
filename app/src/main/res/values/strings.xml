@@ -62,5 +62,6 @@
     <string name="last_barcode">Last Barcode:</string>
     <string name="list">List:</string>
     <string name="quantity">Quantity</string>
+    <string name="print">print</string>
 
 </resources>

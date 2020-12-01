@@ -183,6 +183,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
 
+    public void label_printing(View v) {
+        Log.d("Label print", "onNavigationItemSelected: Label print");
+        startActivity(new Intent(HomeActivity.this, LabelPrintActivity.class));
+
+    }
+
 
     @Override
     public void onBackPressed() {
