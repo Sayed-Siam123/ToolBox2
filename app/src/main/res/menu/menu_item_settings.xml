@@ -4,11 +4,11 @@
     <group android:checkableBehavior="single">
 
         <item android:id="@+id/item_barcode_settings"
-            android:title="Barcode Settings"/>
+            android:title="@string/menu_barcode_settings"/>
         <item android:id="@+id/item_application_settings"
-            android:title="Application Settings"/>
+            android:title="@string/menu_application_settings"/>
         <item android:id="@+id/item_custom_settings"
-            android:title="Custom Settings"/>
+            android:title="@string/menu_custom_settings"/>
     </group>
 
 

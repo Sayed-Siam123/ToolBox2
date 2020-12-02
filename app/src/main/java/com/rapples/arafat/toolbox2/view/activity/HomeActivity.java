@@ -2,14 +2,18 @@ package com.rapples.arafat.toolbox2.view.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +30,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityHome2Binding;
 import com.rapples.arafat.toolbox2.util.SharedPref;
+
+import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -48,6 +54,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     boolean dataAcquisitionFunction;
 
 
+    int checked = -1;
+
     public boolean status = false;
     ImageView back_button, menu_button;
 
@@ -67,6 +75,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         binding = DataBindingUtil.setContentView(HomeActivity.this,R.layout.activity_home2);
         init();
         checkFunction();
+        setDefaultLanguageValue();
         back_button = (ImageView) findViewById(R.id.back_to_menu_icon);
         menu_button = (ImageView) findViewById(R.id.menu_image);
         drawer = binding.drawerLayout;
@@ -140,6 +149,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Log.d("File upload", "onNavigationItemSelected: File upload");
         } else if (id == R.id.item_language) {
             Log.d("item_language", "onNavigationItemSelected: Item Language");
+            openLanguageDialog();
         } else if (id == R.id.item_about) {
             startActivity(new Intent(HomeActivity.this, AboutActivity.class));
         } else if (id == R.id.item_barcode_settings) {
@@ -152,6 +162,57 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
         return true;
+    }
+
+    private void openLanguageDialog() {
+        final String[] language = {"English","German"};
+        final AlertDialog.Builder language_dialog_builder = new AlertDialog.Builder(this);
+        language_dialog_builder.setTitle("Choose Language");
+        language_dialog_builder.setSingleChoiceItems(language, checked, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(which == 0){
+                    Log.d("TAG", "onClick: ENNGLISH");
+                    setLocal("en");
+                    checked =  0;
+                    recreate();
+                }
+                else {
+                    Log.d("TAG", "onClick: German");
+                    setLocal("de");
+                    checked =  1;
+                    recreate();
+                }
+                dialog.dismiss();
+            }
+        });
+        AlertDialog language_dialog = language_dialog_builder.create();
+        language_dialog.show();
+    }
+
+
+    private void setDefaultLanguageValue() {
+        sharedPreferences = getSharedPreferences(SharedPref.LANGUAGE, Activity.MODE_PRIVATE);
+        String language = sharedPreferences.getString(SharedPref.SET_LANGUAGE,"en");
+        setLocal(language);
+        Log.d("TAG", "setDefaultLanguageValue: "+language);
+        if(language.equals("en")){
+            checked = 0;
+        }
+        else{
+            checked = 1;
+        }
+    }
+
+    private void setLocal(String language) {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
+        editor = getSharedPreferences(SharedPref.LANGUAGE,MODE_PRIVATE).edit();
+        editor.putString(SharedPref.SET_LANGUAGE,language);
+        editor.apply();
     }
 
 
