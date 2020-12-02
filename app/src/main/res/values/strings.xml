@@ -63,5 +63,7 @@
     <string name="list">List:</string>
     <string name="quantity">Quantity</string>
     <string name="print">print</string>
+    <string name="barcode_label">Barcode Label</string>
+    <string name="print_barcodetype">Print barcodetype:</string>
 
 </resources>

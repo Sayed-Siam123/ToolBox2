@@ -11,6 +11,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import com.rapples.arafat.toolbox2.Database.MasterExecutor;
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityLabelPrintBinding;
 import com.rapples.arafat.toolbox2.model.Masterdata;
+import com.rapples.arafat.toolbox2.util.SharedPref;
 import com.rapples.arafat.toolbox2.view.adapter.CustomMasterDataAdapter;
 
 import java.util.ArrayList;
@@ -52,12 +54,15 @@ public class LabelPrintActivity extends AppCompatActivity {
     private final boolean isScannerOpenTrue = true;
 
     private ActivityLabelPrintBinding binding;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private final boolean flag = false;
     private boolean ScannerOpen = true;
     private List<Masterdata> masterDataList;
     private int quantity = 1;
     private TextView productDesc, price;
     private boolean masterData = false;
+    private String barcodeType;
     ImageView image;
 
 
@@ -88,9 +93,18 @@ public class LabelPrintActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_label_print);
 
         init();
+
+        getSharedPrederenceData();
+
         setDataIntoMaster();
 
         scannerTextWatch();
+    }
+
+    private void getSharedPrederenceData() {
+
+        barcodeType = sharedPreferences.getString(SharedPref.PRINT_BARCODE_TYPE,"");
+
     }
 
     private void scannerTextWatch() {
@@ -239,6 +253,8 @@ public class LabelPrintActivity extends AppCompatActivity {
 
 
     private void init() {
+        sharedPreferences = getSharedPreferences(SharedPref.SETTING_PREFERENCE,MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         masterDataList = new ArrayList<>();
         binding.labelQnty.setVisibility(View.INVISIBLE);
         binding.imageViewbarcode.setVisibility(View.GONE);
@@ -324,8 +340,19 @@ public class LabelPrintActivity extends AppCompatActivity {
     public void getBarcode(Masterdata data) {
         Bitmap bitmap = null;
 
+
         try {
-            bitmap = encodeAsBitmap(data.getBarcode(), BarcodeFormat.CODE_128, 600, 300);
+
+            if(barcodeType.equals("Code 128")){
+                bitmap = encodeAsBitmap(data.getBarcode(), BarcodeFormat.CODE_128, 600, 300);
+            }else if(barcodeType.equals("2D Datamatrix")){
+                bitmap = encodeAsBitmap(data.getBarcode(), BarcodeFormat.DATA_MATRIX, 400, 400);
+            }else{
+                bitmap = encodeAsBitmap(data.getBarcode(), BarcodeFormat.CODE_128, 600, 300);
+            }
+
+
+
             //binding.imageViewbarcode.setImageBitmap(bitmap);
             binding.labelQnty.setVisibility(View.VISIBLE);
             finalLayout(bitmap, data);
@@ -401,6 +428,7 @@ public class LabelPrintActivity extends AppCompatActivity {
         }
         return null;
     }
+
 
     public void finalLayout(Bitmap barcodeImage, Masterdata data) {
         productDesc.setText(data.getDescription());
