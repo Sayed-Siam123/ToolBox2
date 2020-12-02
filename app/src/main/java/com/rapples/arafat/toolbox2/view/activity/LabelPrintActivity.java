@@ -346,7 +346,7 @@ public class LabelPrintActivity extends AppCompatActivity {
             if(barcodeType.equals("Code 128")){
                 bitmap = encodeAsBitmap(data.getBarcode(), BarcodeFormat.CODE_128, 600, 300);
             }else if(barcodeType.equals("2D Datamatrix")){
-                bitmap = encodeAsBitmap(data.getBarcode(), BarcodeFormat.DATA_MATRIX, 400, 400);
+                bitmap = encodeAsBitmap(data.getBarcode(), BarcodeFormat.QR_CODE, 400, 400);
             }else{
                 bitmap = encodeAsBitmap(data.getBarcode(), BarcodeFormat.CODE_128, 600, 300);
             }

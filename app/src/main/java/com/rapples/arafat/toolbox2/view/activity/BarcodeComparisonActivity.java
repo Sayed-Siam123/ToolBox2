@@ -71,7 +71,7 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
 
     private String defineCodeName(String codeId) {
         String codeName;
-        switch(codeId) {
+        switch (codeId) {
             case ".":
                 codeName = "DOTCODE";
                 break;
@@ -271,9 +271,9 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
                 codeName = "AZTEC_CODE";
                 break;
             default:
-                codeName ="";
+                codeName = "";
         }
-        return  codeName;
+        return codeName;
     }
 
     @Override
@@ -419,7 +419,7 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        if(masterScannerOpen || referScannerOpen){
+        if (masterScannerOpen || referScannerOpen) {
             unregisterReceiver(barcodeDataReceiver);
             releaseScanner();
         }
@@ -465,7 +465,7 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
     private void compareBarcodeForScanner() {
         String code = binding.masterbarCodeFromSCET.getText().toString();
         binding.resultRL.setVisibility(View.VISIBLE);
-        if(binding.barCodeFromSCET.getText().toString().equals(code)) {
+        if (binding.barCodeFromSCET.getText().toString().equals(code)) {
             binding.resultRL.setBackgroundColor(getResources().getColor(R.color.green));
             binding.statusTV.setText("OK");
             binding.resultRL.setVisibility(View.VISIBLE);
@@ -542,21 +542,21 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         onBackPressed();
     }
 
-    public void registeredScanner(){
+    public void registeredScanner() {
         registerReceiver(barcodeDataReceiver, new IntentFilter(ACTION_BARCODE_DATA));
         claimScanner();
     }
 
-    public void unRegisteredScanner(){
+    public void unRegisteredScanner() {
         unregisterReceiver(barcodeDataReceiver);
         releaseScanner();
 
     }
 
-    public void checkBrodcastReceiver(){
-        if(masterScannerOpen || referScannerOpen){
+    public void checkBrodcastReceiver() {
+        if (masterScannerOpen || referScannerOpen) {
             registeredScanner();
-        }else{
+        } else {
             unRegisteredScanner();
         }
     }
