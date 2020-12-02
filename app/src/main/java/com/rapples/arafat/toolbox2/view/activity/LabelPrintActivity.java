@@ -56,7 +56,7 @@ public class LabelPrintActivity extends AppCompatActivity {
     private boolean ScannerOpen = true;
     private List<Masterdata> masterDataList;
     private int quantity = 1;
-    private TextView productDesc,price;
+    private TextView productDesc, price;
     private boolean masterData = false;
     ImageView image;
 
@@ -86,7 +86,6 @@ public class LabelPrintActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_label_print);
-        binding.underline.setVisibility(View.INVISIBLE);
 
         init();
         setDataIntoMaster();
@@ -116,10 +115,7 @@ public class LabelPrintActivity extends AppCompatActivity {
                     if (masterDataList.get(i).getBarcode().equals(binding.masterbarCodeFromSCET.getText().toString())) {
                         Log.d("TAG", "onEditorAction: exist");
                         binding.afterInputLL.setVisibility(View.VISIBLE);
-                        binding.editbarcodeLL.setVisibility(View.GONE);
-                        binding.scanMastercodeTV.setVisibility(View.GONE);
-                        binding.underline3.setVisibility(View.GONE);
-                        binding.underline.setVisibility(View.VISIBLE);
+                        binding.scanMAsterCodeLL.setVisibility(View.GONE);
                         binding.fabButton1.setVisibility(View.VISIBLE);
                         binding.quantityPrint.setVisibility(View.VISIBLE);
                         binding.quantityTV.setText(String.valueOf(quantity));
@@ -137,21 +133,24 @@ public class LabelPrintActivity extends AppCompatActivity {
 
                     }
                 }
-                if(!masterData){
+                if (!masterData) {
                     binding.afterInputLL.setVisibility(View.VISIBLE);
-                    binding.editbarcodeLL.setVisibility(View.GONE);
-                    binding.scanMastercodeTV.setVisibility(View.GONE);
-                    binding.underline3.setVisibility(View.GONE);
-                    binding.underline.setVisibility(View.VISIBLE);
+                    binding.scanMAsterCodeLL.setVisibility(View.GONE);
                     binding.fabButton1.setVisibility(View.VISIBLE);
                     binding.quantityPrint.setVisibility(View.VISIBLE);
                     binding.quantityTV.setText(String.valueOf(quantity));
                     binding.underline2.setVisibility(View.VISIBLE);
+                    binding.barcodeET1.setText(binding.masterbarCodeFromSCET.getText().toString());
+                    binding.masterbarCodeFromET.requestFocus();
+                    binding.barcodeET1.setSelectAllOnFocus(true);
                     binding.barcodeET1.requestFocus();
+                    binding.barcodeET1.setSelectAllOnFocus(true);
+                    disableFocus();
+                    hideKeyboard(LabelPrintActivity.this);
                     binding.descriptionTitleTv.setText("Barcode Type");
                     binding.priceTitleTv.setText("Digits");
-                    binding.priceTV.setText(binding.masterbarCodeFromSCET.getText().toString().length()+"");
-                    getBarcode(new Masterdata(binding.masterbarCodeFromSCET.getText().toString(),"","",""));
+                    binding.priceTV.setText(binding.masterbarCodeFromSCET.getText().toString().length() + "");
+                    getBarcode(new Masterdata(binding.masterbarCodeFromSCET.getText().toString(), "", "", ""));
                 }
 
 
@@ -170,8 +169,8 @@ public class LabelPrintActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-            unregisterReceiver(barcodeDataReceiver);
-            releaseScanner();
+        unregisterReceiver(barcodeDataReceiver);
+        releaseScanner();
 
     }
 
@@ -193,7 +192,6 @@ public class LabelPrintActivity extends AppCompatActivity {
     public void openKeyboard(View view) {
         binding.scanBarcodeLL.setVisibility(View.GONE);
         binding.editbarcodeLL.setVisibility(View.VISIBLE);
-        binding.underline.setVisibility(View.GONE);
         ScannerOpen = false;
         binding.masterbarCodeFromET.requestFocus();
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -204,7 +202,6 @@ public class LabelPrintActivity extends AppCompatActivity {
     public void openScanner(View view) {
         binding.scanBarcodeLL.setVisibility(View.VISIBLE);
         binding.editbarcodeLL.setVisibility(View.GONE);
-        binding.underline.setVisibility(View.GONE);
         ScannerOpen = true;
         disableFocus();
         hideKeyboard(this);
@@ -278,10 +275,7 @@ public class LabelPrintActivity extends AppCompatActivity {
                         if (masterDataList.get(i).getBarcode().equals(binding.masterbarCodeFromET.getText().toString())) {
                             Log.d("TAG", "onEditorAction: exist");
                             binding.afterInputLL.setVisibility(View.VISIBLE);
-                            binding.editbarcodeLL.setVisibility(View.GONE);
-                            binding.scanMastercodeTV.setVisibility(View.GONE);
-                            binding.underline3.setVisibility(View.GONE);
-                            binding.underline.setVisibility(View.VISIBLE);
+                            binding.scanMAsterCodeLL.setVisibility(View.GONE);
                             binding.fabButton1.setVisibility(View.VISIBLE);
                             binding.quantityPrint.setVisibility(View.VISIBLE);
                             binding.quantityTV.setText(String.valueOf(quantity));
@@ -299,21 +293,24 @@ public class LabelPrintActivity extends AppCompatActivity {
 
                         }
                     }
-                    if(!masterData){
+                    if (!masterData) {
                         binding.afterInputLL.setVisibility(View.VISIBLE);
-                        binding.editbarcodeLL.setVisibility(View.GONE);
-                        binding.scanMastercodeTV.setVisibility(View.GONE);
-                        binding.underline3.setVisibility(View.GONE);
-                        binding.underline.setVisibility(View.VISIBLE);
+                        binding.scanMAsterCodeLL.setVisibility(View.GONE);
                         binding.fabButton1.setVisibility(View.VISIBLE);
                         binding.quantityPrint.setVisibility(View.VISIBLE);
                         binding.quantityTV.setText(String.valueOf(quantity));
                         binding.underline2.setVisibility(View.VISIBLE);
+                        binding.barcodeET1.setText(binding.masterbarCodeFromET.getText().toString());
+                        binding.masterbarCodeFromET.requestFocus();
+                        binding.barcodeET1.setSelectAllOnFocus(true);
                         binding.barcodeET1.requestFocus();
+                        binding.barcodeET1.setSelectAllOnFocus(true);
+                        disableFocus();
+                        hideKeyboard(LabelPrintActivity.this);
                         binding.descriptionTitleTv.setText("Barcode Type");
                         binding.priceTitleTv.setText("Digits");
-                        binding.priceTV.setText(binding.masterbarCodeFromET.getText().toString().length()+"");
-                        getBarcode(new Masterdata(binding.masterbarCodeFromET.getText().toString(),"","",""));
+                        binding.priceTV.setText(binding.masterbarCodeFromET.getText().toString().length() + "");
+                        getBarcode(new Masterdata(binding.masterbarCodeFromET.getText().toString(), "", "", ""));
                     }
 
                     handled = true;
@@ -407,14 +404,13 @@ public class LabelPrintActivity extends AppCompatActivity {
 
     public void finalLayout(Bitmap barcodeImage, Masterdata data) {
         productDesc.setText(data.getDescription());
-        if(data.getPrice().equals("") || data.getPrice().equals("null")){
+        if (data.getPrice().equals("") || data.getPrice().equals("null")) {
             price.setText("");
-        }
-        else{
+        } else {
             price.setText(data.getPrice());
         }
         image.setImageBitmap(barcodeImage);
-        Bitmap bitmap = Bitmap.createBitmap(binding.labelQnty.getWidth()+100,binding.labelQnty.getHeight()+50,
+        Bitmap bitmap = Bitmap.createBitmap(binding.labelQnty.getWidth() + 100, binding.labelQnty.getHeight() + 50,
                 Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         binding.labelQnty.draw(canvas);
@@ -425,10 +421,9 @@ public class LabelPrintActivity extends AppCompatActivity {
     }
 
 
-
     private String defineCodeName(String codeId) {
         String codeName;
-        switch(codeId) {
+        switch (codeId) {
             case ".":
                 codeName = "DOTCODE";
                 break;
@@ -628,9 +623,9 @@ public class LabelPrintActivity extends AppCompatActivity {
                 codeName = "AZTEC_CODE";
                 break;
             default:
-                codeName ="";
+                codeName = "";
         }
-        return  codeName;
+        return codeName;
     }
 
 }

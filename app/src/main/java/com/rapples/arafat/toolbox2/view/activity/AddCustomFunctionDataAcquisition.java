@@ -2,9 +2,11 @@ package com.rapples.arafat.toolbox2.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -60,5 +62,13 @@ public class AddCustomFunctionDataAcquisition extends AppCompatActivity {
         sharedPreferences =getSharedPreferences(SharedPref.SETTING_PREFERENCE,MODE_PRIVATE);
         editor = sharedPreferences.edit();
         fieldList = new ArrayList<>();
+    }
+
+    public void onBackCustomFunctionAdd(View view) {
+        onBackPressed();
+    }
+
+    public void onSettingsFromCustomFunction(View view) {
+        startActivity(new Intent(AddCustomFunctionDataAcquisition.this,CustomFunctionSettingsActivity.class));
     }
 }
