@@ -30,6 +30,8 @@ public class ApplicationSettingsActivity extends AppCompatActivity {
     private boolean dataAcquisitionFunctionStatus;
     private boolean quantityFields;
     private boolean allowDuplicateCodes;
+    private boolean barcodeLabelFunction;
+    private String printBarcodeType;
 
 
     @Override
@@ -48,8 +50,9 @@ public class ApplicationSettingsActivity extends AppCompatActivity {
 
         setSeparatorDropDown();
 
-        changeFunctionStatus();
+        setBarcodeTypeDropDown();
 
+        changeFunctionStatus();
 
 
     }
@@ -66,6 +69,7 @@ public class ApplicationSettingsActivity extends AppCompatActivity {
         binding.dataAcquisitionSwitch.setChecked(dataAcquisitionFunctionStatus);
         binding.quantityFieldSwitch.setChecked(quantityFields);
         binding.allowDuplicateCodesSwitch.setChecked(allowDuplicateCodes);
+        binding.barCodeLabelPrintingSwitch.setChecked(barcodeLabelFunction);
 
     }
 
@@ -159,6 +163,14 @@ public class ApplicationSettingsActivity extends AppCompatActivity {
             }
         });
 
+        binding.barCodeLabelPrintingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                editor.putBoolean(SharedPref.BARCODE_LABEL_FUNCTION, isChecked);
+                editor.apply();
+            }
+        });
+
 
     }
 
@@ -180,6 +192,8 @@ public class ApplicationSettingsActivity extends AppCompatActivity {
         dataAcquisitionFunctionStatus = sharedPreferences.getBoolean(SharedPref.DATA_ACQUISITION_FUNCTION, false);
         quantityFields = sharedPreferences.getBoolean(SharedPref.QUANTITY_FIELD, false);
         allowDuplicateCodes = sharedPreferences.getBoolean(SharedPref.ALLOW_DUPLICATE_CODES, false);
+        barcodeLabelFunction = sharedPreferences.getBoolean(SharedPref.BARCODE_LABEL_FUNCTION, false);
+
 
     }
 
@@ -188,14 +202,30 @@ public class ApplicationSettingsActivity extends AppCompatActivity {
     }
 
     private void setSeparatorDropDown() {
-        String[] separatoritems = new String[]{";",".",":"};
+        String[] separatoritems = new String[]{";", ".", ":"};
         ArrayAdapter<String> sep_adapter = new ArrayAdapter<>(ApplicationSettingsActivity.this, android.R.layout.simple_spinner_dropdown_item, separatoritems);
         binding.separatorDropdown.setAdapter(sep_adapter);
     }
 
     private void setFileFormatDropDown() {
-        String[] fileformatitems = new String[]{"Text","Excel","CSV"};
+        String[] fileformatitems = new String[]{"Text", "Excel", "CSV"};
         ArrayAdapter<String> file_adapter = new ArrayAdapter<>(ApplicationSettingsActivity.this, android.R.layout.simple_spinner_dropdown_item, fileformatitems);
         binding.fileFormateDropdown.setAdapter(file_adapter);
+    }
+
+    private void setBarcodeTypeDropDown() {
+        String[] fileformatitems = new String[]{"Code 128", "2D Datamatrix",};
+        ArrayAdapter<String> file_adapter = new ArrayAdapter<>(ApplicationSettingsActivity.this, android.R.layout.simple_spinner_dropdown_item, fileformatitems);
+        binding.barcodeTypeDropdown.setAdapter(file_adapter);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        editor.putString(SharedPref.PRINT_BARCODE_TYPE,binding.barcodeTypeDropdown.getSelectedItem().toString());
+        editor.apply();
+
+        super.onBackPressed();
     }
 }

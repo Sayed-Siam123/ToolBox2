@@ -31,6 +31,9 @@ public class SharedPref {
     public static final String ID ="id";
     public static final String EDITABLE = "editable";
     public static final String IS_ADDED = "isAdded";
+    public static final String CUSTOM_FIELD_LIST = "customFieldList";
+    public static final String PRINT_BARCODE_TYPE = "printBarcodeType";
+    public static final String BARCODE_LABEL_FUNCTION = "barcodeLabelFunction";
     public static final String LANGUAGE = "language";
     public static final String SET_LANGUAGE = "set_language";
     public static final String LICENCE = "licence";

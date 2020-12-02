@@ -48,29 +48,25 @@
                     <View
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-
                         android:layout_marginTop="3dp"
-                        android:background="@drawable/circular_shape"></View>
-
+                        android:background="@drawable/circular_shape"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="6dp"
-                        android:text="connected to">
+                        android:text="connected to"/>
 
-                    </TextView>
 
                 </LinearLayout>
 
-
                 <LinearLayout
+                    android:id="@+id/scanMAsterCodeLL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/scanMastercodeTV"
@@ -219,6 +215,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/descriptionTitleTv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -243,7 +240,7 @@
                                     android:layout_weight="1"
                                     android:background="@android:color/transparent"
                                     android:singleLine="true"
-                                    android:text="prod 1" />
+                                    android:text="" />
 
                             </LinearLayout>
 
@@ -262,6 +259,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/priceTitleTv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -296,14 +294,14 @@
 
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/black" />
+
 
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/underline"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/black" />
 
                 <LinearLayout
                     android:id="@+id/quantityPrint"
@@ -364,20 +362,11 @@
 
                 <include
                     android:id="@+id/labelQnty"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     layout="@layout/label_with_qnty"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
-
-
             </LinearLayout>
-
-
         </LinearLayout>
-
-
-
-
-
     </RelativeLayout>
 </layout>

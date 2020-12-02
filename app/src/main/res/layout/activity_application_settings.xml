@@ -435,15 +435,82 @@
 
                 </RelativeLayout>
             </LinearLayout>
-
-
-
-
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/barcode_label"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/function_is_active"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <Switch
+                    android:id="@+id/barCodeLabelPrintingSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="0.4"
+                    android:text="@string/print_barcodetype"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+
+                <RelativeLayout
+                    android:layout_margin="5dp"
+                    android:layout_width="0dp"
+                    android:padding="3dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/edit_text_background"
+                    android:layout_weight="0.6">
+
+                    <Spinner
+                        android:id="@+id/barcodeTypeDropdown"
+                        android:layout_width="match_parent"
+                        android:background="@android:color/white"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dropdown"/>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+
+
+
         </LinearLayout>
         </ScrollView>
 

@@ -1,3 +1,4 @@
+include ':hsm-android-print'
 include ':DeviceList'
 include ':Rfid.AsciiProtocol-Library'
 rootProject.name='ToolBox2'

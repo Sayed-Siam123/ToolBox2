@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.android.material.navigation.NavigationView;
@@ -52,6 +53,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private TextView customFunctionName, customFunctiondescription;
     boolean doubleBackToExitPressedOnce = false;
     boolean dataAcquisitionFunction;
+    boolean barCodeLabelPrintingStatus;
 
 
     int checked = -1;
@@ -92,6 +94,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         boolean comparisonFuntion = sharedPreferences.getBoolean(SharedPref.BARCODE_COMPARISON_FUNTION, false);
         boolean customFuntion = sharedPreferences.getBoolean(SharedPref.CUSTOM_FUNCTION, false);
         dataAcquisitionFunction = sharedPreferences.getBoolean(SharedPref.DATA_ACQUISITION_FUNCTION,false);
+        barCodeLabelPrintingStatus = sharedPreferences.getBoolean(SharedPref.BARCODE_LABEL_FUNCTION,false);
+
 
         if (comparisonFuntion) {
             barcodeComparationLL.setVisibility(View.VISIBLE);
@@ -106,6 +110,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else {
             customFunctionLL.setVisibility(View.GONE);
         }
+
+        customFunctionLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this,AddCustomFunctionDataAcquisition.class));
+            }
+        });
 
 //        if(dataAcquisitionFunction){
 //            dataAquistionLL.setEnabled(true);
@@ -192,7 +203,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void setDefaultLanguageValue() {
-        sharedPreferences = getSharedPreferences(SharedPref.LANGUAGE, Activity.MODE_PRIVATE);
         String language = sharedPreferences.getString(SharedPref.SET_LANGUAGE,"en");
         setLocal(language);
         Log.d("TAG", "setDefaultLanguageValue: "+language);
@@ -210,7 +220,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Configuration config = new Configuration();
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
-        editor = getSharedPreferences(SharedPref.LANGUAGE,MODE_PRIVATE).edit();
         editor.putString(SharedPref.SET_LANGUAGE,language);
         editor.apply();
     }
@@ -238,8 +247,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
     public void label_printing(View v) {
-        Log.d("Label print", "onNavigationItemSelected: Label print");
-        startActivity(new Intent(HomeActivity.this, LabelPrintActivity.class));
+        if(barCodeLabelPrintingStatus) {
+            startActivity(new Intent(HomeActivity.this, LabelPrintActivity.class));
+        }
 
     }
 

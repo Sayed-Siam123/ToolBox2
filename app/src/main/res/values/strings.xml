@@ -74,6 +74,6 @@
     <string name="menu_custom_settings">Custom Settings</string>
     <string name="title_about">About</string>
     <string name="licencedialog_enter_licence_key">Enter Licence Key</string>
-
-
+    <string name="barcode_label">Barcode label</string>
+    <string name="print_barcodetype">Print barcodetype</string>
 </resources>

@@ -7,7 +7,6 @@
     <string name="second_fragment_label">Zweites Fragment</string>
     <string name="next">Weiter</string>
     <string name="previous">Vorherige</string>
-
     <string name="hello_first_fragment">Hallo, erstes Fragment</string>
     <string name="hello_second_fragment">Hallo, zweites Fragment. Arg: %1$s</string>
     <string name="back">Zurück zum Hauptmenü</string>
