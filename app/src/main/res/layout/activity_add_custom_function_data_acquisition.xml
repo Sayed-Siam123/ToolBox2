@@ -323,7 +323,7 @@
                             android:layout_height="34dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="10dp"
-                            android:onClick="openScannerForAddData"
+                            android:onClick="openScannerField3"
                             android:src="@drawable/ic_bar_code" />
 
                     </LinearLayout>
@@ -333,7 +333,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <EditText
                             android:id="@+id/field3barCodeFromSCET"
@@ -349,12 +349,13 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="10dp"
-                            android:onClick="openKeyboardForAddValue"
+                            android:onClick="openKeyboardField3"
                             android:src="@drawable/ic_tap" />
 
                     </LinearLayout>
 
                     <EditText
+                        android:visibility="gone"
                         android:id="@+id/field3Et"
                         android:layout_width="0dp"
                         android:layout_height="40dp"

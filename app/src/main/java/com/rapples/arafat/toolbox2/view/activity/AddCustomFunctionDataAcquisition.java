@@ -46,11 +46,11 @@ public class AddCustomFunctionDataAcquisition extends AppCompatActivity {
     private List<Field> fieldList;
     private String fieldListInString;
     private int state;
-    private String field1Result="";
-    private String field2Result="";
-    private String field3Result="";
-    private String field4Result="";
-    private String field5Result="";
+    private String field1Result = "";
+    private String field2Result = "";
+    private String field3Result = "";
+    private String field4Result = "";
+    private String field5Result = "";
 
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
@@ -88,8 +88,6 @@ public class AddCustomFunctionDataAcquisition extends AppCompatActivity {
                     }
 
 
-
-
                 }
             }
         }
@@ -105,6 +103,8 @@ public class AddCustomFunctionDataAcquisition extends AppCompatActivity {
         getSharedPreferencesData();
 
         setFiled1();
+
+        setFiled2();
     }
 
     @Override
@@ -180,30 +180,10 @@ public class AddCustomFunctionDataAcquisition extends AppCompatActivity {
                     @Override
                     public void afterTextChanged(Editable s) {
                         field1Result = binding.field1barCodeFromSCET.getText().toString();
-                        if(fieldList.size() > 1){
-                            binding.field2LL.setVisibility(View.VISIBLE);
-                            binding.field2Title.setText(fieldList.get(1).getFieldName());
-                            state = 2;
+                        if (fieldList.size() > 1) {
+                            redirectNextField2();
 
-                            if(fieldList.get(1).getFieldType().equals("Barcode")){
-                                registeredScanner();
-                                binding.field2sannnerLL.setVisibility(View.VISIBLE);
-                                binding.field2barCodeFromSCET.requestFocus();
-                            }else {
-                                binding.field2Et.setVisibility(View.VISIBLE);
-                                binding.field2Et.requestFocus();
-                                InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                                imm.showSoftInput(binding.field2EdittextLL, InputMethodManager.SHOW_IMPLICIT);
-                                if(fieldList.get(1).getFieldType().equals("Numeric")){
-                                    binding.field2Et.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-                                }else{
-                                    binding.field2Et.setInputType(InputType.TYPE_CLASS_TEXT);
-                                    binding.field2Et.requestFocus();
-                                }
-                            }
-
-                        }else{
+                        } else {
                             saveDataIntoDb();
                         }
 
@@ -216,33 +196,9 @@ public class AddCustomFunctionDataAcquisition extends AppCompatActivity {
                         boolean handled = false;
                         if (actionId == EditorInfo.IME_ACTION_DONE) {
                             field1Result = binding.field1barCodeET.getText().toString();
-                            if(fieldList.size() > 1){
-                                binding.field2LL.setVisibility(View.VISIBLE);
-                                binding.field2Title.setText(fieldList.get(1).getFieldName());
-
-                                state= 2;
-                                if(fieldList.get(1).getFieldType().equals("Barcode")){
-                                    registeredScanner();
-                                    binding.field2sannnerLL.setVisibility(View.VISIBLE);
-                                    disableFocus();
-                                    hideKeyboard(AddCustomFunctionDataAcquisition.this);
-                                    binding.field2barCodeFromSCET.requestFocus();
-                                }else {
-                                    binding.field2Et.setVisibility(View.VISIBLE);
-                                    binding.field2Et.requestFocus();
-                                    if(fieldList.get(1).getFieldType().equals("Numeric")){
-                                        binding.field2Et.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-                                    }else{
-                                        binding.field2Et.setInputType(InputType.TYPE_CLASS_TEXT);
-                                        binding.field2Et.requestFocus();
-                                    }
-                                    InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                                    imm.showSoftInput(binding.field2EdittextLL, InputMethodManager.SHOW_IMPLICIT);
-
-                                }
-
-                            }else{
+                            if (fieldList.size() > 1) {
+                                redirectNextField2();
+                            } else {
                                 saveDataIntoDb();
                             }
 
@@ -251,14 +207,14 @@ public class AddCustomFunctionDataAcquisition extends AppCompatActivity {
                         return handled;
                     }
                 });
-            }else{
+            } else {
                 binding.field1Et.setVisibility(View.VISIBLE);
                 binding.field1Et.requestFocus();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(binding.field2EdittextLL, InputMethodManager.SHOW_IMPLICIT);
-                if(fieldList.get(0).getFieldType().equals("Numeric")){
+                if (fieldList.get(0).getFieldType().equals("Numeric")) {
                     binding.field1Et.setInputType(InputType.TYPE_CLASS_NUMBER);
-                }else{
+                } else {
                     binding.field1Et.setInputType(InputType.TYPE_CLASS_TEXT);
                 }
 
@@ -268,31 +224,9 @@ public class AddCustomFunctionDataAcquisition extends AppCompatActivity {
                         boolean handled = false;
                         if (actionId == EditorInfo.IME_ACTION_DONE) {
                             field1Result = binding.field1Et.getText().toString();
-                            if(fieldList.size() > 1){
-                                binding.field2LL.setVisibility(View.VISIBLE);
-                                binding.field2Title.setText(fieldList.get(1).getFieldName());
-
-                                state= 2;
-
-                                if(fieldList.get(1).getFieldType().equals("Barcode")){
-                                    registeredScanner();
-                                    binding.field2sannnerLL.setVisibility(View.VISIBLE);
-                                    disableFocus();
-                                    hideKeyboard(AddCustomFunctionDataAcquisition.this);
-                                    binding.field2barCodeFromSCET.requestFocus();
-                                }else {
-                                    binding.field2Et.setVisibility(View.VISIBLE);
-                                    binding.field2Et.requestFocus();
-                                    if(fieldList.get(1).getFieldType().equals("Numeric")){
-                                        binding.field2Et.setInputType(InputType.TYPE_CLASS_NUMBER);
-                                    }else{
-                                        binding.field2Et.setInputType(InputType.TYPE_CLASS_TEXT);
-                                    }
-                                    InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-                                }
-
-                            }else{
+                            if (fieldList.size() > 1) {
+                                redirectNextField2();
+                            } else {
                                 saveDataIntoDb();
                             }
 
@@ -303,6 +237,137 @@ public class AddCustomFunctionDataAcquisition extends AppCompatActivity {
                 });
 
 
+            }
+        }
+    }
+
+    private void setFiled2() {
+
+        if (fieldList.size() > 1) {
+            binding.field2LL.setVisibility(View.VISIBLE);
+            binding.field2Title.setText(fieldList.get(1).getFieldName());
+
+            if (fieldList.get(1).getFieldType().equals("Barcode")) {
+
+                binding.field2barCodeFromSCET.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        field2Result = binding.field2barCodeFromSCET.getText().toString();
+                        if (fieldList.size() > 2) {
+                            redirectNextField3();
+
+                        } else {
+                            saveDataIntoDb();
+                        }
+
+                    }
+                });
+
+                binding.field2barCodeET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        boolean handled = false;
+                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                            field2Result = binding.field2barCodeET.getText().toString();
+                            if (fieldList.size() > 2) {
+                                redirectNextField3();
+                            } else {
+                                saveDataIntoDb();
+                            }
+
+                            handled = true;
+                        }
+                        return handled;
+                    }
+                });
+            } else {
+                binding.field2Et.setVisibility(View.VISIBLE);
+                binding.field2Et.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                if (fieldList.get(1).getFieldType().equals("Numeric")) {
+                    binding.field2Et.setInputType(InputType.TYPE_CLASS_NUMBER);
+                } else {
+                    binding.field2Et.setInputType(InputType.TYPE_CLASS_TEXT);
+                }
+
+                binding.field2Et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        boolean handled = false;
+                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                            field1Result = binding.field2Et.getText().toString();
+                            if (fieldList.size() > 2) {
+                                redirectNextField3();
+                            } else {
+                                saveDataIntoDb();
+                            }
+
+                            handled = true;
+                        }
+                        return handled;
+                    }
+                });
+
+
+            }
+        }
+    }
+
+    private void redirectNextField3() {
+        binding.field3LL.setVisibility(View.VISIBLE);
+        binding.field3Title.setText(fieldList.get(2).getFieldName());
+        state = 3;
+
+        if (fieldList.get(2).getFieldType().equals("Barcode")) {
+            registeredScanner();
+            binding.field3sannnerLL.setVisibility(View.VISIBLE);
+            binding.field3barCodeFromSCET.requestFocus();
+        } else {
+            binding.field3Et.setVisibility(View.VISIBLE);
+            binding.field3Et.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            if (fieldList.get(2).getFieldType().equals("Numeric")) {
+                binding.field3Et.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+            } else {
+                binding.field3Et.setInputType(InputType.TYPE_CLASS_TEXT);
+                binding.field3Et.requestFocus();
+            }
+        }
+    }
+
+    private void redirectNextField2() {
+        binding.field2LL.setVisibility(View.VISIBLE);
+        binding.field2Title.setText(fieldList.get(1).getFieldName());
+        state = 2;
+
+        if (fieldList.get(1).getFieldType().equals("Barcode")) {
+            registeredScanner();
+            binding.field2sannnerLL.setVisibility(View.VISIBLE);
+            binding.field2barCodeFromSCET.requestFocus();
+        } else {
+            binding.field2Et.setVisibility(View.VISIBLE);
+            binding.field2Et.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            if (fieldList.get(1).getFieldType().equals("Numeric")) {
+                binding.field2Et.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+            } else {
+                binding.field2Et.setInputType(InputType.TYPE_CLASS_TEXT);
+                binding.field2Et.requestFocus();
             }
         }
     }
@@ -391,6 +456,24 @@ public class AddCustomFunctionDataAcquisition extends AppCompatActivity {
         binding.field2sannnerLL.setVisibility(View.GONE);
         binding.field2EdittextLL.setVisibility(View.VISIBLE);
         binding.field2barCodeET.requestFocus();
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    public void openScannerField3(View view) {
+        registeredScanner();
+        binding.field3sannnerLL.setVisibility(View.VISIBLE);
+        binding.field3EdittextLL.setVisibility(View.GONE);
+        binding.field3barCodeFromSCET.requestFocus();
+        disableFocus();
+        hideKeyboard(AddCustomFunctionDataAcquisition.this);
+    }
+
+    public void openKeyboardField3(View view) {
+        unRegisteredScanner();
+        binding.field3sannnerLL.setVisibility(View.GONE);
+        binding.field3EdittextLL.setVisibility(View.VISIBLE);
+        binding.field3barCodeET.requestFocus();
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
