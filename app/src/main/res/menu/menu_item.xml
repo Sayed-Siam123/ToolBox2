@@ -4,15 +4,15 @@
     <group android:checkableBehavior="single">
 
         <item android:id="@+id/item_masterdata"
-            android:title="Masterdata"/>
+            android:title="@string/menu_masterdata"/>
         <item android:id="@+id/item_settings"
-            android:title="Settings"/>
+            android:title="@string/menu_settings"/>
         <item android:id="@+id/item_file_upload"
-            android:title="File Upload"/>
+            android:title="@string/menu_file_upload"/>
         <item android:id="@+id/item_language"
-            android:title="Language"/>
+            android:title="@string/menu_language"/>
         <item android:id="@+id/item_about"
-            android:title="About"/>
+            android:title="@string/menu_about"/>
 
     </group>
 
