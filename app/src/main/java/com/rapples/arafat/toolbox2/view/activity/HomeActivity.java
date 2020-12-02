@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -134,8 +135,44 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         customFunctionName = findViewById(R.id.customFunctionNameTv);
         customFunctiondescription = findViewById(R.id.customFunctionDescriptionTv);
         dataAquistionLL = findViewById(R.id.dataAcquisitionLL);
+        checkLicence();
+    }
 
 
+    private void openLicenceDialog() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setTitle("Licence Key");
+        final View customLayout = getLayoutInflater().inflate(R.layout.licence_key_dialog, null);
+        final EditText licenceEdT = customLayout.findViewById(R.id.licenceET);
+        builder.setView(customLayout);
+        builder.setCancelable(false);
+        builder.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                Log.d("TAG", "onClick: OK! "+licenceEdT.getText().toString());
+                editor.putString(SharedPref.SET_LICENCE,licenceEdT.getText().toString());
+                editor.apply();
+                Log.d("TAG", "onClick: OK! "+licenceEdT.getText().toString());
+                Log.d("TAG", "onClick: OK! saved");
+                dialog.dismiss();
+            }
+        });
+        android.app.AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void checkLicence(){
+        String licence = sharedPreferences.getString(SharedPref.SET_LICENCE,"null");
+        Log.d("TAG", "checkLicence: "+licence);
+        if(licence.equals("null")){
+            Log.d("TAG", "checkLicence: licence  is null");
+            openLicenceDialog();
+        }
+
+        else{
+            Log.d("TAG", "checkLicence: licence  is not null "+ licence);
+        }
     }
 
     @SuppressLint("LongLogTag")

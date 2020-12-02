@@ -50,7 +50,7 @@ public class SplashActivity extends AppCompatActivity {
 
         //openLicenceDialog();
 
-        checkLicence();
+        //checkLicence();
 
         createDir();
 
@@ -58,48 +58,9 @@ public class SplashActivity extends AppCompatActivity {
 
         setDefaultLanguageValue();
 
+        handleScreen();
 
-    }
 
-    private void openLicenceDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Licence Key");
-        final View customLayout = getLayoutInflater().inflate(R.layout.licence_key_dialog, null);
-        final EditText licenceEdT = customLayout.findViewById(R.id.licenceET);
-        builder.setView(customLayout);
-        builder.setCancelable(false);
-        builder.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-                Log.d("TAG", "onClick: OK! "+licenceEdT.getText().toString());
-                SharedPreferences sp = getSharedPreferences(SharedPref.LICENCE,MODE_PRIVATE);
-                SharedPreferences.Editor preferencesEditor = sp.edit();
-                preferencesEditor.putString(SharedPref.SET_LICENCE,licenceEdT.getText().toString());
-                preferencesEditor.apply();
-                Log.d("TAG", "onClick: OK! "+licenceEdT.getText().toString());
-                Log.d("TAG", "onClick: OK! saved");
-                dialog.dismiss();
-                handleScreen();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private void checkLicence(){
-        sharedPreferences = getSharedPreferences(SharedPref.LICENCE, Activity.MODE_PRIVATE);
-        String licence = sharedPreferences.getString(SharedPref.SET_LICENCE,"null");
-        Log.d("TAG", "checkLicence: "+licence);
-        if(licence.equals("null")){
-            Log.d("TAG", "checkLicence: licence  is null");
-            openLicenceDialog();
-        }
-
-        else{
-            Log.d("TAG", "checkLicence: licence  is not null "+ licence);
-            handleScreen();
-        }
     }
 
     private void handleScreen(){
