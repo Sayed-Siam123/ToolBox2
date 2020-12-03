@@ -415,7 +415,7 @@
                             android:layout_height="34dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="10dp"
-                            android:onClick="openScannerForAddData"
+                            android:onClick="openScannerField4"
                             android:src="@drawable/ic_bar_code" />
 
                     </LinearLayout>
@@ -425,7 +425,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <EditText
                             android:id="@+id/field4barCodeFromSCET"
@@ -441,12 +441,13 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="10dp"
-                            android:onClick="openKeyboardForAddValue"
+                            android:onClick="openKeyboardField4"
                             android:src="@drawable/ic_tap" />
 
                     </LinearLayout>
 
                     <EditText
+                        android:visibility="gone"
                         android:id="@+id/field4Et"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
@@ -506,7 +507,7 @@
                             android:layout_height="34dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="10dp"
-                            android:onClick="openScannerForAddData"
+                            android:onClick="openScannerField5"
                             android:src="@drawable/ic_bar_code" />
 
                     </LinearLayout>
@@ -516,7 +517,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <EditText
                             android:id="@+id/field5barCodeFromSCET"
@@ -532,12 +533,13 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="10dp"
-                            android:onClick="openKeyboardForAddValue"
+                            android:onClick="openKeyboardField5"
                             android:src="@drawable/ic_tap" />
 
                     </LinearLayout>
 
                     <EditText
+                        android:visibility="gone"
                         android:id="@+id/field5Et"
                         android:layout_width="0dp"
                         android:layout_height="40dp"

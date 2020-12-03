@@ -105,6 +105,14 @@ public class AddCustomFunctionDataAcquisition extends AppCompatActivity {
         setFiled1();
 
         setFiled2();
+
+        setFiled3();
+
+        setFiled4();
+
+        setFiled5();
+
+
     }
 
     @Override
@@ -244,8 +252,7 @@ public class AddCustomFunctionDataAcquisition extends AppCompatActivity {
     private void setFiled2() {
 
         if (fieldList.size() > 1) {
-            binding.field2LL.setVisibility(View.VISIBLE);
-            binding.field2Title.setText(fieldList.get(1).getFieldName());
+
 
             if (fieldList.get(1).getFieldType().equals("Barcode")) {
 
@@ -306,7 +313,7 @@ public class AddCustomFunctionDataAcquisition extends AppCompatActivity {
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                         boolean handled = false;
                         if (actionId == EditorInfo.IME_ACTION_DONE) {
-                            field1Result = binding.field2Et.getText().toString();
+                            field2Result = binding.field2Et.getText().toString();
                             if (fieldList.size() > 2) {
                                 redirectNextField3();
                             } else {
@@ -322,6 +329,285 @@ public class AddCustomFunctionDataAcquisition extends AppCompatActivity {
 
             }
         }
+    }
+
+    private void setFiled3() {
+
+        if (fieldList.size() > 2) {
+
+
+            if (fieldList.get(2).getFieldType().equals("Barcode")) {
+
+                binding.field3barCodeFromSCET.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        field3Result = binding.field3barCodeFromSCET.getText().toString();
+                        if (fieldList.size() > 3) {
+                            redirectNextField4();
+
+                        } else {
+                            saveDataIntoDb();
+                        }
+
+                    }
+                });
+
+                binding.field3barCodeET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        boolean handled = false;
+                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                            field3Result = binding.field3barCodeET.getText().toString();
+                            if (fieldList.size() > 3) {
+                                redirectNextField4();
+                            } else {
+                                saveDataIntoDb();
+                            }
+
+                            handled = true;
+                        }
+                        return handled;
+                    }
+                });
+            } else {
+                binding.field3Et.setVisibility(View.VISIBLE);
+                binding.field3Et.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                if (fieldList.get(2).getFieldType().equals("Numeric")) {
+                    binding.field3Et.setInputType(InputType.TYPE_CLASS_NUMBER);
+                } else {
+                    binding.field3Et.setInputType(InputType.TYPE_CLASS_TEXT);
+                }
+
+                binding.field3Et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        boolean handled = false;
+                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                            field3Result = binding.field3Et.getText().toString();
+                            if (fieldList.size() > 3) {
+                                redirectNextField4();
+                            } else {
+                                saveDataIntoDb();
+                            }
+
+                            handled = true;
+                        }
+                        return handled;
+                    }
+                });
+
+
+            }
+        }
+    }
+
+    private void setFiled4() {
+
+        if (fieldList.size() > 3) {
+
+
+            if (fieldList.get(3).getFieldType().equals("Barcode")) {
+
+                binding.field4barCodeFromSCET.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        field4Result = binding.field4barCodeFromSCET.getText().toString();
+                        if (fieldList.size() > 4) {
+                            redirectNextField5();
+
+                        } else {
+                            saveDataIntoDb();
+                        }
+
+                    }
+                });
+
+                binding.field4barCodeET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        boolean handled = false;
+                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                            field4Result = binding.field4barCodeET.getText().toString();
+                            if (fieldList.size() > 4) {
+                                redirectNextField5();
+                            } else {
+                                saveDataIntoDb();
+                            }
+
+                            handled = true;
+                        }
+                        return handled;
+                    }
+                });
+            } else {
+                binding.field4Et.setVisibility(View.VISIBLE);
+                binding.field4Et.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                if (fieldList.get(3).getFieldType().equals("Numeric")) {
+                    binding.field4Et.setInputType(InputType.TYPE_CLASS_NUMBER);
+                } else {
+                    binding.field4Et.setInputType(InputType.TYPE_CLASS_TEXT);
+                }
+
+                binding.field4Et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        boolean handled = false;
+                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                            field4Result = binding.field4Et.getText().toString();
+                            if (fieldList.size() > 4) {
+                                redirectNextField5();
+                            } else {
+                                saveDataIntoDb();
+                            }
+
+                            handled = true;
+                        }
+                        return handled;
+                    }
+                });
+
+
+            }
+        }
+    }
+
+    private void setFiled5() {
+
+        if (fieldList.size() > 4) {
+
+            if (fieldList.get(4).getFieldType().equals("Barcode")) {
+
+                binding.field5barCodeFromSCET.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        field5Result = binding.field5barCodeFromSCET.getText().toString();
+                        saveDataIntoDb();
+                    }
+                });
+
+                binding.field5barCodeET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        boolean handled = false;
+                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                            field5Result = binding.field5barCodeET.getText().toString();
+                            saveDataIntoDb();
+                            handled = true;
+                        }
+                        return handled;
+                    }
+                });
+            } else {
+                binding.field5Et.setVisibility(View.VISIBLE);
+                binding.field5Et.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                if (fieldList.get(4).getFieldType().equals("Numeric")) {
+                    binding.field5Et.setInputType(InputType.TYPE_CLASS_NUMBER);
+                } else {
+                    binding.field5Et.setInputType(InputType.TYPE_CLASS_TEXT);
+                }
+
+                binding.field5Et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        boolean handled = false;
+                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                            field5Result = binding.field5Et.getText().toString();
+                            saveDataIntoDb();
+                            handled = true;
+                        }
+                        return handled;
+                    }
+                });
+
+
+            }
+        }
+    }
+
+    private void redirectNextField5() {
+        binding.field5LL.setVisibility(View.VISIBLE);
+        binding.field5Title.setText(fieldList.get(4).getFieldName());
+        state = 5;
+
+        if (fieldList.get(4).getFieldType().equals("Barcode")) {
+            registeredScanner();
+            binding.field5sannnerLL.setVisibility(View.VISIBLE);
+            binding.field5barCodeFromSCET.requestFocus();
+        } else {
+            binding.field5Et.setVisibility(View.VISIBLE);
+            binding.field5Et.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            if (fieldList.get(4).getFieldType().equals("Numeric")) {
+                binding.field5Et.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+            } else {
+                binding.field5Et.setInputType(InputType.TYPE_CLASS_TEXT);
+                binding.field5Et.requestFocus();
+            }
+        }
+
+    }
+
+    private void redirectNextField4() {
+        binding.field4LL.setVisibility(View.VISIBLE);
+        binding.field4Title.setText(fieldList.get(3).getFieldName());
+        state = 4;
+
+        if (fieldList.get(3).getFieldType().equals("Barcode")) {
+            registeredScanner();
+            binding.field4sannnerLL.setVisibility(View.VISIBLE);
+            binding.field4barCodeFromSCET.requestFocus();
+        } else {
+            binding.field4Et.setVisibility(View.VISIBLE);
+            binding.field4Et.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            if (fieldList.get(3).getFieldType().equals("Numeric")) {
+                binding.field4Et.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+            } else {
+                binding.field4Et.setInputType(InputType.TYPE_CLASS_TEXT);
+                binding.field4Et.requestFocus();
+            }
+        }
+
     }
 
     private void redirectNextField3() {
@@ -474,6 +760,43 @@ public class AddCustomFunctionDataAcquisition extends AppCompatActivity {
         binding.field3sannnerLL.setVisibility(View.GONE);
         binding.field3EdittextLL.setVisibility(View.VISIBLE);
         binding.field3barCodeET.requestFocus();
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+
+    public void openScannerField4(View view) {
+        registeredScanner();
+        binding.field4sannnerLL.setVisibility(View.VISIBLE);
+        binding.field4EdittextLL.setVisibility(View.GONE);
+        binding.field4barCodeFromSCET.requestFocus();
+        disableFocus();
+        hideKeyboard(AddCustomFunctionDataAcquisition.this);
+    }
+
+    public void openKeyboardField4(View view) {
+        unRegisteredScanner();
+        binding.field4sannnerLL.setVisibility(View.GONE);
+        binding.field4EdittextLL.setVisibility(View.VISIBLE);
+        binding.field4barCodeET.requestFocus();
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    public void openScannerField5(View view) {
+        registeredScanner();
+        binding.field5sannnerLL.setVisibility(View.VISIBLE);
+        binding.field5EdittextLL.setVisibility(View.GONE);
+        binding.field5barCodeFromSCET.requestFocus();
+        disableFocus();
+        hideKeyboard(AddCustomFunctionDataAcquisition.this);
+    }
+
+    public void openKeyboardField5(View view) {
+        unRegisteredScanner();
+        binding.field5sannnerLL.setVisibility(View.GONE);
+        binding.field5EdittextLL.setVisibility(View.VISIBLE);
+        binding.field5barCodeET.requestFocus();
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }

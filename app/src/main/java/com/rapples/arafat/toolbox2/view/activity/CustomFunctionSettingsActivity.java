@@ -89,7 +89,8 @@ public class CustomFunctionSettingsActivity extends AppCompatActivity implements
 
 
     public void addField(View view) {
-        if (fieldList.size() < 6) {
+
+        if (fieldList.size() < 5) {
             fieldList.add(new Field("", ""));
             configRecyclearview();
         }
@@ -142,7 +143,9 @@ public class CustomFunctionSettingsActivity extends AppCompatActivity implements
 
     @Override
     public void updateFieldList(List<Field> updateList) {
-        fieldList.clear();
-        fieldList.addAll(updateList);
+        if(updateList.size() <6) {
+            fieldList.clear();
+            fieldList.addAll(updateList);
+        }
     }
 }
