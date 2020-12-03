@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.rapples.arafat.toolbox2.CustomFunctionFileNameActivity;
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityCustomFunctionBinding;
 import com.rapples.arafat.toolbox2.util.SharedPref;

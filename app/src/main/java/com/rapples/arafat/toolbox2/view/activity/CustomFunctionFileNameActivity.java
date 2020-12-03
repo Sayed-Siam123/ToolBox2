@@ -1,8 +1,9 @@
-package com.rapples.arafat.toolbox2;
+package com.rapples.arafat.toolbox2.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,17 +13,12 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import com.rapples.arafat.toolbox2.Database.Acquisition_DB;
 import com.rapples.arafat.toolbox2.Database.CustomFunction_DB;
 import com.rapples.arafat.toolbox2.Database.MasterExecutor;
+import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityCustomFunctionFileNameBinding;
 import com.rapples.arafat.toolbox2.model.CustomFunction;
-import com.rapples.arafat.toolbox2.model.DataAcquisition;
 import com.rapples.arafat.toolbox2.util.SharedPref;
-import com.rapples.arafat.toolbox2.view.activity.AddCustomFunctionDataAcquisition;
-import com.rapples.arafat.toolbox2.view.activity.AddDataAcquisitionActivity;
-import com.rapples.arafat.toolbox2.view.activity.CustomFunctionSettingsActivity;
-import com.rapples.arafat.toolbox2.view.activity.DataAcqusitionFileNameActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,6 +41,7 @@ public class CustomFunctionFileNameActivity extends AppCompatActivity {
     }
 
     private void setTitle() {
+
         binding.titleTv.setText(getIntent().getStringExtra(SharedPref.CUSTOM_FUNCTION_NAME));
     }
 
@@ -61,6 +58,8 @@ public class CustomFunctionFileNameActivity extends AppCompatActivity {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     if (!binding.fileNameEt.getText().toString().isEmpty()) {
+                        disableFocus();
+                        hideKeyboard(CustomFunctionFileNameActivity.this);
 
                         saveFileNameRoomDb(binding.fileNameEt.getText().toString());
 
@@ -102,5 +101,20 @@ public class CustomFunctionFileNameActivity extends AppCompatActivity {
 
     public void onSettingsFromCustomFunctionFileName(View view) {
         startActivity(new Intent(CustomFunctionFileNameActivity.this, CustomFunctionSettingsActivity.class));
+    }
+
+    private void disableFocus() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

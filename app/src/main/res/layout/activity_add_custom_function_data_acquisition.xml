@@ -591,6 +591,14 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/last_item"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/customFunctionLastDataRecyclerView"
                     android:layout_width="match_parent"
@@ -620,7 +628,7 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/dataAcquisitionRecyclerView"
+                android:id="@+id/customFunctionRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
@@ -634,7 +642,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_margin="15dp"
-            android:onClick="showList"
+            android:onClick="showCustomFunctionList"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="100dp">
 
