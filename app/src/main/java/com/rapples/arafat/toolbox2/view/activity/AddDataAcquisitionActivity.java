@@ -99,11 +99,11 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
                         mediaPlayer.start();
                     }
 
-                    if(checkBarCode(codeId)){
-                    if (isScannerOpen) {
-                        binding.barCodeFromSCET.setText(data);
-                    }
-                    }else{
+                    if (checkBarCode(codeId)) {
+                        if (isScannerOpen) {
+                            binding.barCodeFromSCET.setText(data);
+                        }
+                    } else {
                         Toast.makeText(context, "Open barcode setting", Toast.LENGTH_SHORT).show();
                     }
 
@@ -189,12 +189,15 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
                 isFound = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     if (!binding.barCodeET.getText().toString().isEmpty()) {
-                        if (quantityStatus) {
-                            binding.quantityEt.requestFocus();
-                            InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-                        } else {
-                            checkduplicateText();
+
+                        if (checkDuplicate()) {
+                            if (quantityStatus) {
+                                binding.quantityEt.requestFocus();
+                                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                            } else {
+                                saveData();
+                            }
                         }
                     }
                     handled = true;
@@ -209,17 +212,24 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     if (!binding.quantityEt.getText().toString().isEmpty()) {
-                        if (isScannerOpen) {
+                        if(isScannerOpen){
                             productList.add(new Product(fileName, binding.barCodeFromSCET.getText().toString(), "", binding.quantityEt.getText().toString()));
                             binding.lastBarLL.setVisibility(View.VISIBLE);
                             configproductList();
-                            saveIntoDb(fileName, binding.barCodeFromSCET.getText().toString(),binding.quantityEt.getText().toString());
+                            saveIntoDb(fileName, binding.barCodeFromSCET.getText().toString(), binding.quantityEt.getText().toString());
                             binding.barCodeFromSCET.setText("");
+                            binding.quantityEt.setText("");
                             binding.barCodeFromSCET.requestFocus();
-                        } else {
-                            checkduplicateText();
+                        }else{
+                            productList.add(new Product(fileName, binding.barCodeET.getText().toString(), "", binding.quantityEt.getText().toString()));
+                            binding.lastBarLL.setVisibility(View.VISIBLE);
+                            configproductList();
+                            saveIntoDb(fileName, binding.barCodeET.getText().toString(), binding.quantityEt.getText().toString());
+                            binding.barCodeET.setText("");
+                            binding.quantityEt.setText("");
                             binding.barCodeET.requestFocus();
                         }
+
                     }
 
                     handled = true;
@@ -240,16 +250,18 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                if (quantityStatus) {
-                    binding.quantityEt.requestFocus();
-                    InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-                } else {
-                    productList.add(new Product(fileName, binding.barCodeFromSCET.getText().toString(), "", ""));
-                    binding.lastBarLL.setVisibility(View.VISIBLE);
-                    configproductList();
-                    saveIntoDb(fileName, binding.barCodeFromSCET.getText().toString(),binding.quantityEt.getText().toString());
-                    binding.barCodeFromSCET.setText("");
+                if (checkDuplicate()) {
+                    if (quantityStatus) {
+                        binding.quantityEt.requestFocus();
+                        InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                    } else {
+                        productList.add(new Product(fileName, binding.barCodeFromSCET.getText().toString(), "", ""));
+                        binding.lastBarLL.setVisibility(View.VISIBLE);
+                        configproductList();
+                        saveIntoDb(fileName, binding.barCodeFromSCET.getText().toString(), binding.quantityEt.getText().toString());
+                        binding.barCodeFromSCET.setText("");
+                    }
                 }
 
 
@@ -257,13 +269,22 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
         });
     }
 
-    private void checkduplicateText() {
+    private boolean checkDuplicate() {
+        boolean status = true;
+        String data = "";
+
+        if (isScannerOpen) {
+            data = binding.barCodeFromSCET.getText().toString().trim();
+        } else {
+            data = binding.barCodeET.getText().toString().trim();
+        }
+
         if (productList.size() > 0) {
             if (allowDuplicate) {
-                saveData();
+                status = true;
             } else {
                 for (int i = 0; i < productList.size(); i++) {
-                    if (productList.get(i).getBarcode().equals(binding.barCodeET.getText().toString().trim())) {
+                    if (productList.get(i).getBarcode().equals(data)) {
                         Toast.makeText(AddDataAcquisitionActivity.this, "Duplicate barcode", Toast.LENGTH_SHORT).show();
                         isFound = true;
                         if (isScannerOpen) {
@@ -277,16 +298,17 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
                         }
                     }
                 }
-                if (!isFound) {
-                    saveData();
+                if (isFound) {
+                    status = false;
+                } else {
+                    status = true;
                 }
 
             }
-        } else {
-            saveData();
         }
-
+        return status;
     }
+
 
     private void saveData() {
         if (quantityStatus) {
@@ -296,16 +318,17 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
         }
         binding.lastBarLL.setVisibility(View.VISIBLE);
         configproductList();
-        saveIntoDb(fileName, binding.barCodeET.getText().toString(),binding.quantityEt.getText().toString());
+        saveIntoDb(fileName, binding.barCodeET.getText().toString(), binding.quantityEt.getText().toString());
         binding.barCodeET.setText("");
         binding.quantityEt.setText("");
 
 
     }
 
-    private void saveIntoDb(String fileName, String barcode,String quantity) {
+    private void saveIntoDb(String fileName, String barcode, String quantity) {
         final Product product = new Product(fileName, barcode, "", quantity);
 
+        Toast.makeText(this, ""+barcode, Toast.LENGTH_SHORT).show();
         MasterExecutor.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -504,6 +527,7 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
             }
         });
     }
+
     private boolean checkBarCode(String codeId) {
         boolean value;
 
