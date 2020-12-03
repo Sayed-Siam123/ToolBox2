@@ -8,6 +8,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +19,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityBarcodeComparisonBinding;
@@ -29,11 +32,13 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
     private static final String EXTRA_SCANNER = "com.honeywell.aidc.extra.EXTRA_SCANNER";
     private static final String EXTRA_PROFILE = "com.honeywell.aidc.extra.EXTRA_PROFILE";
     private static final String EXTRA_PROPERTIES = "com.honeywell.aidc.extra.EXTRA_PROPERTIES";
+    private SharedPreferences sharedPreferences;
     private ActivityBarcodeComparisonBinding binding;
     private String barcode;
     private boolean flag = false;
     private boolean masterScannerOpen = true;
     private boolean referScannerOpen = true;
+    private MediaPlayer mediaPlayer;
 
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
@@ -49,18 +54,46 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
                     byte[] dataBytes = intent.getByteArrayExtra("dataBytes");
                     String timestamp = intent.getStringExtra("timestamp");
 
+                    if (sharedPreferences.getString(SharedPref.TONE, "").equals("Tone 1")) {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                        }
+                        mediaPlayer = MediaPlayer.create(BarcodeComparisonActivity.this, R.raw.tone_one);
+                        mediaPlayer.start();
+
+                    } else if (sharedPreferences.getString(SharedPref.TONE, "").equals("Tone 2")) {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                        }
+                        mediaPlayer = MediaPlayer.create(BarcodeComparisonActivity.this, R.raw.tone_two);
+                        mediaPlayer.start();
+
+                    } else if (sharedPreferences.getString(SharedPref.TONE, "").equals("Tone 3")) {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                        }
+                        mediaPlayer = MediaPlayer.create(BarcodeComparisonActivity.this, R.raw.tone_three);
+                        mediaPlayer.start();
+                    }
+
                     if (!flag) {
-                        binding.masterbarCodeFromSCET.setText(data);
-                        binding.masterScanDigitCount.setText(data.length() + " Digits");
-                        binding.masterScanCodeType.setText(defineCodeName(codeId));
-
-
-                        flag = true;
+                        if (checkBarCode(codeId)) {
+                            binding.masterbarCodeFromSCET.setText(data);
+                            binding.masterScanDigitCount.setText(data.length() + " Digits");
+                            binding.masterScanCodeType.setText(defineCodeName(codeId));
+                            flag = true;
+                        } else {
+                            Toast.makeText(context, "Open barcode setting", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        binding.barCodeFromSCET.setText(data);
-                        binding.scanDigitCount.setText(data.length() + " Digits");
-                        binding.scanCodeType.setText(defineCodeName(codeId));
-                        flag = false;
+                        if (checkBarCode(codeId)) {
+                            binding.barCodeFromSCET.setText(data);
+                            binding.scanDigitCount.setText(data.length() + " Digits");
+                            binding.scanCodeType.setText(defineCodeName(codeId));
+                            flag = false;
+                        } else {
+                            Toast.makeText(context, "Open barcode setting", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
 
@@ -68,6 +101,26 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
             }
         }
     };
+
+    private boolean checkBarCode(String codeId) {
+        boolean value;
+
+        if (codeId.equals("b") && sharedPreferences.getBoolean(SharedPref.CODE_39, false)) {
+            value = true;
+        } else if (codeId.equals("j") && sharedPreferences.getBoolean(SharedPref.CODE_39, false)) {
+            value = true;
+        } else if (codeId.equals("d") && sharedPreferences.getBoolean(SharedPref.EAN_13, false)) {
+            value = true;
+        } else if (codeId.equals("w") && sharedPreferences.getBoolean(SharedPref.DATA_MATRIX, false)) {
+            value = true;
+        } else if (codeId.equals("s") && sharedPreferences.getBoolean(SharedPref.QR_CODE, false)) {
+            value = true;
+        } else {
+            value = false;
+        }
+
+        return value;
+    }
 
     private String defineCodeName(String codeId) {
         String codeName;
@@ -281,6 +334,7 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_barcode_comparison);
 
+        init();
 
         setDefaultFocus();
 
@@ -295,6 +349,10 @@ public class BarcodeComparisonActivity extends AppCompatActivity {
         inputReferenceBarcodeForScanner();
 
 
+    }
+
+    private void init() {
+        sharedPreferences = getSharedPreferences(SharedPref.SETTING_PREFERENCE, MODE_PRIVATE);
     }
 
     private void hideKey() {

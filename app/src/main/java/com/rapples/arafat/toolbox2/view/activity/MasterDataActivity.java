@@ -13,7 +13,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,6 +32,7 @@ import com.rapples.arafat.toolbox2.Database.MasterExecutor;
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityMasterDataBinding;
 import com.rapples.arafat.toolbox2.model.Masterdata;
+import com.rapples.arafat.toolbox2.util.SharedPref;
 import com.rapples.arafat.toolbox2.view.adapter.CustomMasterDataAdapter;
 
 import java.util.ArrayList;
@@ -49,11 +52,13 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
 
     private ActivityMasterDataBinding binding;
     private List<Masterdata> masterDataList;
+    private SharedPreferences sharedPreferences;
     private List<Masterdata> newMasterDataList = new ArrayList<>();
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
     private boolean isScannerOpenTrue = true;
     private EditText barCodeET;
+    private MediaPlayer mediaPlayer;
 
 
     @Override
@@ -83,8 +88,35 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
                     byte[] dataBytes = intent.getByteArrayExtra("dataBytes");
                     String timestamp = intent.getStringExtra("timestamp");
 
-                    if (isScannerOpenTrue) {
-                        binding.barCodeFromSCET.setText(data);
+                    if (sharedPreferences.getString(SharedPref.TONE, "").equals("Tone 1")) {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                        }
+                        mediaPlayer = MediaPlayer.create(MasterDataActivity.this, R.raw.tone_one);
+                        mediaPlayer.start();
+
+                    } else if (sharedPreferences.getString(SharedPref.TONE, "").equals("Tone 2")) {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                        }
+                        mediaPlayer = MediaPlayer.create(MasterDataActivity.this, R.raw.tone_two);
+                        mediaPlayer.start();
+
+                    } else if (sharedPreferences.getString(SharedPref.TONE, "").equals("Tone 3")) {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                        }
+                        mediaPlayer = MediaPlayer.create(MasterDataActivity.this, R.raw.tone_three);
+                        mediaPlayer.start();
+                    }
+
+                    if (checkBarCode(codeId)) {
+
+                        if (isScannerOpenTrue) {
+                            binding.barCodeFromSCET.setText(data);
+                        }
+                    } else {
+                        Toast.makeText(context, "Open barcode setting", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -243,6 +275,7 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void init() {
+        sharedPreferences = getSharedPreferences(SharedPref.SETTING_PREFERENCE, MODE_PRIVATE);
         binding.masterDataRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         masterDataList = new ArrayList<>();
     }
@@ -374,6 +407,26 @@ public class MasterDataActivity extends AppCompatActivity implements View.OnClic
                 }
             });
         }
+    }
+
+    private boolean checkBarCode(String codeId) {
+        boolean value;
+
+        if (codeId.equals("b") && sharedPreferences.getBoolean(SharedPref.CODE_39, false)) {
+            value = true;
+        } else if (codeId.equals("j") && sharedPreferences.getBoolean(SharedPref.CODE_39, false)) {
+            value = true;
+        } else if (codeId.equals("d") && sharedPreferences.getBoolean(SharedPref.EAN_13, false)) {
+            value = true;
+        } else if (codeId.equals("w") && sharedPreferences.getBoolean(SharedPref.DATA_MATRIX, false)) {
+            value = true;
+        } else if (codeId.equals("s") && sharedPreferences.getBoolean(SharedPref.QR_CODE, false)) {
+            value = true;
+        } else {
+            value = false;
+        }
+
+        return value;
     }
 
 

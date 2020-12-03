@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -60,6 +61,7 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
     private boolean allowDuplicate;
     private boolean quantityStatus;
     private boolean isFound;
+    private MediaPlayer mediaPlayer;
 
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
@@ -75,8 +77,34 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
                     byte[] dataBytes = intent.getByteArrayExtra("dataBytes");
                     String timestamp = intent.getStringExtra("timestamp");
 
+                    if (sharedPreferences.getString(SharedPref.TONE, "").equals("Tone 1")) {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                        }
+                        mediaPlayer = MediaPlayer.create(AddDataAcquisitionActivity.this, R.raw.tone_one);
+                        mediaPlayer.start();
+
+                    } else if (sharedPreferences.getString(SharedPref.TONE, "").equals("Tone 2")) {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                        }
+                        mediaPlayer = MediaPlayer.create(AddDataAcquisitionActivity.this, R.raw.tone_two);
+                        mediaPlayer.start();
+
+                    } else if (sharedPreferences.getString(SharedPref.TONE, "").equals("Tone 3")) {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                        }
+                        mediaPlayer = MediaPlayer.create(AddDataAcquisitionActivity.this, R.raw.tone_three);
+                        mediaPlayer.start();
+                    }
+
+                    if(checkBarCode(codeId)){
                     if (isScannerOpen) {
                         binding.barCodeFromSCET.setText(data);
+                    }
+                    }else{
+                        Toast.makeText(context, "Open barcode setting", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -475,5 +503,24 @@ public class AddDataAcquisitionActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+    private boolean checkBarCode(String codeId) {
+        boolean value;
+
+        if (codeId.equals("b") && sharedPreferences.getBoolean(SharedPref.CODE_39, false)) {
+            value = true;
+        } else if (codeId.equals("j") && sharedPreferences.getBoolean(SharedPref.CODE_39, false)) {
+            value = true;
+        } else if (codeId.equals("d") && sharedPreferences.getBoolean(SharedPref.EAN_13, false)) {
+            value = true;
+        } else if (codeId.equals("w") && sharedPreferences.getBoolean(SharedPref.DATA_MATRIX, false)) {
+            value = true;
+        } else if (codeId.equals("s") && sharedPreferences.getBoolean(SharedPref.QR_CODE, false)) {
+            value = true;
+        } else {
+            value = false;
+        }
+
+        return value;
     }
 }

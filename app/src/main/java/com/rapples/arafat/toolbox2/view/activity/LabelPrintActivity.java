@@ -14,6 +14,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -64,6 +65,7 @@ public class LabelPrintActivity extends AppCompatActivity {
     private boolean masterData = false;
     private String barcodeType;
     ImageView image;
+    private MediaPlayer mediaPlayer;
 
 
     private BroadcastReceiver barcodeDataReceiver = new BroadcastReceiver() {
@@ -79,8 +81,32 @@ public class LabelPrintActivity extends AppCompatActivity {
                     byte[] dataBytes = intent.getByteArrayExtra("dataBytes");
                     String timestamp = intent.getStringExtra("timestamp");
 
-                    binding.masterbarCodeFromSCET.setText(data);
-                    binding.priceTV.setText(defineCodeName(codeId));
+                    if (sharedPreferences.getString(SharedPref.TONE, "").equals("Tone 1")) {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                        }
+                        mediaPlayer = MediaPlayer.create(LabelPrintActivity.this, R.raw.tone_one);
+                        mediaPlayer.start();
+
+                    } else if (sharedPreferences.getString(SharedPref.TONE, "").equals("Tone 2")) {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                        }
+                        mediaPlayer = MediaPlayer.create(LabelPrintActivity.this, R.raw.tone_two);
+                        mediaPlayer.start();
+
+                    } else if (sharedPreferences.getString(SharedPref.TONE, "").equals("Tone 3")) {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                        }
+                        mediaPlayer = MediaPlayer.create(LabelPrintActivity.this, R.raw.tone_three);
+                        mediaPlayer.start();
+                    }
+
+                    if (checkBarCode(codeId)) {
+                        binding.masterbarCodeFromSCET.setText(data);
+                        binding.priceTV.setText(defineCodeName(codeId));
+                    }
 
                 }
             }
@@ -103,7 +129,7 @@ public class LabelPrintActivity extends AppCompatActivity {
 
     private void getSharedPrederenceData() {
 
-        barcodeType = sharedPreferences.getString(SharedPref.PRINT_BARCODE_TYPE,"");
+        barcodeType = sharedPreferences.getString(SharedPref.PRINT_BARCODE_TYPE, "");
 
     }
 
@@ -253,7 +279,7 @@ public class LabelPrintActivity extends AppCompatActivity {
 
 
     private void init() {
-        sharedPreferences = getSharedPreferences(SharedPref.SETTING_PREFERENCE,MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(SharedPref.SETTING_PREFERENCE, MODE_PRIVATE);
         editor = sharedPreferences.edit();
         masterDataList = new ArrayList<>();
         binding.labelQnty.setVisibility(View.INVISIBLE);
@@ -343,14 +369,13 @@ public class LabelPrintActivity extends AppCompatActivity {
 
         try {
 
-            if(barcodeType.equals("Code 128")){
+            if (barcodeType.equals("Code 128")) {
                 bitmap = encodeAsBitmap(data.getBarcode(), BarcodeFormat.CODE_128, 600, 300);
-            }else if(barcodeType.equals("2D Datamatrix")){
+            } else if (barcodeType.equals("2D Datamatrix")) {
                 bitmap = encodeAsBitmap(data.getBarcode(), BarcodeFormat.QR_CODE, 400, 400);
-            }else{
+            } else {
                 bitmap = encodeAsBitmap(data.getBarcode(), BarcodeFormat.CODE_128, 600, 300);
             }
-
 
 
             //binding.imageViewbarcode.setImageBitmap(bitmap);
@@ -654,6 +679,26 @@ public class LabelPrintActivity extends AppCompatActivity {
                 codeName = "";
         }
         return codeName;
+    }
+
+    private boolean checkBarCode(String codeId) {
+        boolean value;
+
+        if (codeId.equals("b") && sharedPreferences.getBoolean(SharedPref.CODE_39, false)) {
+            value = true;
+        } else if (codeId.equals("j") && sharedPreferences.getBoolean(SharedPref.CODE_39, false)) {
+            value = true;
+        } else if (codeId.equals("d") && sharedPreferences.getBoolean(SharedPref.EAN_13, false)) {
+            value = true;
+        } else if (codeId.equals("w") && sharedPreferences.getBoolean(SharedPref.DATA_MATRIX, false)) {
+            value = true;
+        } else if (codeId.equals("s") && sharedPreferences.getBoolean(SharedPref.QR_CODE, false)) {
+            value = true;
+        } else {
+            value = false;
+        }
+
+        return value;
     }
 
 }
