@@ -122,8 +122,6 @@ public class CustomFunctionSettingsActivity extends AppCompatActivity implements
 
 
         editor.apply();
-        binding.nameEt.setText("");
-        binding.descriptionEt.setText("");
     }
 
     private void changeCustomFuntionStatus() {
