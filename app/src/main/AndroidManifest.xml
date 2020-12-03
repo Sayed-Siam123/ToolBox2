@@ -23,7 +23,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".view.activity.CustomFunctionFileNameActivity"></activity>
+        <activity android:name=".view.activity.CustomFunctionDetailsActivity"></activity>
+        <activity android:name=".view.activity.CustomFunctionFileNameActivity" />
         <activity android:name=".view.activity.CustomFunctionActivity" />
         <activity android:name=".view.activity.AddCustomFunctionDataAcquisition" />
         <activity android:name=".view.activity.LabelPrintActivity" />
