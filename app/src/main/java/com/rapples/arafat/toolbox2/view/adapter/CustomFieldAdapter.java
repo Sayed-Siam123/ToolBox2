@@ -81,6 +81,8 @@ public class CustomFieldAdapter extends RecyclerView.Adapter<CustomFieldAdapter.
             }
         });
 
+        holder.setIsRecyclable(false);
+
 
     }
 

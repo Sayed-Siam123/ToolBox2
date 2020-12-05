@@ -38,6 +38,8 @@ public class SharedPref {
     public static final String SET_LANGUAGE = "set_language";
     public static final String LICENCE = "licence";
     public static final String SET_LICENCE = "set_licence";
+    public static final String TONE = "tone";
+
 
 
 

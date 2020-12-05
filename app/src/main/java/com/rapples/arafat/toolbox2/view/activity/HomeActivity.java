@@ -114,7 +114,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         customFunctionLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this,AddCustomFunctionDataAcquisition.class));
+                startActivity(new Intent(HomeActivity.this,CustomFunctionActivity.class)
+                        .putExtra(SharedPref.CUSTOM_FUNCTION_NAME,sharedPreferences.getString(SharedPref.CUSTOM_FUNCTION_NAME, "")));
             }
         });
 

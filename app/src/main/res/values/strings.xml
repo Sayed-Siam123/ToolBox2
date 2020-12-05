@@ -76,4 +76,5 @@
     <string name="licencedialog_enter_licence_key">Enter Licence Key</string>
     <string name="barcode_label">Barcode label</string>
     <string name="print_barcodetype">Print barcodetype</string>
+    <string name="last_item">Last item</string>
 </resources>

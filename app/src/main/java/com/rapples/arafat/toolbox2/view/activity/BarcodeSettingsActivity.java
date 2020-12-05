@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import com.rapples.arafat.toolbox2.R;
 import com.rapples.arafat.toolbox2.databinding.ActivityBarcodeSettingsBinding;
@@ -24,12 +27,13 @@ public class BarcodeSettingsActivity extends AppCompatActivity {
     private boolean ean13;
     private boolean dataMatrix;
     private boolean qrCode;
+    private MediaPlayer mediaPlayer;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_barcode_settings);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_barcode_settings);
 
         init();
 
@@ -40,7 +44,6 @@ public class BarcodeSettingsActivity extends AppCompatActivity {
         changeFunctionStatus();
 
         setSoundDropDown();
-
 
     }
 
@@ -125,12 +128,57 @@ public class BarcodeSettingsActivity extends AppCompatActivity {
     }
 
     private void setSoundDropDown() {
+
+
         String[] items = new String[]{"Tone 1", "Tone 2", "Tone 3"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         binding.soundDropdown.setAdapter(adapter);
+        binding.soundDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if (binding.soundDropdown.getSelectedItem().toString().equals("Tone 1")) {
+                    if (mediaPlayer != null) {
+                        mediaPlayer.release();
+                    }
+                    mediaPlayer = MediaPlayer.create(BarcodeSettingsActivity.this, R.raw.tone_one);
+                    mediaPlayer.start();
+
+                } else if (binding.soundDropdown.getSelectedItem().toString().equals("Tone 2")) {
+                    if (mediaPlayer != null) {
+                        mediaPlayer.release();
+                    }
+                    mediaPlayer = MediaPlayer.create(BarcodeSettingsActivity.this, R.raw.tone_two);
+                    mediaPlayer.start();
+
+                } else if (binding.soundDropdown.getSelectedItem().toString().equals("Tone 3")) {
+                    if (mediaPlayer != null) {
+                        mediaPlayer.release();
+                    }
+                    mediaPlayer = MediaPlayer.create(BarcodeSettingsActivity.this, R.raw.tone_three);
+                    mediaPlayer.start();
+
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+
+
     }
 
     public void onBackbarcode(View view) {
         onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        editor.putString(SharedPref.TONE,binding.soundDropdown.getSelectedItem().toString());
+        super.onBackPressed();
     }
 }
