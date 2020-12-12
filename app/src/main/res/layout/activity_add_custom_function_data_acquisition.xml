@@ -323,7 +323,7 @@
                             android:layout_height="34dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="10dp"
-                            android:onClick="openScannerForAddData"
+                            android:onClick="openScannerField3"
                             android:src="@drawable/ic_bar_code" />
 
                     </LinearLayout>
@@ -333,7 +333,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <EditText
                             android:id="@+id/field3barCodeFromSCET"
@@ -349,12 +349,13 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="10dp"
-                            android:onClick="openKeyboardForAddValue"
+                            android:onClick="openKeyboardField3"
                             android:src="@drawable/ic_tap" />
 
                     </LinearLayout>
 
                     <EditText
+                        android:visibility="gone"
                         android:id="@+id/field3Et"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
@@ -414,7 +415,7 @@
                             android:layout_height="34dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="10dp"
-                            android:onClick="openScannerForAddData"
+                            android:onClick="openScannerField4"
                             android:src="@drawable/ic_bar_code" />
 
                     </LinearLayout>
@@ -424,7 +425,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <EditText
                             android:id="@+id/field4barCodeFromSCET"
@@ -440,12 +441,13 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="10dp"
-                            android:onClick="openKeyboardForAddValue"
+                            android:onClick="openKeyboardField4"
                             android:src="@drawable/ic_tap" />
 
                     </LinearLayout>
 
                     <EditText
+                        android:visibility="gone"
                         android:id="@+id/field4Et"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
@@ -505,7 +507,7 @@
                             android:layout_height="34dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="10dp"
-                            android:onClick="openScannerForAddData"
+                            android:onClick="openScannerField5"
                             android:src="@drawable/ic_bar_code" />
 
                     </LinearLayout>
@@ -515,7 +517,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <EditText
                             android:id="@+id/field5barCodeFromSCET"
@@ -531,12 +533,13 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="10dp"
-                            android:onClick="openKeyboardForAddValue"
+                            android:onClick="openKeyboardField5"
                             android:src="@drawable/ic_tap" />
 
                     </LinearLayout>
 
                     <EditText
+                        android:visibility="gone"
                         android:id="@+id/field5Et"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
@@ -588,6 +591,14 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/last_item"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/customFunctionLastDataRecyclerView"
                     android:layout_width="match_parent"
@@ -617,7 +628,7 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/dataAcquisitionRecyclerView"
+                android:id="@+id/customFunctionRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
@@ -631,7 +642,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_margin="15dp"
-            android:onClick="showList"
+            android:onClick="showCustomFunctionList"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="100dp">
 

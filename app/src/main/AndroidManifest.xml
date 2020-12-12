@@ -21,9 +21,12 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        tools:replace="android:allowBackup"
-        android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.AddCustomFunctionDataAcquisition"></activity>
+        android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup">
+        <activity android:name=".view.activity.CustomFunctionDetailsActivity"></activity>
+        <activity android:name=".view.activity.CustomFunctionFileNameActivity" />
+        <activity android:name=".view.activity.CustomFunctionActivity" />
+        <activity android:name=".view.activity.AddCustomFunctionDataAcquisition" />
         <activity android:name=".view.activity.LabelPrintActivity" />
         <activity android:name=".view.activity.DataAcquisitionDetailsActivity" />
         <activity android:name=".view.activity.AddDataAcquisitionActivity" />
